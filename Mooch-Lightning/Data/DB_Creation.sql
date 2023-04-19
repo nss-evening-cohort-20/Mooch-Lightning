@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS [Organization];
 DROP TABLE IF EXISTS [OrganizationType];
 DROP TABLE IF EXISTS [MembershipMooch];
 DROP TABLE IF EXISTS [User];
-DROP TABLE IF EXISTS [SubscriptionLevel];
+
 
 CREATE TABLE [User] (
   [Id] int PRIMARY KEY identity NOT NULL,
@@ -98,3 +98,4 @@ GO
 
 ALTER TABLE [Organization] ADD FOREIGN KEY ([OrganizationTypeId]) REFERENCES [OrganizationType] ([Id])
 GO
+
