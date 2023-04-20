@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Mooch_Lightning</RootNamespace>
+    <UserSecretsId>f17e02da-4838-4894-b55b-cd903117575a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
