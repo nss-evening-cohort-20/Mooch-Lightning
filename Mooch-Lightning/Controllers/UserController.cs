@@ -14,4 +14,10 @@ public class UserController : ControllerBase
     {
         _userRepository = userRepository;
     }
+
+    [HttpGet("{id}")]
+    public IActionResult GetById(int id)
+    {
+        return Ok(_userRepository.GetById(id));
+    }
 }
