@@ -12,6 +12,8 @@ builder.Services.AddSwaggerGen();
 //vvvvvvvvvvvvvvvvvvvvvvvvvv Add Dependency Injections Here vvvvvvvvvvvvvvvvvvvvvvvvvvvv
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserMembershipRepository, UserMembershipRepository>();
+builder.Services.AddTransient<ILocationRepository, LocationRepository>();
+builder.Services.AddTransient<IMembershipMoochRepository, MembershipMoochRepository>();
 builder.Services.AddTransient<IOrganizationTypeRepository, OrganizationTypeRepository>();
 //^^^^^^^^^^^^^^^^^^^^^^^^^^ Add Dependency Injections Here ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
