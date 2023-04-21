@@ -16,14 +16,14 @@ namespace Mooch_Lightning.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-SELECT [Id]
-      ,[OrganizationId]
-      ,[StreetAddress]
-      ,[City]
-      ,[Zipcode]
-  FROM [Location]
-WHERE ID = @id;
-";
+                                      SELECT [Id]
+                                     ,[OrganizationId]
+                                     ,[StreetAddress]
+                                     ,[City]
+                                     ,[Zipcode]
+                                     FROM [Location]
+                                     WHERE ID = @id;
+                                     ";
 
                     cmd.Parameters.AddWithValue("@id", id);
                     var reader = cmd.ExecuteReader();

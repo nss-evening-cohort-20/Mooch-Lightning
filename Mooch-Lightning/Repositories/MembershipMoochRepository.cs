@@ -16,16 +16,16 @@ namespace Mooch_Lightning.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-SELECT [Id]
-      ,[UserId]
-      ,[UserMembershipId]
-      ,[StartDate]
-      ,[EndDate]
-      ,[IsApproved]
-      ,[DateCreated]
-  FROM [MembershipMooch]
-WHERE [Id] = @id;
-";
+                                      SELECT [Id]
+                                      ,[UserId]
+                                      ,[UserMembershipId]
+                                      ,[StartDate]
+                                      ,[EndDate]
+                                      ,[IsApproved]
+                                      ,[DateCreated]
+                                      FROM [MembershipMooch]
+                                      WHERE [Id] = @id;
+                                      ";
 
                     cmd.Parameters.AddWithValue("@id", id);
                     var reader = cmd.ExecuteReader();
