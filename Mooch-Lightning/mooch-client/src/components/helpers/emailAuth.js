@@ -13,6 +13,26 @@ import {
 //   fullName: "",
 // }
 
+const doesUserExist = (firebaseUserId) => {
+  return getToken().then((token) =>
+  fetch(`${_apiUrl}/DoesUserExist/${firebaseUserId}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }).then(resp => resp.ok));
+}
+
+export const getToken = () => {
+  const currentUser = firebase.auth().currentUser;
+  if (!currentUser) {
+    throw new Error("Cannot get current user. Did you forget to login?");
+  }
+  return currentUser.getIdToken();
+};
+
+
+
 export const emailAuth = {
   // Register New User
   register: function(userObj, navigate) {
@@ -53,17 +73,23 @@ export const emailAuth = {
     return new Promise((res) => {
       const auth = getAuth();
       signInWithEmailAndPassword(auth, userObj.email, userObj.password)
-        .then((userCredential) => {
-          const userAuth = {
-            email: userCredential.user.email,
-            displayName: userCredential.user.displayName,
-            uid: userCredential.user.uid,
-            type: "email",
-          };
-          // Saves the user to localstorage
-          localStorage.setItem("capstone_user", JSON.stringify(userAuth));
-          // Navigate us back to home
-          navigate("/");
+        .then((signInResponce) => doesUserExist(signInResponce.user.uid))
+        .then((existingUser) => {
+          if (!existingUser) {
+            this.signOut();
+          } else {
+
+            const userAuth = {
+              email: signInResponce.user.email,
+              displayName: signInResponce.user.displayName,
+              uid: signInResponce.user.uid,
+              type: "email",
+            };
+            // Saves the user to localstorage
+            localStorage.setItem("capstone_user", JSON.stringify(userAuth));
+            // Navigate us back to home
+            navigate("/");
+          }
         })
         .catch((error) => {
           console.log("Email SignIn Error");

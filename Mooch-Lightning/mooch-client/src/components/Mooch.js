@@ -4,7 +4,7 @@ import { ApplicationViews } from "./views/ApplicationViews";
 import { Login } from "./auth/Login";
 import { Register } from "./auth/Register";
 
-export const CapstoneTemplate = () => {
+export const Mooch = () => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
