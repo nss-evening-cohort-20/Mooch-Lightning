@@ -20,4 +20,16 @@ public class UserController : ControllerBase
     {
         return Ok(_userRepository.GetById(id));
     }
+
+    [HttpGet("UserExists/{firebaseUid}")]
+    public IActionResult GetByFirebaseUId(int firebaseUid)
+    {
+        var user = _userRepository.GetByFirebaseUId(firebaseUid);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+        return Ok();
+    }
 }
