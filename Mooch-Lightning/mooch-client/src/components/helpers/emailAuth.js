@@ -6,6 +6,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 
+
 // userObject expected ---->
 // {
 //   email: "",
@@ -13,18 +14,22 @@ import {
 //   fullName: "",
 // }
 
+const _apiUrl = "https://localhost:7082/api"
+
 const doesUserExist = (firebaseUserId) => {
-  return getToken().then((token) =>
-  fetch(`${_apiUrl}/DoesUserExist/${firebaseUserId}`, {
+
+  return getToken().then((token) => fetch(`${_apiUrl}/UserExists/${firebaseUserId}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`
     }
-  }).then(resp => resp.ok));
+  }).then(resp => resp.ok))
+  
 }
 
 export const getToken = () => {
-  const currentUser = firebase.auth().currentUser;
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
   if (!currentUser) {
     throw new Error("Cannot get current user. Did you forget to login?");
   }
@@ -53,7 +58,7 @@ export const emailAuth = {
             // Saves the user to localstorage
             localStorage.setItem("capstone_user", JSON.stringify(userAuth));
             // Navigate us back to home
-            navigate("/");
+  
           },
           function(error) {
             console.log("Email Register Name Error");
@@ -72,25 +77,29 @@ export const emailAuth = {
   signIn: function(userObj, navigate) {
     return new Promise((res) => {
       const auth = getAuth();
+      let existingUser = {};
       signInWithEmailAndPassword(auth, userObj.email, userObj.password)
-        .then((signInResponce) => doesUserExist(signInResponce.user.uid))
-        .then((existingUser) => {
-          if (!existingUser) {
-            this.signOut();
-          } else {
-
-            const userAuth = {
-              email: signInResponce.user.email,
-              displayName: signInResponce.user.displayName,
-              uid: signInResponce.user.uid,
-              type: "email",
-            };
-            // Saves the user to localstorage
-            localStorage.setItem("capstone_user", JSON.stringify(userAuth));
-            // Navigate us back to home
-            navigate("/");
-          }
-        })
+        .then((SignInResponse) => {
+          existingUser.email = SignInResponse.user.email;
+          existingUser.displayName = SignInResponse.user.displayName;
+          existingUser.uid = SignInResponse.user.uid;
+          existingUser.type = "email";  
+          doesUserExist(SignInResponse.user.uid)
+          .then((userExists) => {
+            if (!userExists) {
+              this.signOut();
+            } else {
+  
+              
+              // Saves the user to localstorage
+              localStorage.setItem("capstone_user", JSON.stringify(existingUser));
+              // Navigate us back to home
+              console.log(existingUser.displayName + "Signed In")
+              navigate("/");
+            }
+          })
+        }
+        )
         .catch((error) => {
           console.log("Email SignIn Error");
           console.log("error code", error.code);
