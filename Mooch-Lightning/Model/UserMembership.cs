@@ -6,7 +6,7 @@ public class UserMembership
     public int UserId { get; set; }
     public User User { get; set; }
     public int MembershipId { get; set; }
-    // membership
+    public Membership Membership { get; set; }
     public bool IsMooched { get; set; }
     public DateTime AvailabiltyStartDate { get; set; }
     public DateTime AvailabiltyEndDate { get; set; }
