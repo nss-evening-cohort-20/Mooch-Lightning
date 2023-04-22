@@ -4,11 +4,11 @@ using Mooch_Lightning.Model;
 
 namespace Mooch_Lightning.Repositories
 {
-    public class MembershipMoochRepository : BaseRepository, IMembershipMoochRepository
+    public class MoochRequestRepository : BaseRepository, IMoochRequestRepository
     {
-        public MembershipMoochRepository(IConfiguration configuration) : base(configuration) { }
+        public MoochRequestRepository(IConfiguration configuration) : base(configuration) { }
 
-        public MembershipMooch GetMembershipMoochbyId(int id)
+        public MoochRequest GetMoochRequestById(int id)
         {
             using (var conn = Connection)
             {
@@ -18,25 +18,25 @@ namespace Mooch_Lightning.Repositories
                     cmd.CommandText = @"
                                       SELECT [Id]
                                       ,[UserId]
-                                      ,[UserMembershipId]
+                                      ,[MoochPostId]
                                       ,[StartDate]
                                       ,[EndDate]
                                       ,[IsApproved]
                                       ,[DateCreated]
-                                      FROM [MembershipMooch]
+                                      FROM [MoochRequest]
                                       WHERE [Id] = @id;
                                       ";
 
                     cmd.Parameters.AddWithValue("@id", id);
                     var reader = cmd.ExecuteReader();
-                    MembershipMooch mm = null;
+                    MoochRequest mr = null;
                     if (reader.Read())
                     {
-                        mm = new MembershipMooch()
+                        mr = new MoochRequest()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
                             UserId = DbUtils.GetInt(reader, "UserId"),
-                            UserMembershipId = DbUtils.GetInt(reader, "UserMembershipId"),
+                            MoochPostId = DbUtils.GetInt(reader, "MoochPostId"),
                             StartDate = DbUtils.GetDateTime(reader, "StartDate"),
                             EndDate = DbUtils.GetDateTime(reader, "EndDate"),
                             IsApproved = DbUtils.GetNullableBool(reader, "IsApproved"),
@@ -45,7 +45,7 @@ namespace Mooch_Lightning.Repositories
                         };
                     }
                     reader.Close();
-                    return mm;
+                    return mr;
 
                 }
             }
