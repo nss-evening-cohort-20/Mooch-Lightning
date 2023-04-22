@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Mooch_Lightning.Repositories;
+using Mooch_Lightning.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,6 +74,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ResponseFormatterMiddleware>();
 
 app.UseAuthentication();
 
