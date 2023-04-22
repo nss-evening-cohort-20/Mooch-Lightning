@@ -7,6 +7,7 @@
         public string StreetAddress { get; set;  }
         public string City { get; set; }    
         public int ZipCode { get; set; }
+        public Organization Organization { get; set; }
 
     }
 }
