@@ -82,4 +82,66 @@ public class MembershipRepository : BaseRepository, IMembershipRepository
             }
         }
     }
+
+    public void Add(Membership membership)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"
+                        INSERT INTO [Membership] (Description, OrganizationId, ImageUrl)
+                        OUTPUT INSERTED.ID
+                        VALUES (@Description, @OrganizationId, @ImageUrl)";
+
+                DbUtils.AddParameter(cmd, "@Description", membership.Description);
+                DbUtils.AddParameter(cmd, "@OrganizationId", membership.OrganizationId);
+                DbUtils.AddParameter(cmd, "@ImageUrl", membership.ImageUrl);
+
+               membership.Id = (int)cmd.ExecuteScalar();
+            }
+        }
+    }
+
+    public void Update(Membership membership)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"
+                       UPDATE Membership
+                          SET Description = @Description,
+                              OrganizationId = @OrganizationId,
+                              ImageUrl = @ImageUrl
+                        WHERE Id = @Id";
+
+                DbUtils.AddParameter(cmd, "@Id", membership.Id); 
+                DbUtils.AddParameter(cmd, "@Description", membership.Description);
+                DbUtils.AddParameter(cmd, "@OrganizationId", membership.OrganizationId);
+                DbUtils.AddParameter(cmd, "@ImageUrl", membership.ImageUrl);
+
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
+
+    public void Delete(int id)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = "DELETE FROM Membership WHERE Id = @Id";
+                DbUtils.AddParameter(cmd, "@id", id);
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
 }
+
+
