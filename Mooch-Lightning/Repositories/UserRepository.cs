@@ -7,6 +7,65 @@ namespace Mooch_Lightning.Repositories;
 public class UserRepository : BaseRepository, IUserRepository
 {
     public UserRepository(IConfiguration configuration) : base(configuration) { }
+
+    public User AddUser(User user)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"INSERT INTO [user] 
+                                    (
+                                      [FirebaseUid]
+                                      ,[Username]
+                                      ,[FirstName]
+                                      ,[LastName]
+                                      ,[Email]
+                                      ,[Password]
+                                      ,[SubscriptionLevelId]
+                                      ,[ImageUrl]
+                                      )
+                                        OUTPUT INSERTED.id
+                                        VALUES (
+                                      @FirebaseUid
+                                      ,@Username
+                                      ,@FirstName
+                                      ,@LastName
+                                      ,@Email
+                                      ,@Password
+                                      ,@SubscriptionLevelId
+                                      ,@ImageUrl
+                                        );";
+                DbUtils.AddParameter(cmd, "@FirebaseUid", user.FirebaseUid);
+                DbUtils.AddParameter(cmd, "@Username", user.Username);
+                DbUtils.AddParameter(cmd, "@FirstName", user.FirstName);
+                DbUtils.AddParameter(cmd, "@LastName", user.LastName);
+                DbUtils.AddParameter(cmd, "@Email", user.Email);
+                DbUtils.AddParameter(cmd, "@Password", user.Email);
+                DbUtils.AddParameter(cmd, "@SubscriptionLevelId", user.SubscriptionLevelId);
+                DbUtils.AddParameter(cmd, "@ImageUrl", user.ImageUrl);
+
+                user.Id = (int)cmd.ExecuteScalar();
+                return user;
+            }
+        }
+    }
+
+    public void DeleteUser(int id)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"Delete from [dbo].[User] where id = @id";
+                DbUtils.AddParameter(cmd, "@id", id);
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
+
     public User GetById(int id) 
     {
         using (var conn = Connection)
@@ -50,5 +109,10 @@ public class UserRepository : BaseRepository, IUserRepository
                 return user;
             }
         }
+    }
+
+    public User UpdateUser(User user)
+    {
+        throw new NotImplementedException();
     }
 }
