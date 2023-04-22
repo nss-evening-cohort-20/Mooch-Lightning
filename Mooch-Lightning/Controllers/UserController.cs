@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mooch_Lightning.Repositories;
 
 namespace Mooch_Lightning.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class UserController : ControllerBase
@@ -21,8 +23,8 @@ public class UserController : ControllerBase
         return Ok(_userRepository.GetById(id));
     }
 
-    [HttpGet("UserExists/{firebaseUid}")]
-    public IActionResult GetByFirebaseUId(int firebaseUid)
+    [HttpGet("/api/UserExists/{firebaseUid}")]
+    public IActionResult GetByFirebaseUId(string firebaseUid)
     {
         var user = _userRepository.GetByFirebaseUId(firebaseUid);
 
@@ -30,6 +32,6 @@ public class UserController : ControllerBase
         {
             return NotFound();
         }
-        return Ok();
+        return Ok(user);
     }
 }

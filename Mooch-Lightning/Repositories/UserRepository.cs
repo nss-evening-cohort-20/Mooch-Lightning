@@ -52,7 +52,7 @@ public class UserRepository : BaseRepository, IUserRepository
         }
     }
 
-    public User GetByFirebaseUId(int FbId)
+    public User GetByFirebaseUId(string FbId)
     {
         using (var conn = Connection)
         {
