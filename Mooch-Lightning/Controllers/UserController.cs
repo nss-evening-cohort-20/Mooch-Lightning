@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mooch_Lightning.Model;
 using Mooch_Lightning.Repositories;
 
 namespace Mooch_Lightning.Controllers;
@@ -40,5 +41,18 @@ public class UserController : ControllerBase
             return NotFound();
         }
         return Ok(user);
+    }
+
+    [HttpPost]
+    public IActionResult AddUser(User user)
+    {
+        return Ok(_userRepository.AddUser(user));
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteUser(int id)
+    {
+        _userRepository.DeleteUser(id);
+        return NoContent();
     }
 }
