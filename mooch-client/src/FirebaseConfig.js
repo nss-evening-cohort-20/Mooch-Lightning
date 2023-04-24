@@ -1,4 +1,4 @@
-// Rename this file to apiKeys.js and add your config keys
+// Object that references our .env.local
 
 export const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,

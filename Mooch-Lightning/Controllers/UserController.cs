@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FirebaseAdmin;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mooch_Lightning.Repositories;
@@ -20,7 +21,13 @@ public class UserController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
+        var loggedInUser = User;
+        
+        //var fb = FirebaseApp.DefaultInstance;
+
         return Ok(_userRepository.GetById(id));
+
+
     }
 
     [HttpGet("/api/UserExists/{firebaseUid}")]

@@ -1,3 +1,4 @@
+using FirebaseAdmin;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -5,6 +6,8 @@ using Mooch_Lightning.Repositories;
 using Mooch_Lightning.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//var fbApp = FirebaseApp.Create();
 
 // Add services to the container.
 

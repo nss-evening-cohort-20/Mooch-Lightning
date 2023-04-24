@@ -4,10 +4,15 @@ import { googleAuth } from "../helpers/googleAuth";
 import { emailAuth } from "../helpers/emailAuth";
 import "./Login.css";
 
-export const Register = () => {
+export const CreateAccount = () => {
   const [user, setUser] = useState({
+    userName: "",
+    firstName: "",
+    lastName: "",
     email: "",
-    password: "",
+    FirebaseUid: "",
+    subscriptionLevelId: 0,
+    imageUrl: ""
   });
   let navigate = useNavigate();
 
@@ -23,32 +28,29 @@ export const Register = () => {
     setUser(copy);
   };
 
-  // Register with google (same as sign in)
-  const onSubmitLogin = async () => {
-    googleAuth.signInRegister(navigate);
-  };
+
 
   return (
     <main style={{ textAlign: "center" }}>
       <form className="form--login" onSubmit={handleRegister}>
         <h1 className="h3 mb-3 font-weight-normal">Please Register</h1>
         <fieldset>
-          <label htmlFor="email"> Email address </label>
+          <label htmlFor="firstName">First Name </label>
           <input
             onChange={updateUser}
-            type="email"
-            id="email"
+            type="text"
+            id="firstName"
             className="form-control"
-            placeholder="Email address"
+            placeholder="FirstName"
             required
           />
         </fieldset>
         <fieldset>
-          <label htmlFor="password"> Password </label>
+          <label htmlFor="lastName"> Last Name </label>
           <input
             onChange={updateUser}
             type="text"
-            id="password"
+            id="lastName"
             className="form-control"
             placeholder="Must Be 6 Characters"
             required
@@ -56,13 +58,20 @@ export const Register = () => {
           />
         </fieldset>
         <fieldset>
-          <button type="submit"> Register </button>
+          <label htmlFor="imageUrl"> Image URL </label>
+          <input
+            onChange={updateUser}
+            type="text"
+            id="imageUrl"
+            className="form-control"
+            placeholder="Must Be 6 Characters"
+            autoFocus
+          />
+        </fieldset>
+        <fieldset>
+          <button type="submit"> Create Account </button>
         </fieldset>
       </form>
-      <h2>Register With Google?</h2>
-      <button type="submit" onClick={onSubmitLogin}>
-        Let's Do It!
-      </button>
     </main>
   );
 };

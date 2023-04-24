@@ -1,6 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { PhotoUpload } from "../photoStorage/PhotoUpload";
 import { logout } from "../helpers/logout";
+import { CreateAccount } from "../auth/CreateAccount";
 
 export const ApplicationViews = () => {
   let navigate = useNavigate();
@@ -11,6 +12,12 @@ export const ApplicationViews = () => {
   };
 
   return (
+    <Routes>
+
+    <Route 
+      path="/"
+      element={
+
     <>
       <h1>A Blank Page!!</h1>
       {/* logout button */}
@@ -19,6 +26,13 @@ export const ApplicationViews = () => {
       </button>
       {/* move this component to where you want your PhotoUpload */}
       <PhotoUpload />
+      
     </>
+      }
+      />
+      <Route path="createUser" element={<CreateAccount />}/>
+
+
+    </Routes>
   );
 };
