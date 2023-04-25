@@ -12,13 +12,13 @@ const _apiUrl = "https://localhost:7082/api"
 //check our API to ensure that the firebase user that was just logged exists in our local SQL database
 const doesUserExist = (firebaseUserId) => {
   
-  return getToken()
+   return getToken()
     .then((token) => fetch(`${_apiUrl}/UserExists/${firebaseUserId}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`
     }
-  }).then(resp => resp.ok))
+  }).then(resp =>  userExistsState = resp.ok))
   
 }
 
@@ -32,7 +32,7 @@ export const getToken = () => {
   return currentUser.getIdToken();
 };
 
-
+let userExistsState = false;
 
 export const emailAuth = {
   // Register New User
@@ -41,13 +41,12 @@ export const emailAuth = {
     const userAuth = {};
     createUserWithEmailAndPassword(auth, userObj.email, userObj.password)
       .then((userCredential) => {
-            
               userAuth.email = userCredential.user.email;
               userAuth.uid = userCredential.user.uid;
               userAuth.type= "email";
             doesUserExist(userCredential.user.uid)
-            .then((userExists) => {
-              if (!userExists)  {
+            .then(() => {
+              if (!userExistsState)  {
                   //navigate to new user page.
                   navigate("/createuser")
               } else {
@@ -81,6 +80,7 @@ export const emailAuth = {
           existingUser.email = SignInResponse.user.email;
           existingUser.displayName = SignInResponse.user.displayName;
           existingUser.uid = SignInResponse.user.uid;
+          existingUser.accessToken = SignInResponse.user.accessToken;
           existingUser.type = "email";  
           doesUserExist(SignInResponse.user.uid)
           .then((userExists) => {

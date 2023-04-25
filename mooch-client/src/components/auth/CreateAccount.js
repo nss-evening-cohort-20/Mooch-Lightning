@@ -16,10 +16,25 @@ export const CreateAccount = () => {
   });
   let navigate = useNavigate();
 
+  const capstone_user = localStorage.getItem("capstone_user");
+  const localUser = JSON.parse(capstone_user);
+
+  const _apiUrl = "https://localhost:7082/api"
+
   // Register with email and password
   const handleRegister = async (e) => {
+
+    const userCopy = {...user}
+    userCopy.FirebaseUid = localUser.uid;
+    userCopy.email = localUser.email;
     e.preventDefault();
-    emailAuth.register(user, navigate);
+    fetch(`${_apiUrl}/user`, {
+        method:"POST",
+        body: userCopy,
+        headers: {
+            Authorization: `Bearer ${localUser.accessToken}`
+        }
+    });
   };
 
   const updateUser = (evt) => {

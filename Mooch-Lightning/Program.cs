@@ -38,8 +38,6 @@ builder.Services.AddSwaggerGen(c =>
 
 });
 
-var firebaseProjectId = builder.Configuration.GetValue<string>("FirebaseProjectId");
-var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
 
 //vvvvvvvvvvvvvvvvvvvvvvvvvv Add Dependency Injections Here vvvvvvvvvvvvvvvvvvvvvvvvvvvv
 builder.Services.AddTransient<IUserRepository, UserRepository>();
@@ -50,6 +48,9 @@ builder.Services.AddTransient<IMembershipMoochRepository, MembershipMoochReposit
 builder.Services.AddTransient<IOrganizationTypeRepository, OrganizationTypeRepository>();
 builder.Services.AddTransient<IMembershipRepository, MembershipRepository>();
 //^^^^^^^^^^^^^^^^^^^^^^^^^^ Add Dependency Injections Here ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+var firebaseProjectId = builder.Configuration.GetValue<string>("FirebaseProjectId");
+var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
