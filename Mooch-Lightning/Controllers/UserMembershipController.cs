@@ -31,7 +31,7 @@ public class UserMembershipController : ControllerBase
         {
             Message = "Created",
             UserMembership = newUserMembership
-        }); 
+        });
     }
 
     [HttpPut]
@@ -42,7 +42,7 @@ public class UserMembershipController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
 
     public IActionResult Delete(int id)
     {

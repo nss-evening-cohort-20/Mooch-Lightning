@@ -7,6 +7,6 @@ namespace Mooch_Lightning.Repositories
         UserMembership Add(UserMembership userMembership);
         void Delete(int id);
         UserMembership GetById(int id);
-        UserMembership Update(UserMembership userMembership);
+        void Update(UserMembership userMembership);
     }
 }

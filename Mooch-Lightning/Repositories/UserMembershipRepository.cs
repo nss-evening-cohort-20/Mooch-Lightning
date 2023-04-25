@@ -1,5 +1,6 @@
 ﻿using Gifter.Repositories;
 using Mooch_Lightning.Model;
+using System.Security.Cryptography;
 
 namespace Mooch_Lightning.Repositories;
 
@@ -30,7 +31,7 @@ public class UserMembershipRepository : BaseRepository, IUserMembershipRepositor
 
     //Update UserMembership
 
-    public UserMembership Update(UserMembership userMembership)
+    public void Update(UserMembership userMembership)
     {
         using (var conn = Connection)
         {
@@ -44,8 +45,7 @@ public class UserMembershipRepository : BaseRepository, IUserMembershipRepositor
                 cmd.Parameters.AddWithValue("@id", userMembership.Id);
                 cmd.Parameters.AddWithValue("@UserId", userMembership.UserId);
                 cmd.Parameters.AddWithValue("@MemberShipId", userMembership.MembershipId);
-                userMembership.Id = (int)cmd.ExecuteScalar();
-                return userMembership;
+                cmd.ExecuteNonQuery();
             }
         }
     }
@@ -60,9 +60,11 @@ public class UserMembershipRepository : BaseRepository, IUserMembershipRepositor
             using (var cmd = conn.CreateCommand())
             {
                 cmd.CommandText = @"DELETE FROM [UserMembership] WHERE Id = @id";
-                cmd.Parameters.AddWithValue("id", id);
+                cmd.Parameters.AddWithValue("@id", id);
 
+                cmd.ExecuteNonQuery();
             }
+            
         }
     }
 }
