@@ -1,4 +1,5 @@
 using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -6,8 +7,6 @@ using Mooch_Lightning.Repositories;
 using Mooch_Lightning.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
-
-//var fbApp = FirebaseApp.Create();
 
 // Add services to the container.
 
@@ -19,6 +18,7 @@ builder.Services.AddSwaggerGen(c =>
     var securitySchema = new OpenApiSecurityScheme
     {
         Name = "Authorization",
+        Scheme= "Bearer",
         BearerFormat = "JWT",
         Description = "JWT Authorization header using the Bearer scheme.",
         Type = SecuritySchemeType.ApiKey,
@@ -31,12 +31,14 @@ builder.Services.AddSwaggerGen(c =>
     };
 
     c.AddSecurityDefinition("Bearer", securitySchema);
+
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
         {
-            { securitySchema, new[] { "Bearer"} }
+            { securitySchema, new[] {"Bearer "} }
         });
 
 });
+
 
 
 //vvvvvvvvvvvvvvvvvvvvvvvvvv Add Dependency Injections Here vvvvvvvvvvvvvvvvvvvvvvvvvvvv
@@ -83,8 +85,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseMiddleware<ResponseFormatterMiddleware>();
 
 app.UseAuthentication();
 

@@ -22,9 +22,6 @@ public class UserController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
-        var loggedInUser = User;
-        
-        var fb = FirebaseApp.DefaultInstance;
 
         return Ok(_userRepository.GetById(id));
 
@@ -40,7 +37,7 @@ public class UserController : ControllerBase
         {
             return Ok(false);
         }
-        return Ok(true);
+        return Ok(user);
     }
 
     [HttpPost]
@@ -50,7 +47,6 @@ public class UserController : ControllerBase
     }
 
     //
-    [Authorize(Roles ="Admin, Instructor")]
     [HttpDelete("{id}")]
     public IActionResult DeleteUser(int id)
     {

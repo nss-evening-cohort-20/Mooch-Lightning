@@ -23,7 +23,7 @@ export const googleAuth = {
             type: "google",
           };
           // Add user object to localStorage
-          localStorage.setItem("capstone_user", JSON.stringify(userAuth));
+          localStorage.setItem("mooch_user", JSON.stringify(userAuth));
           // Navigate us back home
           navigate("/");
           console.log("you did it");
@@ -42,7 +42,7 @@ export const googleAuth = {
     signOut(auth)
       .then(() => {
         // Remove user from localStorage
-        localStorage.removeItem("capstone_user");
+        localStorage.removeItem("mooch_user");
         // Navigate us back home
         navigate("/");
         console.log("Sign Out Success!");

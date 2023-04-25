@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { googleAuth } from "../helpers/googleAuth";
-import { emailAuth } from "../helpers/emailAuth";
 import "./Login.css";
 
 export const CreateAccount = () => {
@@ -14,10 +12,12 @@ export const CreateAccount = () => {
     subscriptionLevelId: 0,
     imageUrl: ""
   });
+
+
   let navigate = useNavigate();
 
-  const capstone_user = localStorage.getItem("capstone_user");
-  const localUser = JSON.parse(capstone_user);
+  const mooch_user = localStorage.getItem("mooch_user");
+  const localUser = JSON.parse(mooch_user);
 
   const _apiUrl = "https://localhost:7082/api"
 
@@ -30,9 +30,10 @@ export const CreateAccount = () => {
     e.preventDefault();
     fetch(`${_apiUrl}/user`, {
         method:"POST",
-        body: userCopy,
+        body: JSON.stringify(userCopy),
         headers: {
-            Authorization: `Bearer ${localUser.accessToken}`
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localUser.accessToken}`
         }
     });
   };
@@ -48,7 +49,7 @@ export const CreateAccount = () => {
   return (
     <main style={{ textAlign: "center" }}>
       <form className="form--login" onSubmit={handleRegister}>
-        <h1 className="h3 mb-3 font-weight-normal">Please Register</h1>
+        <h1 className="h3 mb-3 font-weight-normal">Please Create an Account</h1>
         <fieldset>
           <label htmlFor="firstName">First Name </label>
           <input
@@ -57,6 +58,17 @@ export const CreateAccount = () => {
             id="firstName"
             className="form-control"
             placeholder="FirstName"
+            required
+          />
+        </fieldset>
+        <fieldset>
+          <label htmlFor="userName">User Name </label>
+          <input
+            onChange={updateUser}
+            type="text"
+            id="userName"
+            className="form-control"
+            placeholder="User name"
             required
           />
         </fieldset>
@@ -80,6 +92,17 @@ export const CreateAccount = () => {
             id="imageUrl"
             className="form-control"
             placeholder="Must Be 6 Characters"
+            autoFocus
+          />
+        </fieldset>
+        <fieldset>
+          <label htmlFor="subscriptionLevel"> Subscription Level </label>
+          <input
+            onChange={updateUser}
+            type="text"
+            id="subscriptionLevel"
+            className="form-control"
+            placeholder="1-3"
             autoFocus
           />
         </fieldset>

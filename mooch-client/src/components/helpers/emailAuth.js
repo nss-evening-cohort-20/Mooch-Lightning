@@ -18,7 +18,7 @@ const doesUserExist = (firebaseUserId) => {
     headers: {
       Authorization: `Bearer ${token}`
     }
-  }).then(resp =>  userExistsState = resp.ok))
+  }).then(resp => resp.json()))
   
 }
 
@@ -43,16 +43,19 @@ export const emailAuth = {
       .then((userCredential) => {
               userAuth.email = userCredential.user.email;
               userAuth.uid = userCredential.user.uid;
+              userAuth.accessToken = userCredential.user.accessToken;
               userAuth.type= "email";
             doesUserExist(userCredential.user.uid)
-            .then(() => {
-              if (!userExistsState)  {
+            .then((userExists) => {
+              if (!userExists.userId)  {
                   //navigate to new user page.
                   navigate("/createuser")
-              } else {
+                  localStorage.setItem("mooch_user", JSON.stringify(userAuth));
+                } else {
+                userAuth.id = userExists.Id
 
                 // Saves the user to localstorage
-                localStorage.setItem("capstone_user", JSON.stringify(userAuth));
+                localStorage.setItem("mooch_user", JSON.stringify(userAuth));
                 // Navigate us back to home
                 navigate("/")
               }
@@ -88,7 +91,7 @@ export const emailAuth = {
               this.signOut();
             } else {
               // Saves the user to localstorage
-              localStorage.setItem("capstone_user", JSON.stringify(existingUser));
+              localStorage.setItem("mooch_user", JSON.stringify(existingUser));
               // Navigate us back to home
               console.log(existingUser.displayName + "Signed In")
               navigate("/");
@@ -109,7 +112,7 @@ export const emailAuth = {
     signOut(auth)
       .then(() => {
         // Remove the user from localstorage
-        localStorage.removeItem("capstone_user");
+        localStorage.removeItem("mooch_user");
         // Navigate us back to home
         navigate("/");
         console.log("Sign Out Success!");
