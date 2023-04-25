@@ -7,7 +7,10 @@ namespace Mooch_Lightning.Model
         public int Id { get; set; }
         public string Name { get; set; }
         public int OrganizationTypeId { get; set; }
+        public OrganizationType OrganizationType { get; set; }
         public string ImageUrl { get; set; }
+        public List<Location> Locations { get; set; }
+        public List<Membership> Memberships { get; set; }
     }
 }
 
