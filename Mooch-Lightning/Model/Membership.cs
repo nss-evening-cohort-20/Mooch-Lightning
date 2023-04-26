@@ -9,5 +9,11 @@ namespace Mooch_Lightning.Model
         public int OrganizationId { get; set; }
         public string ImageUrl { get; set; }
     }
+
+    public class MembershipAndOrg
+    {
+        public string Organization { get; set; }
+        public string Description { get; set; }
+    }
 }
 
