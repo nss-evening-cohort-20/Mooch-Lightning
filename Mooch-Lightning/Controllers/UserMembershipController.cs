@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mooch_Lightning.Model;
 using Mooch_Lightning.Repositories;
 
 namespace Mooch_Lightning.Controllers;
@@ -20,4 +21,33 @@ public class UserMembershipController : ControllerBase
     {
         return Ok(_userMembershipRepository.GetById(id));
     }
+
+    [HttpPost]
+
+    public IActionResult Add(UserMembership userMembership)
+    {
+        var newUserMembership = _userMembershipRepository.Add(userMembership);
+        return Ok(new
+        {
+            Message = "Created",
+            UserMembership = newUserMembership
+        });
+    }
+
+    [HttpPut]
+
+    public IActionResult Update(UserMembership userMembership)
+    {
+        _userMembershipRepository.Update(userMembership);
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+
+    public IActionResult Delete(int id)
+    {
+        _userMembershipRepository.Delete(id);
+        return NoContent();
+    }
+
 }
