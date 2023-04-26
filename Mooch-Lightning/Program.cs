@@ -46,7 +46,7 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserMembershipRepository, UserMembershipRepository>();
 builder.Services.AddTransient<IOrganizationRepository, OrganizationRepository>();
 builder.Services.AddTransient<ILocationRepository, LocationRepository>();
-builder.Services.AddTransient<IMembershipMoochRepository, MembershipMoochRepository>();
+builder.Services.AddTransient<IMoochRequestRepository, MoochRequestRepository>();
 builder.Services.AddTransient<IOrganizationTypeRepository, OrganizationTypeRepository>();
 builder.Services.AddTransient<IMembershipRepository, MembershipRepository>();
 //^^^^^^^^^^^^^^^^^^^^^^^^^^ Add Dependency Injections Here ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

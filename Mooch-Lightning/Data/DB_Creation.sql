@@ -7,14 +7,15 @@ GO
 USE [Mooch]
 GO
 
+DROP TABLE IF EXISTS [MoochRequest];
+DROP TABLE IF EXISTS [MoochPost];
+DROP TABLE IF EXISTS [MembershipMooch];
 DROP TABLE IF EXISTS [UserMembership];
 DROP TABLE IF EXISTS [Membership];
 DROP TABLE IF EXISTS [Location];
 DROP TABLE IF EXISTS [Organization];
 DROP TABLE IF EXISTS [OrganizationType];
-DROP TABLE IF EXISTS [MembershipMooch];
 DROP TABLE IF EXISTS [User];
-
 
 CREATE TABLE [User] (
   [Id] int PRIMARY KEY identity NOT NULL,
@@ -58,20 +59,26 @@ CREATE TABLE [UserMembership] (
   [Id] int PRIMARY KEY identity NOT NULL,
   [UserId] int NOT NULL,
   [MembershipId] int NOT NULL,
-  [IsMooched] bit NOT NULL,
-  [AvailabiltyStartDate] datetime,
-  [AvailabiltyEndDate] datetime
 )
 GO
 
-CREATE TABLE [MembershipMooch] (
+CREATE TABLE [MoochRequest] (
   [Id] int PRIMARY KEY identity NOT NULL,
   [UserId] int NOT NULL,
-  [UserMembershipId] int NOT NULL,
+  [MoochPostId] int NOT NULL,
   [StartDate] datetime NOT NULL,
   [EndDate] datetime NOT NULL,
   [IsApproved] bit,
   [DateCreated] datetime NOT NULL
+)
+GO
+
+CREATE TABLE [MoochPost] (
+  [Id] int PRIMARY KEY identity NOT NULL,
+  [UserMembershipId] int NOT NULL,
+  [IsMooched] bit NOT NULL,
+  [AvailabiltyStartDate] datetime,
+  [AvailabiltyEndDate] datetime
 )
 GO
 
@@ -94,7 +101,13 @@ GO
 ALTER TABLE [Membership] ADD FOREIGN KEY ([OrganizationId]) REFERENCES [Organization] ([Id])
 GO
 
-ALTER TABLE [MembershipMooch] ADD FOREIGN KEY ([UserId]) REFERENCES [User] ([Id])
+ALTER TABLE [MoochRequest] ADD FOREIGN KEY ([UserId]) REFERENCES [User] ([Id])
+GO
+
+ALTER TABLE [MoochRequest] ADD FOREIGN KEY ([MoochPostId]) REFERENCES [MoochPost] ([Id])
+GO
+
+ALTER TABLE [MoochPost] ADD FOREIGN KEY ([UserMembershipId]) REFERENCES [UserMembership] ([Id])
 GO
 
 ALTER TABLE [Organization] ADD FOREIGN KEY ([OrganizationTypeId]) REFERENCES [OrganizationType] ([Id])
@@ -149,24 +162,37 @@ SET IDENTITY_INSERT [Membership] OFF
 
 SET IDENTITY_INSERT [UserMembership] ON
 INSERT INTO [UserMembership]
-([Id],[UserId],[MembershipId],[IsMooched],[AvailabiltyStartDate],[AvailabiltyEndDate])
+([Id],[UserId],[MembershipId])
 VALUES
-(1,1,1,0,'',''),
-(2,1,4,1,'05-02-2023','05-05-2023'),
-(3,2,5,1,'04-25-2023','04-26-2023'),
-(4,2,3,0,'05-03-2023','05-04-2023'),
-(5,3,6,0,'',''),
-(6,4,2,0,'',''),
-(7,5,2,0,'08-03-2023','08-04-2023')
+(1,1,1),
+(2,1,4),
+(3,2,5),
+(4,2,3),
+(5,3,6),
+(6,4,2),
+(7,5,2)
 SET IDENTITY_INSERT [UserMembership] OFF
 
-SET IDENTITY_INSERT [MembershipMooch] ON
-INSERT INTO [MembershipMooch]
-([Id],[UserId],[UserMembershipId],[StartDate],[EndDate],[IsApproved],[DateCreated])
+SET IDENTITY_INSERT [MoochPost] ON 
+INSERT INTO [MoochPost]
+([Id],[UserMembershipId],[IsMooched],[AvailabiltyStartDate],[AvailabiltyEndDate])
+VALUES
+(1,1,0,'',''),
+(2,4,1,'05-02-2023','05-05-2023'),
+(3,5,1,'04-25-2023','04-26-2023'),
+(4,3,0,'05-03-2023','05-04-2023'),
+(5,6,0,'',''),
+(6,2,0,'',''),
+(7,2,0,'08-03-2023','08-04-2023')
+SET IDENTITY_INSERT [MoochPost] OFF
+
+SET IDENTITY_INSERT [MoochRequest] ON
+INSERT INTO [MoochRequest]
+([Id],[UserId],[MoochPostId],[StartDate],[EndDate],[IsApproved],[DateCreated])
 VALUES
 (1, 1,3,'04-25-2023','04-26-2023',1,'04-19-2023 08:51:42'),
 (2, 2,2,'05-02-2023','05-05-2023',1,'04-19-2023 12:30:03'),
 (3, 2,7,'08-03-2023','08-04-2023',0,'04-19-2023 01:45:22'),
 (4, 3,7,'08-03-2023','08-04-2023',0,'04-18-2023 11:28:15'),
 (5, 4,7,'08-03-2023','08-04-2023',0,'04-17-2023 07:12:02')
-SET IDENTITY_INSERT [MembershipMooch] OFF
+SET IDENTITY_INSERT [MoochRequest] OFF
