@@ -42,8 +42,6 @@ export const CreateAccount = () => {
       localStorage.setItem("mooch_user", JSON.stringify(userCopy));
       navigate("/");
     })
-    
-     
   };
 
   const updateUser = (evt) => {
