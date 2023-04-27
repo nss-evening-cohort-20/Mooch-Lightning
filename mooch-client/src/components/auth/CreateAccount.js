@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
+import { ROUTE_CONSTANTS, getCurrentUser } from "../Utils/Constants";
 
 export const CreateAccount = () => {
   const [user, setUser] = useState({
@@ -16,10 +17,9 @@ export const CreateAccount = () => {
 
   let navigate = useNavigate();
 
-  const mooch_user = localStorage.getItem("mooch_user");
-  const localUser = JSON.parse(mooch_user);
+  const localUser = getCurrentUser();
 
-  const _apiUrl = "https://localhost:7082/api"
+
 
   // Register with email and password
   const handleRegister = async (e) => {
@@ -28,14 +28,22 @@ export const CreateAccount = () => {
     userCopy.FirebaseUid = localUser.uid;
     userCopy.email = localUser.email;
     e.preventDefault();
-    fetch(`${_apiUrl}/user`, {
+    fetch(`${ROUTE_CONSTANTS.API_URL}/user`, {
         method:"POST",
         body: JSON.stringify(userCopy),
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${localUser.accessToken}`
         }
-    });
+    })
+    .then(resp =>  resp.json())
+    .then(jsonResp => {
+      userCopy.id = jsonResp.id;
+      localStorage.setItem("mooch_user", JSON.stringify(userCopy));
+      navigate("/");
+    })
+    
+     
   };
 
   const updateUser = (evt) => {
@@ -96,11 +104,11 @@ export const CreateAccount = () => {
           />
         </fieldset>
         <fieldset>
-          <label htmlFor="subscriptionLevel"> Subscription Level </label>
+          <label htmlFor="subscriptionLevelId"> Subscription Level </label>
           <input
             onChange={updateUser}
-            type="text"
-            id="subscriptionLevel"
+            type="number"
+            id="subscriptionLevelId"
             className="form-control"
             placeholder="1-3"
             autoFocus

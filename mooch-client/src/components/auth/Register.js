@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { googleAuth } from "../helpers/googleAuth";
-import { emailAuth } from "../helpers/emailAuth";
+import { authenticate } from "../Utils/authUtils";
 import "./Login.css";
+import { EMAIL_REGISTER } from "../Utils/Constants";
 
 export const Register = () => {
   const [user, setUser] = useState({
@@ -14,7 +14,7 @@ export const Register = () => {
   // Register with email and password
   const handleRegister = async (e) => {
     e.preventDefault();
-    emailAuth.register(user, navigate);
+    authenticate(user, navigate, EMAIL_REGISTER);
   };
 
   const updateUser = (evt) => {
@@ -23,10 +23,6 @@ export const Register = () => {
     setUser(copy);
   };
 
-  // Register with google (same as sign in)
-  const onSubmitLogin = async () => {
-    googleAuth.signInRegister(navigate);
-  };
 
   return (
     <main style={{ textAlign: "center" }}>
@@ -60,7 +56,7 @@ export const Register = () => {
         </fieldset>
       </form>
       <h2>Register With Google?</h2>
-      <button type="submit" onClick={onSubmitLogin}>
+      <button type="submit" onClick={handleRegister}>
         Let's Do It!
       </button>
     </main>

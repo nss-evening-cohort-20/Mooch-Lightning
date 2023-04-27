@@ -1,9 +1,5 @@
 import { createContext, useState } from "react"
 
-
-
-
-
 export const UserProfileProvider = ({children}) => {
     const [isLoggedIn, setIsLoggedIn] = useState()
     

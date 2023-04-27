@@ -3,13 +3,11 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import firebase from "firebase/compat/app"; // Import Firebase!!
-import { firebaseConfig } from "./FirebaseConfig";
 import { createContext } from "react";
-import { UserProfileProvider } from "./components/auth/UserProfileProvider";
+import { UserProfileProvider } from "./components/Utils/UserProfileProvider";
+import { firebaseConfig } from "./components/Utils/FirebaseConfig";
 
 firebase.initializeApp(firebaseConfig);
-
-
 
 const container = document.getElementById("root");
 const root = createRoot(container);

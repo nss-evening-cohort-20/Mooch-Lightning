@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { emailAuth } from "../helpers/emailAuth";
-import { googleAuth } from "../helpers/googleAuth";
+import { authenticate } from "../Utils/authUtils";
 import "./Login.css";
+import { EMAIL_SIGN_IN, GOOGLE_SIGN_IN } from "../Utils/Constants";
 
 export const Login = () => {
   const [login, setLogin] = useState({
@@ -18,21 +18,17 @@ export const Login = () => {
     setLogin(copy);
   };
 
-  // Login With Email & Password
-  const onSubmitLoginEmail = async (e) => {
+  // Login 
+  const handleAuthenticate = async (e, signInMethod) => {
     e.preventDefault();
-    emailAuth.signIn(login, navigate);
+    authenticate(login, navigate, signInMethod);
   };
 
-  // Login with Google
-  const onSubmitLoginGoogle = async () => {
-    googleAuth.signInRegister(navigate);
-  };
 
   return (
     <main className="container--login">
       <section>
-        <form className="form--login" onSubmit={onSubmitLoginEmail}>
+        <form className="form--login" onSubmit={(e) => handleAuthenticate(e, EMAIL_SIGN_IN)}>
           <h1>Project Name</h1>
           <h2>Please sign in</h2>
           <fieldset>
@@ -70,7 +66,7 @@ export const Login = () => {
         <Link to="/register">Not a member yet?</Link>
       </section>
       <h2>Login With Google?</h2>
-      <button type="submit" onClick={onSubmitLoginGoogle}>
+      <button type="submit" onClick={(e) => handleAuthenticate(e, GOOGLE_SIGN_IN)}>
         Let's Do It!
       </button>
     </main>

@@ -1,4 +1,4 @@
-import { photoStorage } from "../helpers/photoStorage";
+import { photoStorage } from "../Utils/photoStorage";
 import { useState } from "react";
 
 // Photo Upload component

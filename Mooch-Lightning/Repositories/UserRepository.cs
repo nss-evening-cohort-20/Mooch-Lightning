@@ -22,7 +22,6 @@ public class UserRepository : BaseRepository, IUserRepository
                                       ,[FirstName]
                                       ,[LastName]
                                       ,[Email]
-                                      ,[Password]
                                       ,[SubscriptionLevelId]
                                       ,[ImageUrl]
                                       )
@@ -33,7 +32,6 @@ public class UserRepository : BaseRepository, IUserRepository
                                       ,@FirstName
                                       ,@LastName
                                       ,@Email
-                                      ,@Password
                                       ,@SubscriptionLevelId
                                       ,@ImageUrl
                                         );";
@@ -42,7 +40,6 @@ public class UserRepository : BaseRepository, IUserRepository
                 DbUtils.AddParameter(cmd, "@FirstName", user.FirstName);
                 DbUtils.AddParameter(cmd, "@LastName", user.LastName);
                 DbUtils.AddParameter(cmd, "@Email", user.Email);
-                DbUtils.AddParameter(cmd, "@Password", user.Email);
                 DbUtils.AddParameter(cmd, "@SubscriptionLevelId", user.SubscriptionLevelId);
                 DbUtils.AddParameter(cmd, "@ImageUrl", user.ImageUrl);
 
@@ -80,7 +77,6 @@ public class UserRepository : BaseRepository, IUserRepository
                           ,[FirstName]
                           ,[LastName]
                           ,[Email]
-                          ,[Password]
                           ,[SubscriptionLevelId]
                           ,[ImageUrl]
                       FROM [Mooch].[dbo].[User]
@@ -99,7 +95,6 @@ public class UserRepository : BaseRepository, IUserRepository
                         FirstName = DbUtils.GetString(reader, "FirstName"),
                         LastName = DbUtils.GetString(reader, "LastName"),
                         Email = DbUtils.GetString(reader, "Email"),
-                        Password = DbUtils.GetString(reader, "Password"),
                         SubscriptionLevelId = DbUtils.GetInt(reader, "SubscriptionLevelId"),
                         ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
                     };
@@ -130,7 +125,6 @@ public class UserRepository : BaseRepository, IUserRepository
                           ,[FirstName]
                           ,[LastName]
                           ,[Email]
-                          ,[Password]
                           ,[SubscriptionLevelId]
                           ,[ImageUrl]
                       FROM [Mooch].[dbo].[User]
@@ -149,7 +143,6 @@ public class UserRepository : BaseRepository, IUserRepository
                         FirstName = DbUtils.GetString(reader, "FirstName"),
                         LastName = DbUtils.GetString(reader, "LastName"),
                         Email = DbUtils.GetString(reader, "Email"),
-                        Password = DbUtils.GetString(reader, "Password"),
                         SubscriptionLevelId = DbUtils.GetInt(reader, "SubscriptionLevelId"),
                         ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
                     };
