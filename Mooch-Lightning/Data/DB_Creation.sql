@@ -76,8 +76,8 @@ CREATE TABLE [MoochPost] (
   [Id] int PRIMARY KEY identity NOT NULL,
   [UserMembershipId] int NOT NULL,
   [IsMooched] bit NOT NULL,
-  [AvailabiltyStartDate] datetime,
-  [AvailabiltyEndDate] datetime
+  [AvailabilityStartDate] datetime,
+  [AvailabilityEndDate] datetime
 )
 GO
 

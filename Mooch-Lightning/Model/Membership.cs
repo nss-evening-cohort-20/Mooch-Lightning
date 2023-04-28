@@ -12,6 +12,7 @@ namespace Mooch_Lightning.Model
 
     public class MembershipAndOrg
     {
+        public int Id { get; set; }
         public string Organization { get; set; }
         public string Description { get; set; }
     }

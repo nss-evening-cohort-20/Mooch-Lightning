@@ -115,7 +115,7 @@ public class UserRepository : BaseRepository, IUserRepository
             using(var cmd = conn.CreateCommand())
             {
                 cmd.CommandText = @"
-                                    SELECT O.Name AS ORG, M.Description
+                                    SELECT UM.Id AS userMembershipId, O.Name AS ORG, M.Description
                                     FROM Membership M
                                     JOIN Organization O
                                     ON O.Id = M.OrganizationId
@@ -133,6 +133,7 @@ public class UserRepository : BaseRepository, IUserRepository
                 {
                     MembershipAndOrg membership = new MembershipAndOrg()
                     {
+                        Id = DbUtils.GetInt(reader, "userMembershipId"),
                         Organization = DbUtils.GetString(reader, "ORG"),
                         Description = DbUtils.GetString(reader, "Description"),
                     };
