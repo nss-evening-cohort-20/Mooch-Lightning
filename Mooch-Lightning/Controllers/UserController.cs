@@ -28,6 +28,17 @@ public class UserController : ControllerBase
         return Ok(_userRepository.AddUser(user));
     }
 
+    [HttpPut("{id}")]
+    public IActionResult UpdateUser(int id, User user)
+    {
+        if (id != user.Id)
+        {
+            return BadRequest();
+        }
+
+        return NoContent();
+    }
+
     [HttpDelete("{id}")]
     public IActionResult DeleteUser(int id)
     {

@@ -6,7 +6,7 @@ namespace Mooch_Lightning.Repositories
     {
         User GetById(int id);
         User AddUser(User user);
-        User UpdateUser(User user);
+        void UpdateUser(User user);
         void DeleteUser(int id);
     }
 }
