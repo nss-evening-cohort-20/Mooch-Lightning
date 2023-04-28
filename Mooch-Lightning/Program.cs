@@ -17,6 +17,7 @@ builder.Services.AddTransient<ILocationRepository, LocationRepository>();
 builder.Services.AddTransient<IMoochRequestRepository, MoochRequestRepository>();
 builder.Services.AddTransient<IOrganizationTypeRepository, OrganizationTypeRepository>();
 builder.Services.AddTransient<IMembershipRepository, MembershipRepository>();
+builder.Services.AddTransient<IMoochPostRepository, MoochPostRepository>();
 //^^^^^^^^^^^^^^^^^^^^^^^^^^ Add Dependency Injections Here ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 var app = builder.Build();
