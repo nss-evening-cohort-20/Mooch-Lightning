@@ -7,6 +7,6 @@ namespace Mooch_Lightning.Repositories
         MoochPost Add(MoochPost post);
         void Delete(int id);
         MoochPost GetById(int id);
-        void Update(MoochPost post);
+        void Update(MoochPost post, int id);
     }
 }

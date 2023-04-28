@@ -1,5 +1,6 @@
 ﻿using Gifter.Repositories;
 using Gifter.Utils;
+using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
 using Mooch_Lightning.Model;
 
 
@@ -21,13 +22,13 @@ namespace Mooch_Lightning.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO [Mooch].[dbo].[MoochPost] (UserMembershipId, IsMooched, AvailabiltyStartDate,AvailabiltyEndDate)
+                    cmd.CommandText = @"INSERT INTO [Mooch].[dbo].[MoochPost] (UserMembershipId, IsMooched, AvailabilityStartDate,AvailabilityEndDate)
                                         OUTPUT inserted.Id
-                                        VALUES (@UserMembershipId,@IsMooched,@AvailabiltyStartDate,@AvailabiltyEndDate);";
+                                        VALUES (@UserMembershipId,@IsMooched,@AvailabilityStartDate,@AvailabilityEndDate);";
                     cmd.Parameters.AddWithValue("@UserMemberShipId", post.UserMembershipId);
                     cmd.Parameters.AddWithValue("@IsMooched", post.IsMooched);
-                    cmd.Parameters.AddWithValue("@AvailabiltyStartDate", post.AvailabilityStartDate);
-                    cmd.Parameters.AddWithValue("@AvailabiltyEndDate", post.AvailabilityEndDate);
+                    cmd.Parameters.AddWithValue("@AvailabilityStartDate", post.AvailabilityStartDate);
+                    cmd.Parameters.AddWithValue("@AvailabilityEndDate", post.AvailabilityEndDate);
                     post.Id = (int)cmd.ExecuteScalar();
                     return post;
                 }
@@ -36,7 +37,7 @@ namespace Mooch_Lightning.Repositories
 
         //Update MoochPost
 
-        public void Update(MoochPost post)
+        public void Update(MoochPost post, int id)
         {
             using (var conn = Connection)
             {
@@ -44,17 +45,20 @@ namespace Mooch_Lightning.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"UPDATE [Mooch].[dbo].[MoochPost]
-                                        SET UserMembershipId = @UserMembershipId, IsMooched = @IsMooched, AvailabiltyStartDate = @AvailabiltyStartDate, AvailabiltyEndDate = @AvailabiltyEndDate
+                                        SET UserMembershipId = @UserMembershipId, IsMooched = @IsMooched, AvailabilityStartDate = @AvailabilityStartDate, AvailabilityEndDate = @AvailabilityEndDate
                                         WHERE Id = @Id;";
-                    cmd.Parameters.AddWithValue("@Id", post.Id);
+                    cmd.Parameters.AddWithValue("@Id", id);
                     cmd.Parameters.AddWithValue("@UserMemberShipId", post.UserMembershipId);
                     cmd.Parameters.AddWithValue("@IsMooched", post.IsMooched);
-                    cmd.Parameters.AddWithValue("@AvailabiltyStartDate", post.AvailabilityStartDate);
-                    cmd.Parameters.AddWithValue("@AvailabiltyEndDate", post.AvailabilityEndDate);
+                    cmd.Parameters.AddWithValue("@AvailabilityStartDate", post.AvailabilityStartDate);
+                    cmd.Parameters.AddWithValue("@AvailabilityEndDate", post.AvailabilityEndDate);
                     cmd.ExecuteScalar();
                 }
             }
         }
+
+      
+
 
         //Delete MoochPost
         public void Delete(int id)
@@ -68,6 +72,7 @@ namespace Mooch_Lightning.Repositories
                     cmd.Parameters.AddWithValue("@id", id);
 
                     cmd.ExecuteNonQuery();
+                   
                 }
 
             }

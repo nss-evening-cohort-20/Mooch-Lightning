@@ -17,7 +17,6 @@ namespace Mooch_Lightning.Controllers
         }
 
         [HttpPost]
-
         public IActionResult Add(MoochPost moochPost)
         {
             var newMoochPost = _MoochPostRepository.Add(moochPost);
@@ -28,11 +27,11 @@ namespace Mooch_Lightning.Controllers
             });
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
 
-        public IActionResult Update(MoochPost moochPost)
+        public IActionResult Update(MoochPost moochPost, int id)
         {
-            _MoochPostRepository.Update(moochPost);
+            _MoochPostRepository.Update(moochPost, id);
             return NoContent();
         }
 
