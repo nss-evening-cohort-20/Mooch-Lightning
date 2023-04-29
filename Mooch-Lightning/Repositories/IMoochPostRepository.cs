@@ -8,5 +8,6 @@ namespace Mooch_Lightning.Repositories
         void Delete(int id);
         MoochPost GetById(int id);
         void Update(MoochPost post, int id);
+        List<MoochPostSearchResult> GetBySearch(string search);
     }
 }
