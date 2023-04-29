@@ -6,6 +6,7 @@ import firebase from "firebase/compat/app"; // Import Firebase!!
 import { createContext } from "react";
 import { UserProfileProvider } from "./components/Utils/UserProfileProvider";
 import { firebaseConfig } from "./components/Utils/FirebaseConfig";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 firebase.initializeApp(firebaseConfig);
 
