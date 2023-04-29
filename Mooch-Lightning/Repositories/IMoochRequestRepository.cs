@@ -5,5 +5,6 @@ namespace Mooch_Lightning.Repositories
     public interface IMoochRequestRepository
     {
         MoochRequest GetMoochRequestById(int id);
+        List<MoochRequest> TopFiveApprovedMoochRequests();
     }
 }

@@ -15,3 +15,11 @@ public class User
     public List<UserMembership> UserMemberships { get; set; }
     public List<MoochPost> MoochPosts { get; set;}
 }
+
+
+
+public class UserLastestMoochRequest
+{
+    public string Username { get; set; }
+    public string ImageUrl { get; set; }
+}
