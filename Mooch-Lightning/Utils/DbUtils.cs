@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 
-namespace Gifter.Utils;
+namespace Mooch_Lightning.Utils;
 
 public static class DbUtils
 {

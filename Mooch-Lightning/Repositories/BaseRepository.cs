@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 
-namespace Gifter.Repositories;
+namespace Mooch_Lightning.Repositories;
 
 public abstract class BaseRepository
 {
