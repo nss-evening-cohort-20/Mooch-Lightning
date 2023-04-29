@@ -6,5 +6,6 @@ namespace Mooch_Lightning.Repositories
     {
         List<Organization> GetAll();
         Organization GetById(int id);
+        Organization GetOrganizationWithMembership(int Id);
     }
 }

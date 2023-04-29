@@ -174,7 +174,7 @@ SET IDENTITY_INSERT [UserMembership] OFF
 
 SET IDENTITY_INSERT [MoochPost] ON 
 INSERT INTO [MoochPost]
-([Id],[UserMembershipId],[IsMooched],[AvailabiltyStartDate],[AvailabiltyEndDate])
+([Id],[UserMembershipId],[IsMooched],[AvailabilityStartDate],[AvailabilityEndDate])
 VALUES
 (1,1,0,'',''),
 (2,4,1,'05-02-2023','05-05-2023'),
