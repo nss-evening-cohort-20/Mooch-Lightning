@@ -53,4 +53,13 @@ public class UserController : ControllerBase
         _userRepository.DeleteUser(id);
         return NoContent();
     }
+    [HttpGet("usermembershiplist/{userId}")]
+    public IActionResult GetUserMemberships(int userId) 
+    {
+        if (_userRepository.GetById(userId) == null)
+        {
+            return NotFound();
+        }
+        return Ok(_userRepository.GetUserMemberships(userId));
+    }
 }

@@ -8,6 +8,7 @@ namespace Mooch_Lightning.Repositories
         User AddUser(User user);
         User UpdateUser(User user);
         void DeleteUser(int id);
+        UserMembershipList GetUserMemberships(int userId);
         User GetByFirebaseUId(string FbId);
     }
 }

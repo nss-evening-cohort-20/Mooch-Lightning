@@ -1,6 +1,7 @@
 ﻿using Mooch_Lightning.Repositories;
 using Mooch_Lightning.Utils;
 using Mooch_Lightning.Model;
+using System.Security.Cryptography;
 
 namespace Mooch_Lightning.Repositories;
 
@@ -103,6 +104,47 @@ public class UserRepository : BaseRepository, IUserRepository
                 reader.Close();
                 return user;
             }
+        }
+    }
+
+    public UserMembershipList GetUserMemberships(int userId)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using(var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"
+                                    SELECT UM.Id AS userMembershipId, O.Name AS ORG, M.Description
+                                    FROM Membership M
+                                    JOIN Organization O
+                                    ON O.Id = M.OrganizationId
+                                    JOIN UserMembership UM
+                                    ON UM.MembershipId = M.Id
+                                    WHERE UM.UserId = @id";
+                cmd.Parameters.AddWithValue("@id",userId);
+                UserMembershipList uml = new UserMembershipList()
+                {
+                    Memberships = new List<MembershipAndOrg>()
+                };
+               
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    MembershipAndOrg membership = new MembershipAndOrg()
+                    {
+                        Id = DbUtils.GetInt(reader, "userMembershipId"),
+                        Organization = DbUtils.GetString(reader, "ORG"),
+                        Description = DbUtils.GetString(reader, "Description"),
+                    };
+
+                    uml.Memberships.Add(membership);
+
+                };
+                reader.Close();
+                return uml;
+            }
+           
         }
     }
 
