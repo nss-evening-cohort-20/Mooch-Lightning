@@ -11,8 +11,8 @@ public class User
     public string Password { get; set; }
     public int SubscriptionLevelId { get; set; }
     public string ImageUrl { get; set; }
-    public List<MoochRequest> MoochRequests { get; set; }
-    public List<UserMembership> UserMemberships { get; set; }
+    public List<MoochRequest>? MoochRequests { get; set; }
+    public List<UserMembership>? UserMemberships { get; set; }
     public List<MoochPost> MoochPosts { get; set; }
 }
 
