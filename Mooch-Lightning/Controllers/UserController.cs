@@ -7,7 +7,7 @@ using Mooch_Lightning.Repositories;
 
 namespace Mooch_Lightning.Controllers;
 
-[Authorize]
+
 [Route("api/[controller]")]
 [ApiController]
 public class UserController : ControllerBase
@@ -28,6 +28,7 @@ public class UserController : ControllerBase
 
     }
 
+    [Authorize]
     [HttpGet("/api/UserExists/{firebaseUid}")]
     public IActionResult GetByFirebaseUId(string firebaseUid)
     {
