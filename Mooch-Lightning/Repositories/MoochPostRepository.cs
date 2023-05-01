@@ -27,8 +27,8 @@ namespace Mooch_Lightning.Repositories
                                         O.Name,
                                         M.Description,
                                         M.ImageUrl,
-                                        MP.AvailabiltyStartDate,
-                                        MP.AvailabiltyEndDate,
+                                        MP.AvailabilityStartDate,
+                                        MP.AvailabilityEndDate,
                                         OT.Description,
                                         U.Username,
                                         U.ImageUrl
@@ -63,8 +63,8 @@ namespace Mooch_Lightning.Repositories
                             OrganizationName = DbUtils.GetString(reader, "Name"),
                             MembershipDescription = DbUtils.GetString(reader, "Description"),
                             MembershipImageUrl = DbUtils.GetString(reader, "ImageUrl"),
-                            AvailabilityStartDate = DbUtils.GetDateTime(reader, "AvailabiltyStartDate"),
-                            AvailabilityEndDate = DbUtils.GetDateTime(reader, "AvailabiltyEndDate"),
+                            AvailabilityStartDate = DbUtils.GetDateTime(reader, "AvailabilityStartDate"),
+                            AvailabilityEndDate = DbUtils.GetDateTime(reader, "AvailabilityEndDate"),
                             OrganizationTypeDescription = DbUtils.GetString(reader, "Description"),
                             Username = DbUtils.GetString(reader, "Username"),
                             UserImageUrl = DbUtils.GetString(reader, "ImageUrl")
