@@ -8,3 +8,4 @@ public class UserMembership
     public int MembershipId { get; set; }
     public Membership? Membership { get; set; } = null;
 }
+

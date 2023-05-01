@@ -24,7 +24,6 @@ CREATE TABLE [User] (
   [FirstName] nvarchar(255) NOT NULL,
   [LastName] nvarchar(255),
   [Email] nvarchar(255) NOT NULL,
-  [Password] nvarchar(255) NOT NULL,
   [SubscriptionLevelId] int NOT NULL,
   [ImageUrl] nvarchar(255)
 )
@@ -77,8 +76,8 @@ CREATE TABLE [MoochPost] (
   [Id] int PRIMARY KEY identity NOT NULL,
   [UserMembershipId] int NOT NULL,
   [IsMooched] bit NOT NULL,
-  [AvailabiltyStartDate] datetime,
-  [AvailabiltyEndDate] datetime
+  [AvailabilityStartDate] datetime,
+  [AvailabilityEndDate] datetime
 )
 GO
 
@@ -115,13 +114,13 @@ GO
 
 SET IDENTITY_INSERT [User] ON
 INSERT INTO [User]
-([Id],[FirebaseUid],[Username],[FirstName], [LastName], [Email],[Password], [SubscriptionLevelId], [ImageUrl])
+([Id],[FirebaseUid],[Username],[FirstName], [LastName], [Email], [SubscriptionLevelId], [ImageUrl])
 VALUES
-(1,'FID1','rstroud', 'Robert', 'Stroud', 'rstroud@test.com', '1234',1,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png'),
-(2,'FID2','cneames', 'Cristi', 'Neames', 'cneames@test.com', '1234',2,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png'),
-(3,'FID3','cburnett', 'Chase', 'Burnett', 'cburnett@test.com', '1234',3,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png'),
-(4,'FID4','jwhite', 'Jeremy', 'White', 'jwhite@test.com', '1234',1,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png'),
-(5,'FID5','yogi', 'Yogi', '', 'yogi@test.com', '1234',3,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png')
+(1,'9OOIsA1smDYtlgMGb3XsbLqwtVA2','rstroud', 'Robert', 'Stroud', 'rstroud@test.com', 1,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png'),
+(2,'T9Ew6N2uBoQyVUEuDobg1cEGcRh2','cneames', 'Cristi', 'Neames', 'cneames@test.com', 2,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png'),
+(3,'uaJGxIZK37hcesO56ohg9zQaDuN2','cburnett', 'Chase', 'Burnett', 'cburnett@test.com', 3,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png'),
+(4,'GyhH5HLeE7OyXg0Akw4Is1osNeX2','jwhite', 'Jeremy', 'White', 'jwhite@test.com', 1,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png'),
+(5,'4xOjKw75UdQghdWh9iKrW99lOx13','yogi', 'Yogi', '', 'yogi@test.com',3,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png')
 SET IDENTITY_INSERT [User] OFF
 
 SET IDENTITY_INSERT [OrganizationType] ON
@@ -175,7 +174,7 @@ SET IDENTITY_INSERT [UserMembership] OFF
 
 SET IDENTITY_INSERT [MoochPost] ON 
 INSERT INTO [MoochPost]
-([Id],[UserMembershipId],[IsMooched],[AvailabiltyStartDate],[AvailabiltyEndDate])
+([Id],[UserMembershipId],[IsMooched],[AvailabilityStartDate],[AvailabilityEndDate])
 VALUES
 (1,1,0,'',''),
 (2,4,1,'05-02-2023','05-05-2023'),

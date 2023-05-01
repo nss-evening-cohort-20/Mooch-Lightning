@@ -1,4 +1,5 @@
-﻿using Gifter.Repositories;
+﻿using Mooch_Lightning.Utils;
+using Mooch_Lightning.Repositories;
 using Mooch_Lightning.Model;
 using System.Security.Cryptography;
 
@@ -7,7 +8,37 @@ namespace Mooch_Lightning.Repositories;
 public class UserMembershipRepository : BaseRepository, IUserMembershipRepository
 {
     public UserMembershipRepository(IConfiguration configuration) : base(configuration) { }
-    public UserMembership GetById(int id) { return new UserMembership(); }
+    public UserMembership GetById(int id) 
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"
+                                    SELECT Id, UserId, MembershipId 
+                                    FROM UserMembership 
+                                    WHERE ID = @id;";
+
+                cmd.Parameters.AddWithValue("@id", id);
+                var reader = cmd.ExecuteReader();
+                UserMembership um = null;
+                if(reader.Read())
+                {
+                    um = new UserMembership() 
+                    { 
+                        Id = DbUtils.GetInt(reader, "Id"),
+                        UserId = DbUtils.GetInt(reader, "UserId"),
+                        MembershipId = DbUtils.GetInt(reader, "MembershipId")
+                    };
+
+                }
+                reader.Close();
+                return um;
+            }
+        }
+        
+        return new UserMembership(); }
 
     //Add New UserMembership
 
