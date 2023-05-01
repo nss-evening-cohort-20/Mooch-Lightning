@@ -4,7 +4,7 @@ cd into mooch-client
 
 do an npm install
 
-open the mooch-clinet folder in vs code. NOT THE MOOCH-Lightning parent directory
+open the mooch-client folder in vs code. NOT THE MOOCH-Lightning parent directory
 
 create a new file, .env.local and paste in the firebase Keys from slack
 
@@ -18,5 +18,4 @@ In visual studio, right on Mooch-Lighting, select Manage User Secrets, then add 
   "FirebaseProjectId": "mooch-lightning"
 ```
 
-start both applications, front end with running npm start when in the mooch-client directory
-
+start both applications, front end with running `npm start` when in the mooch-client directory
