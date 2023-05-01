@@ -42,5 +42,12 @@ namespace Mooch_Lightning.Controllers
             _MoochPostRepository.Delete(id);
             return NoContent();
         }
+
+        [HttpGet]
+
+        public IActionResult GetAll() 
+        {
+            return Ok(_MoochPostRepository.GetAll()); 
+        }
     }
 }
