@@ -164,8 +164,8 @@ namespace Mooch_Lightning.Repositories
                                     U.Username,
                                     U.ImageUrl AS UserImg,
                                     MP.IsMooched,
-                                    MP.AvailabiltyStartDate, 
-                                    MP.AvailabiltyEndDate
+                                    MP.AvailabilityStartDate, 
+                                    MP.AvailabilityEndDate
 
                                     FROM MoochPost MP
 
@@ -201,7 +201,7 @@ namespace Mooch_Lightning.Repositories
                                     AND
                                     MP.IsMooched = 0
 
-                                    ORDER BY MP.AvailabiltyStartDate, O.Name ASC";
+                                    ORDER BY MP.AvailabilityStartDate, O.Name ASC";
 
                     cmd.Parameters.AddWithValue("@SEARCH", search);
 
@@ -221,8 +221,8 @@ namespace Mooch_Lightning.Repositories
                             UserName = DbUtils.GetString(reader, "Username"),
                             UserImageUrl = DbUtils.GetString(reader, "UserImg"),
                             IsMooched = DbUtils.GetNullableBool(reader, "IsMooched"),
-                            AvailabilityStartDate = DbUtils.GetNullableDateTime(reader, "AvailabiltyStartDate"),
-                            AvailabilityEndDate = DbUtils.GetNullableDateTime(reader, "AvailabiltyEndDate")
+                            AvailabilityStartDate = DbUtils.GetNullableDateTime(reader, "AvailabilityStartDate"),
+                            AvailabilityEndDate = DbUtils.GetNullableDateTime(reader, "AvailabilityEndDate")
                         };
                         searchResults.Add(searchResult);
                     };
