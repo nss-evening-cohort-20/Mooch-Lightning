@@ -1,5 +1,5 @@
-﻿using Gifter.Repositories;
-using Gifter.Utils;
+﻿using Mooch_Lightning.Repositories;
+using Mooch_Lightning.Utils;
 using Mooch_Lightning.Model;
 using System.Security.Cryptography;
 
@@ -151,5 +151,48 @@ public class UserRepository : BaseRepository, IUserRepository
     public User UpdateUser(User user)
     {
         throw new NotImplementedException();
+    }
+
+    public User GetByFirebaseUId(string FbId)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"
+                    SELECT [Id]
+                          ,[FirebaseUid]
+                          ,[Username]
+                          ,[FirstName]
+                          ,[LastName]
+                          ,[Email]
+                          ,[SubscriptionLevelId]
+                          ,[ImageUrl]
+                      FROM [Mooch].[dbo].[User]
+                    WHERE FirebaseUid = @id;";
+                cmd.Parameters.AddWithValue("@id", FbId);
+                var reader = cmd.ExecuteReader();
+                User user = null;
+
+                if (reader.Read())
+                {
+                    user = new User()
+                    {
+                        Id = DbUtils.GetInt(reader, "Id"),
+                        FirebaseUid = DbUtils.GetString(reader, "FirebaseUid"),
+                        Username = DbUtils.GetString(reader, "Username"),
+                        FirstName = DbUtils.GetString(reader, "FirstName"),
+                        LastName = DbUtils.GetString(reader, "LastName"),
+                        Email = DbUtils.GetString(reader, "Email"),
+                        SubscriptionLevelId = DbUtils.GetInt(reader, "SubscriptionLevelId"),
+                        ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
+                    };
+
+                }
+                reader.Close();
+                return user;
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection.PortableExecutable;
-using Gifter.Repositories;
-using Gifter.Utils;
+using Mooch_Lightning.Repositories;
+using Mooch_Lightning.Utils;
 using Microsoft.Extensions.Hosting;
 using Mooch_Lightning.Model;
 

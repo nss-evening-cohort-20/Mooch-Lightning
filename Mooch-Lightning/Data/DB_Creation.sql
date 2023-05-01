@@ -116,11 +116,11 @@ SET IDENTITY_INSERT [User] ON
 INSERT INTO [User]
 ([Id],[FirebaseUid],[Username],[FirstName], [LastName], [Email], [SubscriptionLevelId], [ImageUrl])
 VALUES
-(1,'FID1','rstroud', 'Robert', 'Stroud', 'rstroud@test.com',1,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png'),
-(2,'FID2','cneames', 'Cristi', 'Neames', 'cneames@test.com', 2,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png'),
-(3,'FID3','cburnett', 'Chase', 'Burnett', 'cburnett@test.com', 3,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png'),
-(4,'FID4','jwhite', 'Jeremy', 'White', 'jwhite@test.com', 1,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png'),
-(5,'FID5','yogi', 'Yogi', '', 'yogi@test.com', 3,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png')
+(1,'9OOIsA1smDYtlgMGb3XsbLqwtVA2','rstroud', 'Robert', 'Stroud', 'rstroud@test.com', 1,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png'),
+(2,'T9Ew6N2uBoQyVUEuDobg1cEGcRh2','cneames', 'Cristi', 'Neames', 'cneames@test.com', 2,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png'),
+(3,'uaJGxIZK37hcesO56ohg9zQaDuN2','cburnett', 'Chase', 'Burnett', 'cburnett@test.com', 3,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png'),
+(4,'GyhH5HLeE7OyXg0Akw4Is1osNeX2','jwhite', 'Jeremy', 'White', 'jwhite@test.com', 1,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png'),
+(5,'4xOjKw75UdQghdWh9iKrW99lOx13','yogi', 'Yogi', '', 'yogi@test.com',3,'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/1200px-Windows_10_Default_Profile_Picture.svg.png')
 SET IDENTITY_INSERT [User] OFF
 
 SET IDENTITY_INSERT [OrganizationType] ON
