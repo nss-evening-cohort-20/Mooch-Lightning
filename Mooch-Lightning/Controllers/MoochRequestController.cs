@@ -33,6 +33,11 @@ public class MoochRequestController : ControllerBase
         return Ok(_moochRequestRepo.TopFiveApprovedMoochRequests());
     }
 
-    
-
+    [HttpGet("TopFivePending")]
+    public IActionResult TopFivePendingMoochRequests()
+    {
+        return Ok(_moochRequestRepo.TopFivePendingMoochRequests());
     }
+
+
+}
