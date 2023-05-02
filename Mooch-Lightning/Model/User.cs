@@ -15,8 +15,18 @@ public class User
     public List<MoochPost>? MoochPosts { get; set; }
 }
 
+
+
+
+public class UserLastestMoochRequest
+{
+    public string Username { get; set; }
+    public string ImageUrl { get; set; }
+}
+
 public class UserMembershipList 
 { 
     public List<MembershipAndOrg> Memberships { get; set; }
 }
+
 
