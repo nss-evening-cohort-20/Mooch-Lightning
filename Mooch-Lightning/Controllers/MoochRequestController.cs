@@ -26,5 +26,13 @@ public class MoochRequestController : ControllerBase
         }
         return Ok(_moochRequestRepo.GetMoochRequestById(id));
     }
+
+    [HttpGet ("TopFiveApproved")]
+    public IActionResult TopFiveApprovedMoochRequests()
+    {
+        return Ok(_moochRequestRepo.TopFiveApprovedMoochRequests());
+    }
+
     
-}
+
+    }
