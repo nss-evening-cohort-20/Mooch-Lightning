@@ -49,5 +49,16 @@ namespace Mooch_Lightning.Controllers
         {
             return Ok(_MoochPostRepository.GetAll()); 
         }
+
+        [HttpGet("search_results")]
+        public IActionResult GetBySearch(string? search = null) 
+        {
+            if (search == null)
+            {
+                search = "";
+                return Ok(_MoochPostRepository.GetBySearch(search));
+            }
+            return Ok( _MoochPostRepository.GetBySearch(search));
+        }
     }
 }
