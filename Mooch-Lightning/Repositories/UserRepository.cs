@@ -173,7 +173,7 @@ public class UserRepository : BaseRepository, IUserRepository
                 DbUtils.AddParameter(cmd, "@FirstName", user.FirstName);
                 DbUtils.AddParameter(cmd, "@LastName", user.LastName);
                 DbUtils.AddParameter(cmd, "@Email", user.Email);
-                DbUtils.AddParameter(cmd, "@Password", user.Password);
+                //DbUtils.AddParameter(cmd, "@Password", user.Password);
                 DbUtils.AddParameter(cmd, "@SubscriptionLevelId", user.SubscriptionLevelId);
                 DbUtils.AddParameter(cmd, "@ImageUrl", user.ImageUrl);
                 DbUtils.AddParameter(cmd, "@Id", user.Id);
