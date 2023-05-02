@@ -10,5 +10,6 @@ namespace Mooch_Lightning.Repositories
         void Update(MoochPost post, int id);
 
         List<DetailedMoochPost> GetAll();
+        List<MoochPostSearchResult> GetBySearch(string search);
     }
 }

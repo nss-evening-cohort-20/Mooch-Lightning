@@ -141,5 +141,95 @@ namespace Mooch_Lightning.Repositories
 
             }
         }
+
+        // GET ALL MOOCHPOSTS BY SEARCH CRITERIA
+        public List<MoochPostSearchResult> GetBySearch(string search)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                    DECLARE @SEARCHVALUE NVARCHAR(255)
+                                    SET @SEARCHVALUE = @SEARCH
+
+                                    SELECT 
+
+                                    MP.Id AS PostId, 
+                                    O.Name AS OrgName,
+                                    M.Description AS mDescription,
+                                    M.ImageUrl AS MembershipImg,
+                                    OT.Description AS Type,
+                                    U.Username,
+                                    U.ImageUrl AS UserImg,
+                                    MP.IsMooched,
+                                    MP.AvailabilityStartDate, 
+                                    MP.AvailabilityEndDate
+
+                                    FROM MoochPost MP
+
+                                    JOIN UserMembership UM
+                                    ON UM.Id = MP.UserMembershipId
+
+                                    JOIN Membership M
+                                    ON M.Id = UM.MembershipId
+
+                                    JOIN Organization O
+                                    ON O.Id = M.OrganizationId
+
+                                    JOIN OrganizationType OT
+                                    ON OT.Id = O.OrganizationTypeId
+
+                                    JOIN [USER] U
+                                    ON U.Id = UM.UserId
+
+                                    WHERE 
+                                    UPPER(O.Name) LIKE '%' + @SEARCHVALUE + '%'
+                                    AND
+                                    MP.IsMooched = 0
+                                    OR
+                                    UPPER(M.Description) LIKE '%' + @SEARCHVALUE + '%'
+                                    AND
+                                    MP.IsMooched = 0
+                                    OR
+                                    UPPER(OT.Description) LIKE '%' + @SEARCHVALUE + '%'
+                                    AND
+                                    MP.IsMooched = 0
+                                    OR
+                                    UPPER(U.Username) LIKE '%' + @SEARCHVALUE + '%'
+                                    AND
+                                    MP.IsMooched = 0
+
+                                    ORDER BY MP.AvailabilityStartDate, O.Name ASC";
+
+                    cmd.Parameters.AddWithValue("@SEARCH", search);
+
+                    List<MoochPostSearchResult> searchResults = new List<MoochPostSearchResult>();
+
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        MoochPostSearchResult searchResult = new MoochPostSearchResult()
+                        {
+                            Id = DbUtils.GetInt(reader, "PostId"),
+                            OrganizationName = DbUtils.GetString(reader,"OrgName"),
+                            MembershipDescription = DbUtils.GetString(reader, "mDescription"),
+                            MembershipImageUrl = DbUtils.GetString(reader, "MembershipImg"),
+                            Type = DbUtils.GetString(reader, "Type"),
+                            UserName = DbUtils.GetString(reader, "Username"),
+                            UserImageUrl = DbUtils.GetString(reader, "UserImg"),
+                            IsMooched = DbUtils.GetNullableBool(reader, "IsMooched"),
+                            AvailabilityStartDate = DbUtils.GetNullableDateTime(reader, "AvailabilityStartDate"),
+                            AvailabilityEndDate = DbUtils.GetNullableDateTime(reader, "AvailabilityEndDate")
+                        };
+                        searchResults.Add(searchResult);
+                    };
+                    reader.Close();
+                    return searchResults;
+                }
+            }
+        }
     }
 }

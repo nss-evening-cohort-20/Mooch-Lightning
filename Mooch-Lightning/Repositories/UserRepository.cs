@@ -196,9 +196,37 @@ public class UserRepository : BaseRepository, IUserRepository
         }
     
 
-    public User UpdateUser(User user)
+    public void UpdateUser(User user)
     {
-        throw new NotImplementedException();
+        using(var conn = Connection)
+            {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"
+                                    UPDATE [dbo].[User]
+                                       SET [FirebaseUid] = @FirebaseUid
+                                          ,[Username] = @Username
+                                          ,[FirstName] = @FirstName
+                                          ,[LastName] = @LastName
+                                          ,[Email] = @Email
+                                          ,[SubscriptionLevelId] = @SubscriptionLevelId
+                                          ,[ImageUrl] = @ImageUrl
+                                     WHERE Id = @Id;
+                                    ";
+
+                DbUtils.AddParameter(cmd, "@FirebaseUid", user.FirebaseUid);
+                DbUtils.AddParameter(cmd, "@Username", user.Username);
+                DbUtils.AddParameter(cmd, "@FirstName", user.FirstName);
+                DbUtils.AddParameter(cmd, "@LastName", user.LastName);
+                DbUtils.AddParameter(cmd, "@Email", user.Email);
+                DbUtils.AddParameter(cmd, "@SubscriptionLevelId", user.SubscriptionLevelId);
+                DbUtils.AddParameter(cmd, "@ImageUrl", user.ImageUrl);
+                DbUtils.AddParameter(cmd, "@Id", user.Id);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 
     public User GetByFirebaseUId(string FbId)
