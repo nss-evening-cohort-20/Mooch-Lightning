@@ -1,7 +1,6 @@
 ﻿using Mooch_Lightning.Repositories;
 using Mooch_Lightning.Utils;
 using Mooch_Lightning.Model;
-using NuGet.Protocol.Plugins;
 
 namespace Mooch_Lightning.Repositories
 {
@@ -51,7 +50,6 @@ namespace Mooch_Lightning.Repositories
                 }
             }
         }
-
 
         public List<MoochRequest> TopFiveApprovedMoochRequests()
         {
@@ -106,3 +104,6 @@ namespace Mooch_Lightning.Repositories
         }
     }
 }
+
+    
+

@@ -12,5 +12,4 @@
         public bool? IsApproved { get; set; }
         public DateTime? DateCreated { get; set; }
     }
-
 }
