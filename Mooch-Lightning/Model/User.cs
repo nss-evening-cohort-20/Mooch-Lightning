@@ -20,3 +20,23 @@ public class UserMembershipList
     public List<MembershipAndOrg> Memberships { get; set; }
 }
 
+public class UserMembershipsAndMoochRequests
+{
+    public string MembershipDescription { get; set; }
+
+    public string MembershipImageUrl { get; set; }
+
+    public int MoochRequestId { get; set; }
+
+    public DateTime? MoochRequestDateCreated { get; set; }
+
+    public int MoochRequestMoochPostId { get; set; }
+
+    public DateTime? MoochRequestStartDate { get; set; }
+
+    public DateTime? MoochRequestEndDate { get; set; }
+
+    public bool? MoochRequestIsApproved { get; set; }
+
+}
+

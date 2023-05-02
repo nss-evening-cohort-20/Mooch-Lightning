@@ -62,4 +62,15 @@ public class UserController : ControllerBase
         }
         return Ok(_userRepository.GetUserMemberships(userId));
     }
+
+    [HttpGet("usermembershipsandmoochrequests/{userId}")]
+
+    public IActionResult GetUserMembershipsAndRequestsById(int userId)
+    {
+        if(_userRepository.GetById(userId) == null)
+        {
+            return NotFound();
+        }
+        return Ok(_userRepository.GetUserMembershipsAndRequestsById(userId));
+    }
 }

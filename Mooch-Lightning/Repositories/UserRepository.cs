@@ -148,6 +148,54 @@ public class UserRepository : BaseRepository, IUserRepository
         }
     }
 
+    public UserMembershipsAndMoochRequests GetUserMembershipsAndRequestsById(int userId)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"SELECT M.Description, M.ImageUrl, 
+                                    MR.Id,MR.DateCreated,MR.MoochPostId,MR.StartDate,MR.EndDate,
+                                    MR.IsApproved
+
+                                    FROM [User] U
+
+                                    JOIN UserMembership UM
+                                    ON UM.UserId = U.Id
+
+                                    JOIN Membership M
+                                    ON M.Id = UM.MembershipId
+
+                                    JOIN MoochRequest MR
+                                    ON MR.UserId = U.Id
+
+                                    WHERE U.Id = @id; ";
+                cmd.Parameters.AddWithValue("@id", userId);
+                var reader = cmd.ExecuteReader();
+                UserMembershipsAndMoochRequests umamr = null;
+                if (reader.Read())
+                {
+                    umamr = new UserMembershipsAndMoochRequests()
+                    {
+                        MembershipDescription = DbUtils.GetString(reader, "Description"),
+                        MembershipImageUrl = DbUtils.GetString(reader, "ImageUrl"),
+                        MoochRequestId = DbUtils.GetInt(reader, "Id"),
+                        MoochRequestDateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
+                        MoochRequestMoochPostId = DbUtils.GetInt(reader, "MoochPostId"),
+                        MoochRequestStartDate = DbUtils.GetDateTime(reader, "StartDate"),
+                        MoochRequestEndDate = DbUtils.GetDateTime(reader, "EndDate"),
+                        MoochRequestIsApproved = DbUtils.GetNullableBool(reader, "IsApproved")
+                    };
+                }
+                reader.Close();
+                return umamr;
+                                
+                }
+            }
+        }
+    
+
     public User UpdateUser(User user)
     {
         throw new NotImplementedException();
