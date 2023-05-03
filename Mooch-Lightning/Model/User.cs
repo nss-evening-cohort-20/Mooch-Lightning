@@ -24,9 +24,9 @@ public class UserLastestMoochRequest
     public string ImageUrl { get; set; }
 }
 
-public class UserMembershipList 
-{ 
-    public List<MembershipAndOrg> Memberships { get; set; }
-}
+//public class UserMembershipList 
+//{ 
+//    public List<MembershipAndOrg> Memberships { get; set; }
+//}
 
 

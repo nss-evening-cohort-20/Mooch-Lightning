@@ -107,7 +107,7 @@ public class UserRepository : BaseRepository, IUserRepository
         }
     }
 
-    public UserMembershipList GetUserMemberships(int userId)
+    public List<MembershipAndOrg> GetUserMemberships(int userId)
     {
         using (var conn = Connection)
         {
@@ -123,10 +123,8 @@ public class UserRepository : BaseRepository, IUserRepository
                                     ON UM.MembershipId = M.Id
                                     WHERE UM.UserId = @id";
                 cmd.Parameters.AddWithValue("@id",userId);
-                UserMembershipList uml = new UserMembershipList()
-                {
-                    Memberships = new List<MembershipAndOrg>()
-                };
+                List<MembershipAndOrg> membershipOrg = new List<MembershipAndOrg>();
+               
                
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -138,11 +136,11 @@ public class UserRepository : BaseRepository, IUserRepository
                         Description = DbUtils.GetString(reader, "Description"),
                     };
 
-                    uml.Memberships.Add(membership);
+                    membershipOrg.Add(membership);
 
                 };
                 reader.Close();
-                return uml;
+                return membershipOrg;
             }
            
         }
