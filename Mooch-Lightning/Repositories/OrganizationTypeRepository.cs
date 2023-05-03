@@ -37,6 +37,33 @@ namespace Mooch_Lightning.Repositories
             }
         }
 
+        public List<OrganizationType> GetAll()
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT [Id],
+                                        [Description] 
+                                        FROM [Mooch].[dbo].[OrganizationType]";
+
+                    var reader = cmd.ExecuteReader();
+                    List<OrganizationType> types= new List<OrganizationType>();
+                    while (reader.Read())
+                    {
+                        types.Add(new OrganizationType()
+                        {
+                            Id = DbUtils.GetInt(reader, "id"),
+                            Description = DbUtils.GetString(reader, "description")
+                        });
+                    }
+                    reader.Close();
+                    return types;
+                };
+            }
+        }
+
 
     }
 }
