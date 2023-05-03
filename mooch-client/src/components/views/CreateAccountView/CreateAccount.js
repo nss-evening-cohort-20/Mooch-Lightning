@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Login.css";
-import { ROUTE_CONSTANTS, getCurrentUser } from "../Utils/Constants";
+import "../LoginView/Login.css";
+import { ROUTE_CONSTANTS, getCurrentUser } from "../../Utils/Constants";
 
 export const CreateAccount = () => {
   const [user, setUser] = useState({
@@ -24,24 +24,24 @@ export const CreateAccount = () => {
   // Register with email and password
   const handleRegister = async (e) => {
 
-    const userCopy = {...user}
+    const userCopy = { ...user }
     userCopy.FirebaseUid = localUser.uid;
     userCopy.email = localUser.email;
     e.preventDefault();
     fetch(`${ROUTE_CONSTANTS.API_URL}/user`, {
-        method:"POST",
-        body: JSON.stringify(userCopy),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localUser.accessToken}`
-        }
+      method: "POST",
+      body: JSON.stringify(userCopy),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localUser.accessToken}`
+      }
     })
-    .then(resp =>  resp.json())
-    .then(jsonResp => {
-      userCopy.id = jsonResp.id;
-      localStorage.setItem("mooch_user", JSON.stringify(userCopy));
-      navigate("/");
-    })
+      .then(resp => resp.json())
+      .then(jsonResp => {
+        userCopy.id = jsonResp.id;
+        localStorage.setItem("mooch_user", JSON.stringify(userCopy));
+        navigate("/");
+      })
   };
 
   const updateUser = (evt) => {

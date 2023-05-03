@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { authenticate } from "../Utils/authUtils";
-import "./Login.css";
-import { EMAIL_REGISTER } from "../Utils/Constants";
+import { authenticate } from "../../Utils/authUtils";
+import "../LoginView/Login.css";
+import { EMAIL_REGISTER } from "../../Utils/Constants";
 
 export const Register = () => {
   const [user, setUser] = useState({
