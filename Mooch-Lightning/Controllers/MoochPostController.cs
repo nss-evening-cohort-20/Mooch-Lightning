@@ -16,6 +16,12 @@ namespace Mooch_Lightning.Controllers
             _MoochPostRepository = moochPostRepository;
         }
 
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            return Ok(_MoochPostRepository.GetById(id));
+        }
         [HttpPost]
         public IActionResult Add(MoochPost moochPost)
         {

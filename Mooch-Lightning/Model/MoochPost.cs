@@ -44,4 +44,11 @@
         public string UserImageUrl { get; set; }
     }
 
+    public class DetailedMoochPostWithSuggetions : DetailedMoochPost 
+    {
+        public List<DetailedMoochPost> organizationTypeSuggestions { get; set; }
+        public List<DetailedMoochPost> userSuggestions { get; set; }
+    }
+
+
 }
