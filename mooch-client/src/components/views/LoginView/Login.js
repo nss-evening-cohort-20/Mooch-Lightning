@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { authenticate } from "../Utils/authUtils";
+import { authenticate } from "../../Utils/authUtils";
 import "./Login.css";
-import { EMAIL_SIGN_IN, GOOGLE_SIGN_IN } from "../Utils/Constants";
+import { EMAIL_SIGN_IN, GOOGLE_SIGN_IN } from "../../Utils/Constants";
 
 
 export const Login = () => {

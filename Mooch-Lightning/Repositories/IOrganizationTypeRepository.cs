@@ -5,5 +5,6 @@ namespace Mooch_Lightning.Repositories
     public interface IOrganizationTypeRepository
     {
         OrganizationType GetById(int id);
+        List<OrganizationType> GetAll();
     }
 }
