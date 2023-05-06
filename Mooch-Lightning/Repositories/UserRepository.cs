@@ -64,7 +64,7 @@ public class UserRepository : BaseRepository, IUserRepository
         }
     }
 
-    public User GetById(int id) 
+    public User GetById(int id)
     {
         using (var conn = Connection)
         {
@@ -102,6 +102,7 @@ public class UserRepository : BaseRepository, IUserRepository
 
                 }
                 reader.Close();
+                user.UserMembershipsDetails = GetUserMembershipDetailsList(id);
                 return user;
             }
         }
@@ -112,7 +113,7 @@ public class UserRepository : BaseRepository, IUserRepository
         using (var conn = Connection)
         {
             conn.Open();
-            using(var cmd = conn.CreateCommand())
+            using (var cmd = conn.CreateCommand())
             {
                 cmd.CommandText = @"
                                     SELECT UM.Id AS userMembershipId, O.Name AS ORG, M.Description
@@ -122,10 +123,10 @@ public class UserRepository : BaseRepository, IUserRepository
                                     JOIN UserMembership UM
                                     ON UM.MembershipId = M.Id
                                     WHERE UM.UserId = @id";
-                cmd.Parameters.AddWithValue("@id",userId);
+                cmd.Parameters.AddWithValue("@id", userId);
                 List<MembershipAndOrg> membershipOrg = new List<MembershipAndOrg>();
-               
-               
+
+
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -142,7 +143,7 @@ public class UserRepository : BaseRepository, IUserRepository
                 reader.Close();
                 return membershipOrg;
             }
-           
+
         }
     }
 
@@ -188,16 +189,16 @@ public class UserRepository : BaseRepository, IUserRepository
                 }
                 reader.Close();
                 return umamr;
-                                
-                }
+
             }
         }
-    
+    }
+
 
     public void UpdateUser(User user)
     {
-        using(var conn = Connection)
-            {
+        using (var conn = Connection)
+        {
             conn.Open();
             using (var cmd = conn.CreateCommand())
             {
@@ -266,6 +267,58 @@ public class UserRepository : BaseRepository, IUserRepository
                 }
                 reader.Close();
                 return user;
+            }
+        }
+    }
+
+    private List<UserMembershipDetails> GetUserMembershipDetailsList(int userId)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"
+                                    select um.UserId as UserId
+                                    ,m.id as MembershipId 
+                                    ,m.Description as MembershipDescription
+                                    ,m.ImageUrl as MembershipImageUrl
+                                    ,o.Id as OrganizationId
+                                    ,o.Name as OrganizationName
+                                    ,o.ImageUrl as OrignizationImageUrl
+                                    ,ot.Description as OrganizationType
+
+                                    from [dbo].[UserMembership] um
+                                    inner join [dbo].[User] u on u.id = um.UserId
+                                    inner join [dbo].[Membership] m on m.id = um.MembershipId
+                                    inner join [dbo].[Organization] o on o.id = m.OrganizationId
+                                    inner join [dbo].[OrganizationType] ot on ot.id = o.OrganizationTypeId
+
+                                    where um.UserId = @userId
+                                    order by um.UserId ,m.Description ,o.Name ,ot.Description
+                                    ";
+
+                cmd.Parameters.AddWithValue("@userId", userId);
+                var reader = cmd.ExecuteReader();
+                var userMembershipDetailsList = new List<UserMembershipDetails>();
+
+                while(reader.Read())
+                {
+                    userMembershipDetailsList.Add(new UserMembershipDetails()
+                    {
+                        UserId = DbUtils.GetInt(reader, "UserId"),
+                        MembershipId = DbUtils.GetInt(reader, "MembershipId"),
+                        MembershipDescription = DbUtils.GetString(reader, "MembershipDescription"),
+                        MembershipImageUrl = DbUtils.GetString(reader, "MembershipImageUrl"),
+                        OrganizationId = DbUtils.GetInt(reader, "OrganizationId"),
+                        OrganizationName = DbUtils.GetString(reader, "OrganizationName"),
+                        OrignizationImageUrl = DbUtils.GetString(reader, "OrignizationImageUrl"),
+                        OrganizationType = DbUtils.GetString(reader, "OrganizationType"),
+                    });
+                }
+                reader.Close();
+
+                return userMembershipDetailsList;
             }
         }
     }

@@ -11,11 +11,23 @@ public class User
     public int SubscriptionLevelId { get; set; }
     public string ImageUrl { get; set; }
     public List<MoochRequest>? MoochRequests { get; set; }
-    public List<UserMembership>? UserMemberships { get; set; }
+    public List<UserMembershipDetails>? UserMembershipsDetails { get; set; }
     public List<MoochPost>? MoochPosts { get; set; }
 }
 
 
+public class UserMembershipDetails
+{
+    public int UserId { get; set; }
+    public int MembershipId { get; set; }
+    public string? MembershipDescription { get; set; }
+    public string? MembershipImageUrl { get; set; }
+    public int OrganizationId { get; set; }
+    public string? OrganizationName { get; set; }
+    public string? OrignizationImageUrl { get; set; }
+    public string? OrganizationType { get; set; }
+
+}
 
 
 public class UserLastestMoochRequest
