@@ -19,37 +19,58 @@ namespace Mooch_Lightning.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"WITH megaTable as 
-                                        (SELECT 
-                                        MP.Id AS MoochPostId,
-                                        O.Name AS OrganizationName,
-                                        M.Description AS MembershipDescription,
-                                        M.ImageUrl AS MembershipImageUrl,
-                                        MP.AvailabilityStartDate,
-                                        MP.AvailabilityEndDate,
-                                        MP.IsMooched,
-                                        OT.Description AS OrganizationTypeDescription,
-                                        OT.Id AS OrganizationTypeId,
-                                        U.Username,
-                                        U.Id AS UserId,
-                                        U.ImageUrl AS UserImageURL
-                                        FROM MoochPost MP
+                    cmd.CommandText = @"CREATE TABLE #tempMegaTable (
+                                            MoochPostId int,
+                                            OrganizationName nvarchar(255),
+                                            MembershipDescription nvarchar(255),
+                                            MembershipImageUrl nvarchar(255),
+                                            AvailabilityStartDate datetime,
+                                            AvailabilityEndDate datetime,
+                                            IsMooched bit,
+                                            OrganizationTypeDescription nvarchar(255),
+                                            OrganizationTypeId int,
+                                            Username nvarchar(255),
+                                            UserId int,
+                                            UserImageURL nvarchar(255)
+                                        );
 
-                                        JOIN UserMembership UM
-                                        ON UM.Id = MP.UserMembershipId
+                                        INSERT INTO #tempMegaTable
+                                            (MoochPostId, OrganizationName, MembershipDescription, MembershipImageUrl,
+                                            AvailabilityStartDate, AvailabilityEndDate, IsMooched, OrganizationTypeDescription,
+                                            OrganizationTypeId, Username, UserId, UserImageURL)
 
-                                        JOIN Membership M
-                                        ON M.Id = Um.MembershipId
 
-                                        JOIN Organization O
-                                        ON M.OrganizationId = O.Id
+                                        SELECT 
+                                            MP.Id AS MoochPostId,
+                                            O.Name AS OrganizationName,
+                                            M.Description AS MembershipDescription,
+                                            M.ImageUrl AS MembershipImageUrl,
+                                            MP.AvailabilityStartDate,
+                                            MP.AvailabilityEndDate,
+                                            MP.IsMooched,
+                                            OT.Description AS OrganizationTypeDescription,
+                                            OT.Id AS OrganizationTypeId,
+                                            U.Username,
+                                            U.Id AS UserId,
+                                            U.ImageUrl AS UserImageURL
+                                        FROM 
+                                            MoochPost MP
+                                            JOIN UserMembership UM ON UM.Id = MP.UserMembershipId
+                                            JOIN Membership M ON M.Id = Um.MembershipId
+                                            JOIN Organization O ON M.OrganizationId = O.Id
+                                            JOIN OrganizationType OT ON O.OrganizationTypeId = OT.Id
+                                            JOIN [User] U ON UM.UserId = U.Id;
 
-                                        JOIN OrganizationType OT
-                                        ON O.OrganizationTypeId = OT.Id
 
-                                        JOIN [User] U
-                                        ON UM.UserId = U.Id
-                                        )
+                                        DECLARE @userId int
+                                        SELECT @userId = UserId
+                                        FROM #tempMegaTable 
+                                        WHERE MoochPostId = 1;
+
+                                        DECLARE @OrganizationTypeId int
+                                        SELECT @OrganizationTypeId = OrganizationTypeId
+                                        FROM #tempMegaTable 
+                                        WHERE MoochPostId = 1;
 
                                         SELECT 
                                             MoochPostId,
@@ -61,7 +82,7 @@ namespace Mooch_Lightning.Repositories
                                             OrganizationTypeDescription,
                                             Username,
                                             UserImageURL,
-                                            (SELECT TOP 5
+                                            (SELECT TOP 3
                                                 MoochPostId AS Id,
                                                 OrganizationName,
                                                 MembershipDescription,
@@ -72,13 +93,13 @@ namespace Mooch_Lightning.Repositories
                                                 Username,
                                                 UserImageURL
                                             FROM 
-                                                megatable 
+                                                #tempMegaTable 
                                             WHERE 
-                                                OrganizationTypeId = 1 AND isMooched = 0
+                                                OrganizationTypeId = @OrganizationTypeId AND isMooched = 0
 		                                        ORDER BY AvailabilityStartDate
                                             FOR JSON PATH
                                             ) AS OrganizationSuggestions,
-	                                        (SELECT TOP 5
+	                                        (SELECT TOP 3
                                                 MoochPostId AS Id,
                                                 OrganizationName,
                                                 MembershipDescription,
@@ -89,15 +110,17 @@ namespace Mooch_Lightning.Repositories
                                                 Username,
                                                 UserImageURL
                                             FROM 
-                                                megatable 
+                                                #tempMegaTable 
                                             WHERE 
-                                                UserId = 1 AND isMooched = 0
+                                                UserId = @userId AND isMooched = 0
 	                                        ORDER BY AvailabilityStartDate
                                             FOR JSON PATH) AS UserSuggestions
                                         FROM 
-                                            Megatable
+                                            #tempMegaTable
                                         WHERE 
-                                            MoochPostId = @Id
+                                            MoochPostId = @Id;
+
+	                                        DROP TABLE #tempMegaTable;
                                         ";
                     DbUtils.AddParameter(cmd, "@Id", id);
                     var reader = cmd.ExecuteReader();

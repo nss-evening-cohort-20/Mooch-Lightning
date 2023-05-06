@@ -10,7 +10,7 @@ export const ApplicationViews = () => {
 
       <Route path="/" element={<HomeView />} />
       <Route path="createUser" element={<CreateAccount />} />
-      <Route path="mooch-details" element={<MoochPostView />} />
+      <Route path="mooch-details/:moochId" element={<MoochPostView />} />
 
     </Routes>
   );

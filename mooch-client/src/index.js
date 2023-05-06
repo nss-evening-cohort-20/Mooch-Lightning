@@ -7,6 +7,7 @@ import { createContext } from "react";
 import { UserProfileProvider } from "./components/Utils/UserProfileProvider";
 import { firebaseConfig } from "./components/Utils/FirebaseConfig";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container } from "reactstrap";
 
 firebase.initializeApp(firebaseConfig);
 
@@ -14,8 +15,10 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(
   <BrowserRouter>
-  <UserProfileProvider>
-    <Mooch />
-  </UserProfileProvider>
+    <div style={{backgroundColor: "#f5f5f5", width: '100vw', height: '100vh'}}>
+      <UserProfileProvider>
+        <Mooch />
+      </UserProfileProvider>
+    </div>
   </BrowserRouter>
 );
