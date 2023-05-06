@@ -2,14 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { Button, Card, CardBody, CardHeader, Form, FormGroup, Label, Input } from 'reactstrap';
 import { PhotoUpload } from "../../Utils/PhotoUpload";
 import { authsignOut } from "../../Utils/authUtils";
-import "./Test.css"
 import { useState, useEffect } from "react";
-import { MoochPost } from "./MoochPost";
+import { MoochPostContainer } from "./MoochPostContainer";
+import { SearchResults } from "./SearchResults";
 
-
-const url = "https://localhost:7082/api/MoochPost/search_results?search=";
-
-
+const url = "https://localhost:7082/api/OrganizationType"
 
 export const HomeView = () => {
   // let navigate = useNavigate();
@@ -17,61 +14,84 @@ export const HomeView = () => {
   // const onLogout = () => {
   //   authsignOut(navigate);
   // };
-  const getMoochPostsBySearch = async () => {
+  const getOrganizationTypes = async () => {
     const fetchData = await fetch(url)
     const fetchJson = await fetchData.json()
-    setSearchedPosts(fetchJson)
+    setOrganizationTypes(fetchJson)
   }
 
-  const [searchedPosts, setSearchedPosts] = useState([])
+  const [organizationTypes, setOrganizationTypes] = useState([])
 
   useEffect(
     () => {
-      getMoochPostsBySearch()
+      getOrganizationTypes()
     }, []
   )
 
-  const [sortSearchedPosts, setSortSearchedPosts] = useState([])
-
-  useEffect(
-    () => {
-      searchedPosts.filter((post => post.type))
-    },
-  )
+  const [searchValue, setSearchValue] = useState([])
+  const [isClicked, setIsClicked] = useState(false)
 
   return <>
+    <div className="d-flex justify-content-around"
+      style={{ height: "200px" }}>
+      <Form
+        style={{ width: "95rem", alignSelf: "center" }}>
+        <FormGroup>
+          <Label
+            for="exampleEmail">
+            Search MoochPosts
+          </Label>
+          <Input
+            id="searchBar"
+            name="search-bar"
+            placeholder="Placeholder"
+            type="text"
+            className=" py-4"
+            onChange={
 
-    <Form
-      className="d-flex justify-content-around">
-      <FormGroup className="w-75 mt-5">
-        <Label
-          for="exampleEmail">
-          Search MoochPosts
-        </Label>
-        <Input
-          id="exampleEmail"
-          name="email"
-          placeholder="Placeholder"
-          type="email"
-          className=" py-4"
-        />
-      </FormGroup>
-    </Form>
+              //sends value to SearchResults component
+              (e) => (setSearchValue(e.target.value))
 
-    {searchedPosts.map((post) => (
+            }
+          />
+        </FormGroup>
+      </Form>
+
+      <Button
+        style={{
+          height: "50px",
+          alignSelf: "center"
+        }}
+        color="primary"
+        onClick={
+          () => {
+            setIsClicked(!isClicked)
+          }
+        }>
+        Click Me
+      </Button>
+    </div>
+    {/* autofill for search results */}
+    <SearchResults
+      searchValue={searchValue}
+      setSearchValue={setSearchValue}
+    />
+
+    {/* populates organization types */}
+    {organizationTypes.map((type) => (
       <>
-        {/* fetch request to get all organization types */}
-        <div>
-          <div className="h3">{post.type}</div>
-          <div>
-            <MoochPost
-              type={post.type}
-              id={post.id}
-              organizationName={post.organizationName}>
-
-            </MoochPost>
+        <section style={{ margin: "20px 0px 0px 20px" }}>
+          <div className="h3">{type.description}</div>
+          <div className="d-flex justify-content-start">
+            <MoochPostContainer
+              key={`mpc--${type.id}`}
+              orgType={type.description}
+              isClicked={isClicked}
+              searchValue={searchValue}
+              setSearchValue={setSearchValue} />
           </div>
-        </div>
+        </section>
+
 
       </>
     ))}
