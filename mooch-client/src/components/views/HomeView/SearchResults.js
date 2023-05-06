@@ -40,11 +40,11 @@ export const SearchResults = ({ searchValue, setSearchValue }) => {
     useEffect(
         () => {
 
-            function exists(existsArray, value, sArray, originDesc, length) {
+            function addToSuggestions(value, originDesc, length) {
 
                 if (existsArray.indexOf(value) === -1) {
                     existsArray.push(value)
-                    sArray.push(
+                    searchArray.push(
                         {
                             result: value,
                             origin: originDesc,
@@ -75,10 +75,8 @@ export const SearchResults = ({ searchValue, setSearchValue }) => {
                     //     }
                     // )
 
-                    exists(
-                        existsArray,
+                    addToSuggestions(
                         x.organizationName,
-                        searchArray,
                         "Organization",
                         orgName.filter((item) =>
                             item.toUpperCase().includes(x.organizationName.toUpperCase())).length)
@@ -100,10 +98,8 @@ export const SearchResults = ({ searchValue, setSearchValue }) => {
                     //         number: filterByDesc?.length
                     //     }
                     // )
-                    exists(
-                        existsArray,
+                    addToSuggestions(
                         x.membershipDescription,
-                        searchArray,
                         "Description",
                         memDesc.filter((item) =>
                             item.toUpperCase().includes(x.membershipDescription.toUpperCase())).length)
@@ -127,10 +123,8 @@ export const SearchResults = ({ searchValue, setSearchValue }) => {
                     //     }
                     // )
 
-                    exists(
-                        existsArray,
+                    addToSuggestions(
                         x.userName,
-                        searchArray,
                         "Username",
                         uName.filter((item) =>
                             item.toUpperCase().includes(x.userName.toUpperCase())).length)

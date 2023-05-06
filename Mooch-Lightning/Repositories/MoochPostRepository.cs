@@ -193,10 +193,6 @@ namespace Mooch_Lightning.Repositories
                                     AND
                                     MP.IsMooched = 0
                                     OR
-                                    UPPER(OT.Description) LIKE '%' + @SEARCHVALUE + '%'
-                                    AND
-                                    MP.IsMooched = 0
-                                    OR
                                     UPPER(U.Username) LIKE '%' + @SEARCHVALUE + '%'
                                     AND
                                     MP.IsMooched = 0
