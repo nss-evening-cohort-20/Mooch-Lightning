@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, ListGroup, ListGroupItem } from "reactstrap";
+import { Card, ListGroup, ListGroupItem, CardHeader, CardBody, CardText } from "reactstrap";
 
 export const SearchResults = ({ searchValue, setSearchValue }) => {
     //searchValue is user input into searchbar
@@ -24,28 +24,16 @@ export const SearchResults = ({ searchValue, setSearchValue }) => {
 
     const [filterResults, setFilterResults] = useState([])
 
-    // function exists(existsArray, value, sArray, originDesc, length) {
-    //     if (existsArray.indexOf(value) === -1) {
-    //         existsArray.push(value)
-    //         sArray.push(
-    //             {
-    //                 result: value,
-    //                 origin: originDesc,
-    //                 number: length
-    //             }
-    //         )
-    //     }
-    // }
-
     useEffect(
         () => {
 
-            function addToSuggestions(value, originDesc, length) {
+            function addToSuggestions(id, value, originDesc, length) {
 
                 if (existsArray.indexOf(value) === -1) {
                     existsArray.push(value)
                     searchArray.push(
                         {
+                            idNo: id,
                             result: value,
                             origin: originDesc,
                             number: length
@@ -58,7 +46,6 @@ export const SearchResults = ({ searchValue, setSearchValue }) => {
             const copy = searchResults.map(x => ({ ...x }))
             const searchArray = []
             const existsArray = []
-            // const countArray = []
 
             //organization name results
             const filterByOrg = copy.filter(x => x.organizationName.toUpperCase().includes(searchValue.toUpperCase()))
@@ -76,11 +63,11 @@ export const SearchResults = ({ searchValue, setSearchValue }) => {
                     // )
 
                     addToSuggestions(
+                        x.id,
                         x.organizationName,
                         "Organization",
                         orgName.filter((item) =>
                             item.toUpperCase().includes(x.organizationName.toUpperCase())).length)
-
                 ))
             }
 
@@ -99,11 +86,11 @@ export const SearchResults = ({ searchValue, setSearchValue }) => {
                     //     }
                     // )
                     addToSuggestions(
+                        x.id,
                         x.membershipDescription,
                         "Description",
                         memDesc.filter((item) =>
                             item.toUpperCase().includes(x.membershipDescription.toUpperCase())).length)
-
                 ))
             }
 
@@ -124,6 +111,7 @@ export const SearchResults = ({ searchValue, setSearchValue }) => {
                     // )
 
                     addToSuggestions(
+                        x.id,
                         x.userName,
                         "Username",
                         uName.filter((item) =>
@@ -147,36 +135,51 @@ export const SearchResults = ({ searchValue, setSearchValue }) => {
             {filterResults === "" ? "" : filterResults.map((x) => (
                 <>
                     {x.result === searchValue ? "" :
-                        <div
-                            style={{
-                                width: '800px',
-                                marginLeft: "200px",
-                            }}
-                        >
-                            <div>
-                                <div>
-                                    <section className="d-flex justify-content-start"
-                                        onClick={
-                                            () => {
-                                                // setFilterResults("")
-                                                setSearchValue(x.result)
-                                                document.getElementById("searchBar").value = x.result
+                        // <div
+                        //     style={{
+                        //         width: '800px',
+                        //         marginLeft: "200px",
+                        //     }}
+                        // >
+                        //     <div>
+                        //         <div>
+                        //             <section className="d-flex justify-content-start"
+                        //                 onClick={
+                        //                     () => {
+                        //                         setSearchValue(x.result)
+                        //                         document.getElementById("searchBar").value = x.result
+                        //                     }
+                        //                 }>
+                        //                 {/* matching search result */}
+                        //                 <div style={{ margin: "5px 12px", width: "210px" }}>
+                        //                     {x.result}</div>
+                        //                 {/* number of search results */}
+                        //                 <div style={{ margin: "5px 12px", width: "150px" }}>
+                        //                     {`${x.number} results found`}</div>
+                        //                 {/* search origin */}
+                        //                 <div style={{ margin: "5px 12px", width: "200px" }}>
+                        //                     {`from ${x.origin}`}</div>
+                        //             </section>
+                        //         </div>
+                        //     </div>
+                        // </div>
 
-                                            }
-                                        }>
-                                        {/* matching search result */}
-                                        <div style={{ margin: "5px 12px", width: "210px" }}>
-                                            {x.result}</div>
-                                        {/* number of search results */}
-                                        <div style={{ margin: "5px 12px", width: "150px" }}>
-                                            {`${x.number} results found`}</div>
-                                        {/* search origin */}
-                                        <div style={{ margin: "5px 12px", width: "200px" }}>
-                                            {`from ${x.origin}`}</div>
-                                    </section>
-                                </div>
-                            </div>
-                        </div>}
+                        <Card
+                            style={{ width: "100%" }}
+                            id={`result--${x.idNo}`}>
+                            <CardBody className="d-flex pb-1 mb-0">
+                                <CardText style={{ marginRight: "20px" }}>{x.result}</CardText>
+                                <CardText style={{ marginRight: "20px" }}>{`${x.number} results found`}</CardText>
+                                <CardText >{`from ${x.origin}`}</CardText>
+                            </CardBody>
+                        </Card>
+
+                    }
+
+
+
+
+
                 </>
             ))
             }

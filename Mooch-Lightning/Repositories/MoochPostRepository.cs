@@ -158,6 +158,7 @@ namespace Mooch_Lightning.Repositories
 
                                     MP.Id AS PostId, 
                                     O.Name AS OrgName,
+                                    O.ImageUrl AS OrgImg,
                                     M.Description AS mDescription,
                                     M.ImageUrl AS MembershipImg,
                                     OT.Description AS Type,
@@ -211,6 +212,7 @@ namespace Mooch_Lightning.Repositories
                         {
                             Id = DbUtils.GetInt(reader, "PostId"),
                             OrganizationName = DbUtils.GetString(reader,"OrgName"),
+                            OrganizationImageUrl = DbUtils.GetString(reader,"OrgImg"),
                             MembershipDescription = DbUtils.GetString(reader, "mDescription"),
                             MembershipImageUrl = DbUtils.GetString(reader, "MembershipImg"),
                             Type = DbUtils.GetString(reader, "Type"),

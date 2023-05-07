@@ -45,7 +45,8 @@ namespace Mooch_Lightning.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"SELECT [Id],
-                                        [Description] 
+                                        [Description],
+                                        [OrganizationTypeImageUrl]
                                         FROM [Mooch].[dbo].[OrganizationType]";
 
                     var reader = cmd.ExecuteReader();
@@ -55,7 +56,8 @@ namespace Mooch_Lightning.Repositories
                         types.Add(new OrganizationType()
                         {
                             Id = DbUtils.GetInt(reader, "id"),
-                            Description = DbUtils.GetString(reader, "description")
+                            Description = DbUtils.GetString(reader, "description"),
+                            OrganizationTypeImageUrl = DbUtils.GetString(reader, "OrganizationTypeImageUrl")
                         });
                     }
                     reader.Close();

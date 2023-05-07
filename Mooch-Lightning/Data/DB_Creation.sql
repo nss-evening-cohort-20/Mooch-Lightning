@@ -83,7 +83,8 @@ GO
 
 CREATE TABLE [OrganizationType] (
   [Id] int PRIMARY KEY identity NOT NULL,
-  [Description] nvarchar(255) NOT NULL
+  [Description] nvarchar(255) NOT NULL,
+  [OrganizationTypeImageUrl] nvarchar(255)
 )
 GO
 
@@ -125,19 +126,19 @@ SET IDENTITY_INSERT [User] OFF
 
 SET IDENTITY_INSERT [OrganizationType] ON
 INSERT INTO [OrganizationType]
-([Id],[Description])
+([Id],[Description], [OrganizationTypeImageUrl])
 VALUES
-(1,'Streaming Service'),
-(2, 'Fitness')
+(1,'Streaming Service', 'https://media.istockphoto.com/id/1130133758/photo/pop-corn-on-pastel-color-background-food-and-snack-concepts-ideas-minimal.jpg?s=612x612&w=0&k=20&c=MoDEUkTcZ8QeOSQ5DJCEpEyUATQkfPWSsx5Jr12oxts='),
+(2, 'Fitness', 'https://images.squarespace-cdn.com/content/v1/5fea20d8455b341d9dd8ba63/1609441552564-AW5AYSGG2WPXW8TACN5O/landing-background-min-squarespace.jpg?format=2500w')
 SET IDENTITY_INSERT [OrganizationType] OFF
 
 SET IDENTITY_INSERT [Organization] ON
 INSERT INTO [Organization]
 ([Id],[Name],[OrganizationTypeId],[ImageUrl])
 VALUES
-(1,'Netflix',1,'https://img.freepik.com/premium-vector/company-icon-simple-element-illustration-company-concept-symbol-design-can-be-used-web-mobile_159242-7784.jpg'),
-(2,'Hulu',1,'https://img.freepik.com/premium-vector/company-icon-simple-element-illustration-company-concept-symbol-design-can-be-used-web-mobile_159242-7784.jpg'),
-(3,'YMCA',2,'https://img.freepik.com/premium-vector/company-icon-simple-element-illustration-company-concept-symbol-design-can-be-used-web-mobile_159242-7784.jpg')
+(1,'Netflix',1,'https://i.pcmag.com/imagery/reviews/05cItXL96l4LE9n02WfDR0h-5.fit_scale.size_760x427.v1582751026.png'),
+(2,'Hulu',1,'https://assetshuluimcom-a.akamaihd.net/h3o/facebook_share_thumb_default_hulu.jpg'),
+(3,'YMCA',2,'https://1000logos.net/wp-content/uploads/2017/08/YMCA-emblem.jpg')
 SET IDENTITY_INSERT [Organization] OFF
 
 SET IDENTITY_INSERT [Location] ON

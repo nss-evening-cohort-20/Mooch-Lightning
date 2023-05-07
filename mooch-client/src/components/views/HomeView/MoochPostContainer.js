@@ -60,11 +60,14 @@ export const MoochPostContainer = ({ orgType, isClicked, searchValue, setSearchV
     return <>
         {filterResults.map((search) => (
             <>
-                <div style={{ margin: "10px 15px" }}>
+                <div style={{
+                    margin: "10px 15px",
+                }}>
                     <MoochPost
                         key={`mp--${search.id}`}
                         id={search.id}
                         organizationName={search.organizationName}
+                        organizationImage={search.organizationImageUrl}
                         membershipDescription={search.membershipDescription}
                         membershipImageUrl={search.membershipImageUrl}
                         userName={search.userName}
