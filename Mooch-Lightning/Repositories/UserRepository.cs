@@ -2,6 +2,7 @@
 using Mooch_Lightning.Utils;
 using Mooch_Lightning.Model;
 using System.Security.Cryptography;
+using NuGet.Protocol.Plugins;
 
 namespace Mooch_Lightning.Repositories;
 
@@ -9,7 +10,7 @@ public class UserRepository : BaseRepository, IUserRepository
 {
     public UserRepository(IConfiguration configuration) : base(configuration) { }
 
-    public User AddUser(User user)
+    public UserDetails AddUser(UserDetails userDetails)
     {
         using (var conn = Connection)
         {
@@ -36,16 +37,16 @@ public class UserRepository : BaseRepository, IUserRepository
                                       ,@SubscriptionLevelId
                                       ,@ImageUrl
                                         );";
-                DbUtils.AddParameter(cmd, "@FirebaseUid", user.FirebaseUid);
-                DbUtils.AddParameter(cmd, "@Username", user.Username);
-                DbUtils.AddParameter(cmd, "@FirstName", user.FirstName);
-                DbUtils.AddParameter(cmd, "@LastName", user.LastName);
-                DbUtils.AddParameter(cmd, "@Email", user.Email);
-                DbUtils.AddParameter(cmd, "@SubscriptionLevelId", user.SubscriptionLevelId);
-                DbUtils.AddParameter(cmd, "@ImageUrl", user.ImageUrl);
+                DbUtils.AddParameter(cmd, "@FirebaseUid", userDetails.FirebaseUid);
+                DbUtils.AddParameter(cmd, "@Username", userDetails.Username);
+                DbUtils.AddParameter(cmd, "@FirstName", userDetails.FirstName);
+                DbUtils.AddParameter(cmd, "@LastName", userDetails.LastName);
+                DbUtils.AddParameter(cmd, "@Email", userDetails.Email);
+                DbUtils.AddParameter(cmd, "@SubscriptionLevelId", userDetails.SubscriptionLevelId);
+                DbUtils.AddParameter(cmd, "@ImageUrl", userDetails.ImageUrl);
 
-                user.Id = (int)cmd.ExecuteScalar();
-                return user;
+                userDetails.Id = (int)cmd.ExecuteScalar();
+                return userDetails;
             }
         }
     }
@@ -103,6 +104,8 @@ public class UserRepository : BaseRepository, IUserRepository
                 }
                 reader.Close();
                 user.UserMembershipsDetails = GetUserMembershipDetailsList(id);
+                user.UserMoochPostDetails = GetUserMoochPostDetailsList(id);
+                user.UserMoochRequestDetails = GetUserMoochRequestDetailsList(id);
                 return user;
             }
         }
@@ -195,7 +198,7 @@ public class UserRepository : BaseRepository, IUserRepository
     }
 
 
-    public void UpdateUser(User user)
+    public void UpdateUser(UserDetails userDetails)
     {
         using (var conn = Connection)
         {
@@ -214,14 +217,14 @@ public class UserRepository : BaseRepository, IUserRepository
                                      WHERE Id = @Id;
                                     ";
 
-                DbUtils.AddParameter(cmd, "@FirebaseUid", user.FirebaseUid);
-                DbUtils.AddParameter(cmd, "@Username", user.Username);
-                DbUtils.AddParameter(cmd, "@FirstName", user.FirstName);
-                DbUtils.AddParameter(cmd, "@LastName", user.LastName);
-                DbUtils.AddParameter(cmd, "@Email", user.Email);
-                DbUtils.AddParameter(cmd, "@SubscriptionLevelId", user.SubscriptionLevelId);
-                DbUtils.AddParameter(cmd, "@ImageUrl", user.ImageUrl);
-                DbUtils.AddParameter(cmd, "@Id", user.Id);
+                DbUtils.AddParameter(cmd, "@FirebaseUid", userDetails.FirebaseUid);
+                DbUtils.AddParameter(cmd, "@Username", userDetails.Username);
+                DbUtils.AddParameter(cmd, "@FirstName", userDetails.FirstName);
+                DbUtils.AddParameter(cmd, "@LastName", userDetails.LastName);
+                DbUtils.AddParameter(cmd, "@Email", userDetails.Email);
+                DbUtils.AddParameter(cmd, "@SubscriptionLevelId", userDetails.SubscriptionLevelId);
+                DbUtils.AddParameter(cmd, "@ImageUrl", userDetails.ImageUrl);
+                DbUtils.AddParameter(cmd, "@Id", userDetails.Id);
 
                 cmd.ExecuteNonQuery();
             }
@@ -302,7 +305,7 @@ public class UserRepository : BaseRepository, IUserRepository
                 var reader = cmd.ExecuteReader();
                 var userMembershipDetailsList = new List<UserMembershipDetails>();
 
-                while(reader.Read())
+                while (reader.Read())
                 {
                     userMembershipDetailsList.Add(new UserMembershipDetails()
                     {
@@ -322,4 +325,95 @@ public class UserRepository : BaseRepository, IUserRepository
             }
         }
     }
+
+    private List<UserMoochPostDetails> GetUserMoochPostDetailsList(int userId)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"
+                                    select um.UserId as UserId
+                                    ,mp.Id as MoochPostId
+                                    ,mp.IsMooched as IsMooched
+                                    ,mp.AvailabilityStartDate as AvailabilityStartDate
+                                    ,mp.AvailabilityEndDate as AvailabilityEndDate
+                                    ,um.MembershipId as MembershipId
+                                    from [dbo].[MoochPost] mp
+                                    inner join [dbo].[UserMembership] um on um.id = mp.UserMembershipId
+                                    inner join [dbo].[User] u on u.id = um.UserId
+                                    where u.id = @userId
+                                    ";
+
+                cmd.Parameters.AddWithValue("@userId", userId);
+                var reader = cmd.ExecuteReader();
+                var userMoochPostDetailsList = new List<UserMoochPostDetails>();
+
+                while (reader.Read())
+                {
+                    userMoochPostDetailsList.Add(new UserMoochPostDetails()
+                    {
+                        UserId = DbUtils.GetInt(reader, "UserId"),
+                        MembershipId = DbUtils.GetInt(reader, "MembershipId"),
+                        MoochPostId = DbUtils.GetInt(reader, "MoochPostId"),
+                        IsMooched = DbUtils.GetNullableBool(reader, "IsMooched"),
+                        AvailabilityStartDate = DbUtils.GetDateTime(reader, "AvailabilityStartDate"),
+                        AvailabilityEndDate = DbUtils.GetDateTime(reader, "AvailabilityEndDate"),
+                    });
+                }
+                reader.Close();
+
+                return userMoochPostDetailsList;
+            }
+        }
+    }
+
+    private List<UserMoochRequestDetails> GetUserMoochRequestDetailsList(int userId)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"
+                                    select mr.UserId as UserId
+                                    ,mr.Id as MoochRequestId
+                                    ,mr.MoochPostId as MoochPostId
+                                    ,mr.StartDate as StartDate
+                                    ,mr.EndDate as EndDate
+                                    ,mr.IsApproved as IsApproved
+                                    ,mr.DateCreated as DateCreated
+                                    from [dbo].[MoochRequest] mr
+                                    inner join [dbo].[User] u on u.id = mr.UserId
+                                    where u.id = @userId
+                                    ";
+
+                cmd.Parameters.AddWithValue("@userId", userId);
+                var reader = cmd.ExecuteReader();
+                var userMoochRequestDetailsList = new List<UserMoochRequestDetails>();
+
+                while (reader.Read())
+                {
+                    userMoochRequestDetailsList.Add(new UserMoochRequestDetails()
+                    {
+                        UserId = DbUtils.GetInt(reader, "UserId"),
+                        MoochRequestId = DbUtils.GetInt(reader, "MoochRequestId"),
+                        MoochPostId = DbUtils.GetInt(reader, "MoochPostId"),
+                        StartDate = DbUtils.GetDateTime(reader, "StartDate"),
+                        EndDate = DbUtils.GetDateTime(reader, "EndDate"),
+                        IsApproved = DbUtils.GetNullableBool(reader, "IsApproved"),
+                        DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
+
+                    });
+                }
+                reader.Close();
+
+                return userMoochRequestDetailsList;
+            }
+        }
+    }
+
 }
+
+
