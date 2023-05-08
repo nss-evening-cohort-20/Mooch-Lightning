@@ -386,4 +386,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-mooch-client/.vscode/
+/mooch-client/.vscode/
+/mooch-client/.vscode/tasks.json
