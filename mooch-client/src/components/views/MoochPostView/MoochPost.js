@@ -1,6 +1,6 @@
-
 import { useNavigate } from "react-router-dom"
 import { Card, CardHeader, CardBody, CardTitle, CardText, Button, CardFooter } from "reactstrap"
+import { formatDateToString } from "../../Utils/dateUtils"
 
 export const MoochPost = ({ id,
     organizationName,
@@ -13,8 +13,6 @@ export const MoochPost = ({ id,
 
         const navigate = useNavigate()
 
-    let startDate = new Date(availabilityStartDate)
-    let endDate = new Date(availabilityEndDate)
 
     return <>
 
@@ -33,13 +31,16 @@ export const MoochPost = ({ id,
             </CardHeader>
             <CardBody>
                 <CardTitle tag="h5">
-                    <div>{startDate.toLocaleDateString()} - {endDate.toLocaleDateString()}</div>
+                    <div>{formatDateToString(availabilityStartDate)} - {formatDateToString(availabilityEndDate)}</div>
                 </CardTitle>
                 <CardText>
                     {membershipDescription}
                 </CardText>
+                <Button onClick={(c) => navigate(`/mooch-details/${id}`)} style={{marginRight: '2rem'}}>
+                    Details!
+                </Button>
                 <Button onClick={(c) => navigate(`/mooch-details/${id}`)}>
-                    Mooch!
+                    Request!
                 </Button>
             </CardBody>
             <CardFooter>

@@ -3,6 +3,7 @@ import { ROUTE_CONSTANTS } from "../../Utils/Constants";
 import { useParams } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
 import { MoochPost } from "./MoochPost";
+import { formatDateToString } from "../../Utils/dateUtils";
 
 export const MoochPostView = () => {
     const [moochPost, setMoochPost] = useState();
@@ -42,7 +43,7 @@ export const MoochPostView = () => {
                     <h1>Mooch Post Details Page</h1>
                     <img src={moochPost?.membershipImageUrl} />
                     <h1>{moochPost?.organizationName} - {moochPost?.membershipDescription}</h1>
-                    <h5>{moochPost?.availabilityStartDate} - {moochPost?.availabilityEndDate}</h5>
+                    <h5>{formatDateToString(moochPost?.availabilityStartDate)} - {formatDateToString(moochPost?.availabilityEndDate)}</h5>
              
                 </section>
             </Col>
