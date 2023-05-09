@@ -17,7 +17,7 @@ import { PhotoUpload } from "../../Utils/PhotoUpload";
 import { authsignOut } from "../../Utils/authUtils";
 import { useState, useEffect } from "react";
 import { MoochPostContainer } from "./MoochPostContainer";
-import { SearchResults } from "./SearchResults";
+import { SearchResultsContainer } from "./SearchResultsContainer";
 
 const url = "https://localhost:7082/api/OrganizationType"
 
@@ -44,9 +44,17 @@ export const HomeView = () => {
   const [searchValue, setSearchValue] = useState([])
   const [isClicked, setIsClicked] = useState(false)
 
+  //checks if suggestion is selected on searchbar or if search matches items in database
+  const [madeSelection, setMadeSelection] = useState(false)
+
+
   return <>
     <div className=" position-fixed py-3"
-      style={{ height: "150px", top: "0px", zIndex: "100", width: "100vw", backgroundColor: "#dceafa", }}>
+      style={{
+        height: "150px", top: "0px", zIndex: "100", width: "100vw",
+        backgroundColor: "#E5E5E5",
+        boxShadow: "0px 2px 5px 0px #14213D"
+      }}>
       <Form
         style={{ alignSelf: "center" }}>
         <FormGroup>
@@ -59,12 +67,16 @@ export const HomeView = () => {
               }}>
               <Label
                 className="pb-1"
-                for="searchBar">
+                for="searchBar"
+                style={{ color: "#14213D" }}>
                 Search MoochPosts
-
               </Label>
               <Input
-                style={{ width: "100%" }}
+                style={{
+                  width: "100%",
+                  color: "white",
+                  backgroundColor: "#14213D"
+                }}
                 id="searchBar"
                 name="search-bar"
                 placeholder="Placeholder"
@@ -72,25 +84,38 @@ export const HomeView = () => {
                 className=" py-4"
                 onChange={
                   //sends value to SearchResults component
-                  (e) => (setSearchValue(e.target.value))
+                  (e) => (setSearchValue(e.target.value)
+                  )
+
                 }
               />
               {/* autofill for suggested search results */}
-              <SearchResults
-                key={`sr--1`}
-                searchValue={searchValue}
-                setSearchValue={setSearchValue}
-              />
+              <Card
+                className="overflow-hidden"
+                style={{
+                  boxShadow: madeSelection === false ? "none" : "0px 0px 0px 3px #BAD9FB",
+                  borderWidth: madeSelection === false ? "0px" : "0px 1px 1px",
+                  position: "relative",
+                  bottom: "2px"
+                }}>
+                <SearchResultsContainer
+                  key={`sr--1`}
+                  searchValue={searchValue}
+                  setSearchValue={setSearchValue}
+                  setMadeSelection={setMadeSelection}
+                  madeSelection={madeSelection}
+                />
+              </Card>
             </div>
             <Button
               className="px-3"
               style={{
                 height: "50px",
-                // alignSelf: "center",
                 marginTop: "30px",
-                minWidth: "200px"
+                minWidth: "200px",
+                backgroundColor: "#FCA311"
               }}
-              color="primary"
+              // color="primary"
               onClick={
                 () => {
                   setIsClicked(!isClicked)
@@ -101,43 +126,73 @@ export const HomeView = () => {
 
           </div>
 
-
-
         </FormGroup>
 
       </Form>
 
     </div>
 
+
+
+
+    {/* populates organization types */}
+
     <div
-      style={{ marginTop: "150px" }}>
-      {/* populates organization types */}
+      style={{
+        // marginTop: "160px",
+        // marginBottom: "800px",
+        position: "absolute",
+        top: "150px",
+        width: "101%"
+      }}>
+
       {organizationTypes.map((type) => (
         <>
 
-          <div>
+          <div
+            style={{
+              position: "sticky",
+              top: `${type.id * 150}px`,
+              minWidth: "fit-content",
+            }}>
 
             <Card inverse
-              className="rounded-0">
+              className="rounded-0"
+              style={{
+                width: "101%",
+                position: "relative",
+                right: "0.5%",
+                // border: "15px solid #E5E5E5",
+                boxShadow: "0px 0px 5px 3px black",
+              }}>
               <CardImg
                 className="rounded-0"
                 alt=""
-                src={type.organizationTypeImageUrl}
                 style={{
-                  height: 550
+                  height: 535,
+                  backgroundImage: "url(https://codetheweb.blog/assets/img/posts/css-advanced-background-images/cover.jpg)",
+                  backgroundPosition: "center"
                 }}
                 width="100%"
               />
               <CardImgOverlay
                 className="py-0 px-0">
-                <CardTitle tag="h2" className="mb-4 py-2"
+                <CardTitle tag="h2" className="mb-0"
                   style={{
-                    backgroundColor: "white",
-                    color: "#0C0067"
+                    background: "linear-gradient(45deg,#FCA311,#FDC466)",
+                    // backgroundColor: "#FCA311",
+                    color: "#E5E5E5",
+                    border: "1px solid #E5E5E5",
+                    padding: "15px 30px",
                   }}>
                   {type.description}
                 </CardTitle>
-                <div className="d-flex justify-content-start mb-4">
+                <div className="d-flex justify-content-start"
+                  style={{
+                    backgroundColor: "#14213D",
+                    padding: "20px",
+                    opacity: "0.90",
+                  }}>
                   <MoochPostContainer
                     key={`mpc--${type.id}`}
                     orgType={type.description}
@@ -145,11 +200,11 @@ export const HomeView = () => {
                     searchValue={searchValue}
                     setSearchValue={setSearchValue} />
                 </div>
-                <CardText>
+                {/* <CardText>
                   <small className="text-muted">
                     Last updated 3 mins ago
                   </small>
-                </CardText>
+                </CardText> */}
               </CardImgOverlay>
             </Card>
           </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Card, ListGroup, ListGroupItem, CardHeader, CardBody, CardText } from "reactstrap";
+import { SearchResult } from "./SearchResult";
 
-export const SearchResults = ({ searchValue, setSearchValue }) => {
+export const SearchResultsContainer = ({ searchValue, setSearchValue, madeSelection, setMadeSelection }) => {
     //searchValue is user input into searchbar
 
     const url = "https://localhost:7082/api/MoochPost/search_results?search=";
@@ -54,14 +54,6 @@ export const SearchResults = ({ searchValue, setSearchValue }) => {
                 filterByOrg.forEach((x) => (orgName.push(x.organizationName)))
                 filterByOrg.forEach((x) => (
 
-                    // searchArray.push(
-                    //     {
-                    //         result: x.organizationName,
-                    //         origin: "Organization",
-                    //         number: filterByOrg?.length
-                    //     }
-                    // )
-
                     addToSuggestions(
                         x.id,
                         x.organizationName,
@@ -78,13 +70,6 @@ export const SearchResults = ({ searchValue, setSearchValue }) => {
                 filterByDesc.forEach((x) => (memDesc.push(x.membershipDescription)))
                 filterByDesc.forEach((x) => (
 
-                    //     searchArray.push(
-                    //     {
-                    //         result: x.membershipDescription,
-                    //         origin: "Description",
-                    //         number: filterByDesc?.length
-                    //     }
-                    // )
                     addToSuggestions(
                         x.id,
                         x.membershipDescription,
@@ -100,15 +85,6 @@ export const SearchResults = ({ searchValue, setSearchValue }) => {
                 const uName = []
                 filterByUser.forEach((x) => (uName.push(x.userName)))
                 filterByUser.forEach((x) => (
-
-
-                    // searchArray.includes(x) ? <></> : searchArray.push(
-                    //     {
-                    //         result: x.userName,
-                    //         origin: "Username",
-                    //         number: filterByUser?.length
-                    //     }
-                    // )
 
                     addToSuggestions(
                         x.id,
@@ -134,50 +110,67 @@ export const SearchResults = ({ searchValue, setSearchValue }) => {
         <>
             {filterResults === "" ? "" : filterResults.map((x) => (
                 <>
-                    {x.result === searchValue ? "" :
-                        // <div
+                    {x.result === searchValue || !x.result.includes(searchValue) || searchValue === "" ?
+                        setMadeSelection(false) : setMadeSelection(true)}
+
+                    {madeSelection === true ?
+
+                        <SearchResult
+                            searchValue={searchValue}
+                            setSearchValue={setSearchValue}
+                            idNo={x.idNo}
+                            result={x.result}
+                            number={x.number}
+                            origin={x.origin}
+                        />
+
+
+
+
+
+                        // <Card
                         //     style={{
-                        //         width: '800px',
-                        //         marginLeft: "200px",
+                        //         width: "102%",
+                        //         position: "relative",
+                        //         right: "1%",
+                        //         borderWidth: searchValue === "" ? "0px" : "1px",
+                        //         borderColor: "#BAD9FB",
+                        //         // backgroundColor: isSuggestionHovered ? "blue" : ""
                         //     }}
+                        //     id={`result--${x.idNo}`}
+                        //     onClick={
+                        //         () => {
+                        //             setSearchValue(x.result)
+                        //             document.getElementById("searchBar").value = x.result
+                        //         }
+                        //     }
+
                         // >
-                        //     <div>
-                        //         <div>
-                        //             <section className="d-flex justify-content-start"
-                        //                 onClick={
-                        //                     () => {
-                        //                         setSearchValue(x.result)
-                        //                         document.getElementById("searchBar").value = x.result
-                        //                     }
-                        //                 }>
-                        //                 {/* matching search result */}
-                        //                 <div style={{ margin: "5px 12px", width: "210px" }}>
-                        //                     {x.result}</div>
-                        //                 {/* number of search results */}
-                        //                 <div style={{ margin: "5px 12px", width: "150px" }}>
-                        //                     {`${x.number} results found`}</div>
-                        //                 {/* search origin */}
-                        //                 <div style={{ margin: "5px 12px", width: "200px" }}>
-                        //                     {`from ${x.origin}`}</div>
-                        //             </section>
-                        //         </div>
-                        //     </div>
-                        // </div>
-
-                        <Card
-                            style={{ width: "100%" }}
-                            id={`result--${x.idNo}`}>
-                            <CardBody className="d-flex pb-1 mb-0">
-                                <CardText style={{ marginRight: "20px" }}>{x.result}</CardText>
-                                <CardText style={{ marginRight: "20px" }}>{`${x.number} results found`}</CardText>
-                                <CardText >{`from ${x.origin}`}</CardText>
-                            </CardBody>
-                        </Card>
-
-                    }
-
-
-
+                        //     <CardBody className="d-flex mb-0"
+                        //         style={{
+                        //             padding: "8px 0 8px 30px",
+                        //             height: "fit-content",
+                        //             backgroundColor: isSuggestionHovered ? "blue" : ""
+                        //         }}
+                        //         onMouseEnter={
+                        //             () => {
+                        //                 setIsSuggestionHovered(true)
+                        //             }
+                        //         }
+                        //         onMouseLeave={
+                        //             () => {
+                        //                 setIsSuggestionHovered(false)
+                        //             }
+                        //         }>
+                        //         <CardText style={{
+                        //             margin: "0 20px 0",
+                        //             width: "33%"
+                        //         }}>{x.result.toUpperCase()}</CardText>
+                        //         <CardText style={{ margin: "0 20px 0", width: "33%" }}>{`${x.number} results found`}</CardText>
+                        //         <CardText style={{ margin: "0", width: "33%" }}>{`from ${x.origin.toUpperCase()}`}</CardText>
+                        //     </CardBody>
+                        // </Card>
+                        : <></>}
 
 
                 </>

@@ -98,7 +98,8 @@ export const MoochPost = ({ id,
         <Card
             style={{
                 width: '15rem',
-                transform: isCardHovered ? "scale(1.1)" : ""
+                transform: isCardHovered ? "scale(1.1)" : "",
+                boxShadow: "2px 2px 5px 1px black"
             }}
             onMouseEnter={
                 () => {
@@ -136,7 +137,8 @@ export const MoochPost = ({ id,
                 </ListGroupItem>
             </ListGroup>
             <CardBody>
-                <Button>
+                <Button
+                    style={{ backgroundColor: "#14213D" }}>
                     Mooch!
                 </Button>
             </CardBody>
