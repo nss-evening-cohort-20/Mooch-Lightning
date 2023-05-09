@@ -90,10 +90,11 @@ namespace Mooch_Lightning.Repositories
                                         OUTPUT inserted.Id
                                         VALUES (@UserMembershipId,@IsMooched,@AvailabilityStartDate,@AvailabilityEndDate);";
                     cmd.Parameters.AddWithValue("@UserMemberShipId", post.UserMembershipId);
-                    cmd.Parameters.AddWithValue("@IsMooched", post.IsMooched);
+                    cmd.Parameters.AddWithValue("@IsMooched", false);
                     cmd.Parameters.AddWithValue("@AvailabilityStartDate", post.AvailabilityStartDate);
                     cmd.Parameters.AddWithValue("@AvailabilityEndDate", post.AvailabilityEndDate);
                     post.Id = (int)cmd.ExecuteScalar();
+                 
                     return post;
                 }
             }
