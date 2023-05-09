@@ -135,12 +135,7 @@ export const HomeView = () => {
               </div>
 
               {/* autofill for suggested search results */}
-              <div
-                style={{
-                  fontFamily: 'Vina Sans, cursive',
-                  fontSize: "35px",
-                  margin: "5px 0px 0 -15px"
-                }}>Welcome Robert</div>
+
               <Card
                 className="overflow-hidden"
                 style={{
@@ -205,7 +200,15 @@ export const HomeView = () => {
         position: "absolute",
         top: "112px"
       }}>
-
+      <div
+        style={{
+          fontFamily: 'Vina Sans, cursive',
+          fontSize: "35px",
+          position: "sticky",
+          paddingLeft: "10px",
+          top: "65px",
+          // zIndex: "00"
+        }}>Welcome Robert</div>
       {/* welcome message */}
       <div
         className="d-flex"
