@@ -294,10 +294,12 @@ namespace Mooch_Lightning.Repositories
 
                                     SELECT 
 
-                                    MP.Id AS PostId, 
+                                    MP.Id AS PostId,
                                     O.Name AS OrgName,
+                                    O.ImageUrl AS OrgImg,
                                     M.Description AS mDescription,
                                     M.ImageUrl AS MembershipImg,
+                                    OT.Id AS TypeId,
                                     OT.Description AS Type,
                                     U.Username,
                                     U.ImageUrl AS UserImg,
@@ -331,10 +333,6 @@ namespace Mooch_Lightning.Repositories
                                     AND
                                     MP.IsMooched = 0
                                     OR
-                                    UPPER(OT.Description) LIKE '%' + @SEARCHVALUE + '%'
-                                    AND
-                                    MP.IsMooched = 0
-                                    OR
                                     UPPER(U.Username) LIKE '%' + @SEARCHVALUE + '%'
                                     AND
                                     MP.IsMooched = 0
@@ -352,9 +350,12 @@ namespace Mooch_Lightning.Repositories
                         MoochPostSearchResult searchResult = new MoochPostSearchResult()
                         {
                             Id = DbUtils.GetInt(reader, "PostId"),
+                            
                             OrganizationName = DbUtils.GetString(reader,"OrgName"),
+                            OrganizationImageUrl = DbUtils.GetString(reader,"OrgImg"),
                             MembershipDescription = DbUtils.GetString(reader, "mDescription"),
                             MembershipImageUrl = DbUtils.GetString(reader, "MembershipImg"),
+                            TypeId = DbUtils.GetInt(reader,"TypeId"),
                             Type = DbUtils.GetString(reader, "Type"),
                             UserName = DbUtils.GetString(reader, "Username"),
                             UserImageUrl = DbUtils.GetString(reader, "UserImg"),
