@@ -22,4 +22,9 @@ public class OrganizationTypeController : ControllerBase
     {
         return Ok(_organizationTypeRepository.GetById(id));
     }
+    [HttpGet]
+    public IActionResult GetAllOrganizations()
+    {
+        return Ok(_organizationTypeRepository.GetAll());
+    }
 }

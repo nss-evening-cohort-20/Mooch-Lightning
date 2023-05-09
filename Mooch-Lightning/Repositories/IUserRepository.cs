@@ -5,10 +5,10 @@ namespace Mooch_Lightning.Repositories
     public interface IUserRepository
     {
         User GetById(int id);
-        User AddUser(User user);
-        void UpdateUser(User user);
+        UserDetails AddUser(UserDetails userDetails);
+        void UpdateUser(UserDetails userDetails);
         void DeleteUser(int id);
-        UserMembershipList GetUserMemberships(int userId);
+        List<MembershipAndOrg> GetUserMemberships(int userId);
         User GetByFirebaseUId(string FbId);
 
         UserMembershipsAndMoochRequests GetUserMembershipsAndRequestsById(int userId);
