@@ -131,4 +131,35 @@ public class OrganizationRepository : BaseRepository, IOrganizationRepository
             }
         }
     }
+
+    public List<OrganizationName> GetAllNames()
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"
+                                SELECT O.Id, O.Name
+                                FROM Organization O";
+
+                var reader = cmd.ExecuteReader();
+                List<OrganizationName> names = new List<OrganizationName>();
+                while (reader.Read())
+                {
+                    OrganizationName name = new OrganizationName()
+                    {
+                        Id = DbUtils.GetInt(reader,"Id"),
+                        Name = DbUtils.GetString(reader, "Name")
+
+                    };
+                    names.Add(name);
+                };
+
+                reader.Close();
+
+                return names;
+            }
+        }
+    }
 }

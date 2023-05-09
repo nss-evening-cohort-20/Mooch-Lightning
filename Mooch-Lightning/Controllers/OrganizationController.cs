@@ -46,4 +46,11 @@ public class OrganizationController : ControllerBase
     {
         return Ok(_organizationRepository.GetOrganizationWithMembership(Id));
     }
+
+    // GET: Organization names
+    [HttpGet("organiztion_names")]
+    public IActionResult GetAllNames()
+    {
+        return Ok(_organizationRepository.GetAllNames());
+    }
 }
