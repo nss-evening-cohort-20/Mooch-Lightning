@@ -15,7 +15,7 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(
   <BrowserRouter>
-    <div style={{backgroundColor: "#f5f5f5", width: '100vw', height: '100vh'}}>
+    <div style={{}}>
       <UserProfileProvider>
         <Mooch />
       </UserProfileProvider>
