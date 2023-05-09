@@ -150,7 +150,7 @@ public class UserRepository : BaseRepository, IUserRepository
         }
     }
 
-    public UserMembershipsAndMoochRequests GetUserMembershipsAndRequestsById(int userId)
+    public List<UserMembershipsAndMoochRequests> GetUserMembershipsAndRequestsById(int userId)
     {
         using (var conn = Connection)
         {
@@ -174,11 +174,13 @@ public class UserRepository : BaseRepository, IUserRepository
 
                                     WHERE U.Id = @id; ";
                 cmd.Parameters.AddWithValue("@id", userId);
+                List<UserMembershipsAndMoochRequests> membershipAndMooch = new List<UserMembershipsAndMoochRequests>();
+
                 var reader = cmd.ExecuteReader();
-                UserMembershipsAndMoochRequests umamr = null;
-                if (reader.Read())
+              
+                while (reader.Read())
                 {
-                    umamr = new UserMembershipsAndMoochRequests()
+                   UserMembershipsAndMoochRequests currentMembership = new UserMembershipsAndMoochRequests()
                     {
                         MembershipDescription = DbUtils.GetString(reader, "Description"),
                         MembershipImageUrl = DbUtils.GetString(reader, "ImageUrl"),
@@ -189,9 +191,10 @@ public class UserRepository : BaseRepository, IUserRepository
                         MoochRequestEndDate = DbUtils.GetDateTime(reader, "EndDate"),
                         MoochRequestIsApproved = DbUtils.GetNullableBool(reader, "IsApproved")
                     };
+                    membershipAndMooch.Add(currentMembership);
                 }
                 reader.Close();
-                return umamr;
+                return membershipAndMooch;
 
             }
         }

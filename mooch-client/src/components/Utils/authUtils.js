@@ -93,7 +93,10 @@ const handleUserExists = (resp, navigate, userAuth) => {
     navigate("/createuser")
     localStorage.setItem("mooch_user", JSON.stringify(userAuth));
   } else {
-    userAuth.id = resp.Id
+    userAuth.id = resp.id
+    userAuth.username = resp.username
+    userAuth.imageUrl = resp.imageUrl
+    userAuth.subscriptionLevelId = resp.subscriptionLevelId
     // Saves the user to localstorage
     localStorage.setItem("mooch_user", JSON.stringify(userAuth));
     // Navigate us back to home
