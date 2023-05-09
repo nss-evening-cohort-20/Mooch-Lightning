@@ -41,19 +41,20 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AddUser(User user)
+    public IActionResult AddUser(UserDetails userDetails)
     {
-        return Ok(_userRepository.AddUser(user));
+        return Ok(_userRepository.AddUser(userDetails));
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateUser(int id, User user)
+    public IActionResult UpdateUser(int id, UserDetails userDetails)
     {
-        if (id != user.Id)
+        if (id != userDetails.Id)
         {
             return BadRequest();
         }
 
+        _userRepository.UpdateUser(userDetails);
         return NoContent();
     }
 
@@ -71,5 +72,16 @@ public class UserController : ControllerBase
             return NotFound();
         }
         return Ok(_userRepository.GetUserMemberships(userId));
+    }
+
+    [HttpGet("usermembershipsandmoochrequests/{userId}")]
+
+    public IActionResult GetUserMembershipsAndRequestsById(int userId)
+    {
+        if(_userRepository.GetById(userId) == null)
+        {
+            return NotFound();
+        }
+        return Ok(_userRepository.GetUserMembershipsAndRequestsById(userId));
     }
 }
