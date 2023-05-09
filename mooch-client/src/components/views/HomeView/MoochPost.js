@@ -13,7 +13,9 @@ import {
 } from "reactstrap"
 import { useEffect, useState } from "react"
 
-export const MoochPost = ({ id,
+export const MoochPost = ({
+    id,
+    typeId,
     organizationName,
     organizationImage,
     membershipDescription,
@@ -21,93 +23,39 @@ export const MoochPost = ({ id,
     userName,
     userImageUrl,
     availabilityStartDate,
-    availabilityEndDate }) => {
+    availabilityEndDate,
+    setBackground }) => {
 
     let startDate = new Date(availabilityStartDate)
     let endDate = new Date(availabilityEndDate)
 
-    const [isHovered, setIsHovered] = useState(false)
+    const [buttonHovered, setButtonHovered] = useState(false)
     const [isCardHovered, setIsCardHovered] = useState(false)
 
 
     return <>
-        {/* <Card
-            className="my-2"
-            style={{
-                width: '18rem',
-                borderColor: "#0C0067",
-                boxShadow: "2px 2px 5px 3px black",
-                backgroundImage: `url(${organizationImage})`,
-                backgroundPosition: "center",
-                backgroundSize: "cover"
-            }}
-            onMouseEnter={
-                () => {
-                    setIsHovered(true)
-                }
-            }
-            onMouseLeave={
-                () => {
-                    setIsHovered(false)
-                }
-            }
-        >
-            <CardHeader tag="h4" style={{
-                background: "linear-gradient(45deg,#060034,#0C0067)"
-            }}>
-                <div className="">
-                    <div>{organizationName}</div>
-                </div>
-            </CardHeader>
-            <CardBody className={isHovered ? `overflow-hidden h-100` : `overflow-hidden py-0`}
-                style={{
-                    height: isHovered ? "" : "0",
-                    transition: "5s"
-                }}>
-                <div
-                    style={{
-                        backgroundColor: "#f5f5f5",
-                        opacity: "0.8",
-                        borderRadius: "5px",
-                        padding: "15px",
-                        margin: "0px 0 10px"
-                    }}>
-                    <CardTitle tag="h5"
-                        style={{ color: "#060034" }}>
-                        <div>{startDate.toLocaleDateString()} - {endDate.toLocaleDateString()}</div>
-                    </CardTitle>
-                    <CardText
-                        style={{ color: "#060034" }}>
-                        {membershipDescription}
-                    </CardText>
-                </div>
-                <Button>
-                    Mooch!
-                </Button>
-
-            </CardBody>
-            <CardFooter style={{ background: "linear-gradient(45deg,#060034,#0C0067)" }}>
-                <div className="d-flex justify-content-start">
-                    <img style={{ width: "40px", marginRight: "12px" }} src={`${userImageUrl}`} alt="" />
-                    <div>{userName}</div>
-                </div>
-            </CardFooter>
-        </Card> */}
-
-
         <Card
             style={{
                 width: '15rem',
-                transform: isCardHovered ? "scale(1.1)" : "",
-                boxShadow: "2px 2px 5px 1px black"
+                transform: isCardHovered ? "scale(1.05)" : "",
+                boxShadow: "2px 2px 5px 1px black",
+                border: isCardHovered ? "2px solid white" : "2px solid #2A2B37"
             }}
             onMouseEnter={
                 () => {
                     setIsCardHovered(true)
+                    setBackground({
+                        idNo: typeId,
+                        img: organizationImage
+                    })
                 }}
             onMouseLeave={
                 () => {
                     setIsCardHovered(false)
+                    setBackground({
+                        id: 0,
+                        img: "none"
+                    })
                 }}
         >
             <img
@@ -120,7 +68,8 @@ export const MoochPost = ({ id,
             <CardBody>
                 <CardTitle tag="h4"
                     style={{ color: "#060034" }}>
-                    {organizationName} <span
+                    {organizationName}
+                    <span
                         style={{ color: "#0C0067", fontSize: "14px", display: "block" }}>
                         {membershipDescription}</span>
                     <span
@@ -128,7 +77,12 @@ export const MoochPost = ({ id,
                         Shared By: {userName}</span>
                 </CardTitle>
             </CardBody>
-            <ListGroup flush>
+            <ListGroup flush
+                style={{
+                    borderWidth: "1px 0px",
+                    borderColor: "lightgray",
+                    borderStyle: "solid"
+                }}>
                 <ListGroupItem>
                     Start Date: <span>{startDate.toLocaleDateString()}</span>
                 </ListGroupItem>
@@ -138,7 +92,23 @@ export const MoochPost = ({ id,
             </ListGroup>
             <CardBody>
                 <Button
-                    style={{ backgroundColor: "#14213D" }}>
+                    style={{
+                        backgroundColor: buttonHovered ? "white" : "#14213D",
+                        color: buttonHovered ? "#14213D" : "white",
+                        fontFamily: 'Vina Sans, cursive',
+                        fontSize: "18px",
+                        letterSpacing: "0.7px",
+
+                    }}
+                    onMouseEnter={
+                        () => {
+                            setButtonHovered(true)
+                        }}
+                    onMouseLeave={
+                        () => {
+                            setButtonHovered(false)
+                        }}
+                >
                     Mooch!
                 </Button>
             </CardBody>

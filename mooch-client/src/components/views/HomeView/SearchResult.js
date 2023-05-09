@@ -1,4 +1,4 @@
-import { Card, ListGroup, ListGroupItem, CardHeader, CardBody, CardText } from "reactstrap"
+import { Card, CardBody, CardText } from "reactstrap"
 import { useState, useEffect } from "react"
 
 
@@ -7,14 +7,12 @@ export const SearchResult = ({ searchValue, setSearchValue, result, idNo, number
     const [isSuggestionHovered, setIsSuggestionHovered] = useState(false)
 
     return <>
+        {/* {result === searchValue ? setMadeSelection(true) : setMadeSelection(true)} */}
         <Card
             style={{
-                width: "102%",
-                position: "relative",
-                right: "1%",
+                width: "100%",
                 borderWidth: searchValue === "" ? "0px" : "1px",
                 borderColor: "#BAD9FB",
-                // backgroundColor: isSuggestionHovered ? "blue" : ""
             }}
             id={`result--${idNo}`}
             onClick={
@@ -27,10 +25,11 @@ export const SearchResult = ({ searchValue, setSearchValue, result, idNo, number
         >
             <CardBody className="d-flex mb-0"
                 style={{
-                    padding: "8px 0 8px 30px",
+                    padding: "5px 0 5px 30px",
                     height: "fit-content",
-                    backgroundColor: isSuggestionHovered ? "#FCA311" : "#14213D",
-                    color: "#E5E5E5"
+                    backgroundColor: "#2A2B37",
+                    color: isSuggestionHovered ? "#E5E5E5" : "grey",
+                    fontSize: "20px"
                 }}
                 onMouseEnter={
                     () => {
@@ -45,23 +44,24 @@ export const SearchResult = ({ searchValue, setSearchValue, result, idNo, number
                 <CardText style={{
                     margin: "0 20px 0",
                     width: "33%",
-                    fontSize: isSuggestionHovered ? "19px" : "",
+                    fontFamily: 'Vina Sans, cursive',
                     color: isSuggestionHovered ? "white" : ""
                 }}>{result.toUpperCase()}</CardText>
                 <CardText style={{
                     margin: "0 20px 0",
                     width: "33%",
-                    fontSize: isSuggestionHovered ? "19px" : "",
-                    color: isSuggestionHovered ? "white" : ""
+                    color: isSuggestionHovered ? "white" : "",
+                    fontFamily: 'Vina Sans, cursive',
                 }}>{`${number} results found`}</CardText>
                 <CardText style={{
                     margin: "0",
                     width: "33%",
-                    fontSize: isSuggestionHovered ? "19px" : "",
-                    color: isSuggestionHovered ? "white" : ""
+                    color: isSuggestionHovered ? "white" : "",
+                    fontFamily: 'Vina Sans, cursive',
                 }}
                 >{`from ${origin.toUpperCase()}`}</CardText>
             </CardBody>
         </Card>
+
     </>
 }

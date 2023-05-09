@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { MoochPost } from "./MoochPost";
 
-export const MoochPostContainer = ({ orgType, isClicked, searchValue, setSearchValue }) => {
+export const MoochPostContainer = ({ orgType, isClicked, searchValue, setSearchValue, setBackground }) => {
 
     const url = "https://localhost:7082/api/MoochPost/search_results?search=";
 
@@ -66,6 +66,7 @@ export const MoochPostContainer = ({ orgType, isClicked, searchValue, setSearchV
                     <MoochPost
                         key={`mp--${search.id}`}
                         id={search.id}
+                        typeId={search.typeId}
                         organizationName={search.organizationName}
                         organizationImage={search.organizationImageUrl}
                         membershipDescription={search.membershipDescription}
@@ -74,6 +75,7 @@ export const MoochPostContainer = ({ orgType, isClicked, searchValue, setSearchV
                         userImageUrl={search.userImageUrl}
                         availabilityStartDate={search.availabilityStartDate}
                         availabilityEndDate={search.availabilityEndDate}
+                        setBackground={setBackground}
                     />
                 </div>
             </>
