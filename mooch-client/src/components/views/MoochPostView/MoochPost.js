@@ -9,10 +9,26 @@ export const MoochPost = ({ id,
     userName,
     userImageUrl,
     availabilityStartDate,
-    availabilityEndDate }) => {
+    availabilityEndDate,
+    setModalData,
+    setModalIsOpen }) => {
 
         const navigate = useNavigate()
-
+        
+        const handleRequestBtn = () => {
+            setModalData(
+                {
+                    postId: id,
+                    organizationName: organizationName,
+                    membershipDescription: membershipDescription,
+                    membershipImageUrl: membershipImageUrl,
+                    userName: userName,
+                    userImageUrl: userImageUrl,
+                    availabilityStartDate: availabilityStartDate,
+                    availabilityEndDate: availabilityEndDate
+                })
+            setModalIsOpen(true)
+        }
 
     return <>
 
@@ -39,7 +55,7 @@ export const MoochPost = ({ id,
                 <Button onClick={(c) => navigate(`/mooch-details/${id}`)} style={{marginRight: '2rem'}}>
                     Details!
                 </Button>
-                <Button onClick={(c) => navigate(`/mooch-details/${id}`)}>
+                <Button onClick={(c) => handleRequestBtn()}>
                     Request!
                 </Button>
             </CardBody>

@@ -1,19 +1,38 @@
 import { useEffect, useState } from "react"
 import { ROUTE_CONSTANTS } from "../../Utils/Constants";
 import { useParams } from "react-router-dom";
-import { Col, Container, Row } from "reactstrap";
+import { Button, Col, Container, Row } from "reactstrap";
 import { MoochPost } from "./MoochPost";
 import { formatDateToString } from "../../Utils/dateUtils";
+import { MoochRequestModal } from "../MoochRequestView/MoochRequestModal";
 
 export const MoochPostView = () => {
-    const [moochPost, setMoochPost] = useState();
     const [userSuggestions, setUserSuggestions] = useState([]);
     const [organizationTypeSuggestions, setorganizationTypeSuggestions] = useState([]);
+    const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [moochPost, setMoochPost] = useState({
+        id: 0,
+        membershipImageUrl: "",
+        organizationName: "",
+        membershipDescription: "",
+        userName: "",
+        userImageUrl: "",
+        availabilityStartDate: "",
+        availabilityEndDate: ""
+    });
+
+    const [modalData, setModalData] = useState({
+        postId: 0,
+        organizationName: "",
+        membershipDescription: "",
+        membershipImageUrl: "",
+        userName: "",
+        userImageUrl: "",
+        availabilityStartDate: "",
+        availabilityEndDate: ""
+    })
 
     const { moochId } = useParams();
-
-    //console.log(userSuggestions)
-    console.log(organizationTypeSuggestions)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,6 +52,20 @@ export const MoochPostView = () => {
     }, [moochId])
 
 
+    const handleRequestBtn = () => {
+        setModalData(
+            {
+                postId: moochPost.id,
+                organizationName: moochPost.organizationName,
+                membershipDescription: moochPost.membershipDescription,
+                membershipImageUrl: moochPost.membershipImageUrl,
+                userName: moochPost.userName,
+                userImageUrl: moochPost.userImageUrl,
+                availabilityStartDate: moochPost.availabilityStartDate,
+                availabilityEndDate: moochPost.availabilityEndDate
+            })
+        setModalIsOpen(true)
+    }
 
     return <>
     <Container fluid className="text-muted pt-5">
@@ -44,7 +77,9 @@ export const MoochPostView = () => {
                     <img src={moochPost?.membershipImageUrl} />
                     <h1>{moochPost?.organizationName} - {moochPost?.membershipDescription}</h1>
                     <h5>{formatDateToString(moochPost?.availabilityStartDate)} - {formatDateToString(moochPost?.availabilityEndDate)}</h5>
-             
+                    <Button onClick={(c) => handleRequestBtn()}>
+                    Request!
+                </Button>
                 </section>
             </Col>
         <Col className="">
@@ -63,6 +98,8 @@ export const MoochPostView = () => {
                         userImageUrl={post.userImageUrl}
                         availabilityStartDate={post.availabilityStartDate}
                         availabilityEndDate={post.availabilityEndDate}
+                        setModalData={setModalData}
+                        setModalIsOpen={setModalIsOpen}
                         />
                         
 
@@ -83,6 +120,8 @@ export const MoochPostView = () => {
                         userImageUrl={post.userImageUrl}
                         availabilityStartDate={post.availabilityStartDate}
                         availabilityEndDate={post.availabilityEndDate}
+                        setModalData={setModalData}
+                        setModalIsOpen={setModalIsOpen}
                         />
                         </>
 
@@ -93,5 +132,6 @@ export const MoochPostView = () => {
                
 
     </Container>
+    <MoochRequestModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} modalData={modalData}/>
     </>
 };
