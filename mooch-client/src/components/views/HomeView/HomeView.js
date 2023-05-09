@@ -31,13 +31,13 @@ export const HomeView = () => {
     }, []
   )
 
-  const [sortSearchedPosts, setSortSearchedPosts] = useState([])
+  // const [sortSearchedPosts, setSortSearchedPosts] = useState([])
 
-  useEffect(
-    () => {
-      searchedPosts.filter((post => post.type))
-    },
-  )
+  // useEffect(
+  //   () => {
+  //     searchedPosts.filter((post => post.type))
+  //   },
+  // )
 
   return <>
 

@@ -11,6 +11,6 @@ namespace Mooch_Lightning.Repositories
         List<MembershipAndOrg> GetUserMemberships(int userId);
         User GetByFirebaseUId(string FbId);
 
-        UserMembershipsAndMoochRequests GetUserMembershipsAndRequestsById(int userId);
+       List <UserMembershipsAndMoochRequests> GetUserMembershipsAndRequestsById(int userId);
     }
 }
