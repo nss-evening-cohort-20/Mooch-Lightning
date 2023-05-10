@@ -14,7 +14,21 @@ import {
 } from 'reactstrap';
 import { Title } from './Title';
 
+//const url = 'https://localhost:7082/api/Organization/withMembership/1';
+
 export const OrganizationView = () => {
+  //   const getOrganizationWithMembership = async () => {
+  //     const fetchData = await fetch(url);
+  //     const fetchJson = await fetchData.json();
+  //     setTitleName(fetchJson);
+  //   };
+
+  //   const [titleName, setTitleName] = useState([]);
+
+  //   useEffect(() => {
+  //     getOrganizationWithMembership();
+  //   }, []);
+
   return (
     <>
       <Title />

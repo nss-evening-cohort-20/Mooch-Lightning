@@ -1,19 +1,27 @@
 import { useEffect, useState } from 'react';
+import './Title.css';
+
+const url = 'https://localhost:7082/api/Organization/withMembership/1';
 
 export const Title = () => {
-  const [title, setTitle] = useState('Default Title');
+  const [org, setOrg] = useState({ name: 'name', imageUrl: 'imageUrl' });
 
-  useEffect(() => {
-    document.title = title;
-  }, [title]);
-
-  const changeTitle = (event) => {
-    setTitle(event.target.value);
+  const getOrganizationWithMembership = async () => {
+    const fetchData = await fetch(url);
+    const fetchJson = await fetchData.json();
+    setOrg(fetchJson);
   };
 
+  useEffect(() => {
+    getOrganizationWithMembership();
+  }, []);
+
   return (
-    <div>
-      <input type="text" onChange={changeTitle} value={title} />
-    </div>
+    <>
+      <div className="container">
+        <h2> {org.name}</h2>
+        <img src={org.imageUrl} />
+      </div>
+    </>
   );
 };
