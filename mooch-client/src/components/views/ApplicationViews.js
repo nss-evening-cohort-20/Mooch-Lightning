@@ -1,6 +1,3 @@
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import { CreateAccount } from './CreateAccountView/CreateAccount';
-import { HomeView } from './HomeView/HomeView';
 import { UserView } from './UserView/UserView';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { CreateAccount } from './CreateAccountView/CreateAccount';
