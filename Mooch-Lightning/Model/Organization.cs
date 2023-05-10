@@ -12,5 +12,12 @@ namespace Mooch_Lightning.Model
         public List<Location> Locations { get; set; }
         public List<Membership> Memberships { get; set; }
     }
+
+    public class OrganizationName 
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
 }
 

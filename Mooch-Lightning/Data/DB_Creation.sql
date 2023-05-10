@@ -83,7 +83,8 @@ GO
 
 CREATE TABLE [OrganizationType] (
   [Id] int PRIMARY KEY identity NOT NULL,
-  [Description] nvarchar(255) NOT NULL
+  [Description] nvarchar(255) NOT NULL,
+  [OrganizationTypeImageUrl] nvarchar(255)
 )
 GO
 
@@ -125,19 +126,22 @@ SET IDENTITY_INSERT [User] OFF
 
 SET IDENTITY_INSERT [OrganizationType] ON
 INSERT INTO [OrganizationType]
-([Id],[Description])
+([Id],[Description], [OrganizationTypeImageUrl])
 VALUES
-(1,'Streaming Service'),
-(2, 'Fitness')
+(1,'Streaming Service', 'https://media.istockphoto.com/id/1130133758/photo/pop-corn-on-pastel-color-background-food-and-snack-concepts-ideas-minimal.jpg?s=612x612&w=0&k=20&c=MoDEUkTcZ8QeOSQ5DJCEpEyUATQkfPWSsx5Jr12oxts='),
+(2, 'Fitness', 'https://images.squarespace-cdn.com/content/v1/5fea20d8455b341d9dd8ba63/1609441552564-AW5AYSGG2WPXW8TACN5O/landing-background-min-squarespace.jpg?format=2500w'),
+(3, 'Theatres','https://images.squarespace-cdn.com/content/v1/5fea20d8455b341d9dd8ba63/1609441552564-AW5AYSGG2WPXW8TACN5O/landing-background-min-squarespace.jpg?format=2500w')
 SET IDENTITY_INSERT [OrganizationType] OFF
 
 SET IDENTITY_INSERT [Organization] ON
 INSERT INTO [Organization]
 ([Id],[Name],[OrganizationTypeId],[ImageUrl])
 VALUES
-(1,'Netflix',1,'https://img.freepik.com/premium-vector/company-icon-simple-element-illustration-company-concept-symbol-design-can-be-used-web-mobile_159242-7784.jpg'),
-(2,'Hulu',1,'https://img.freepik.com/premium-vector/company-icon-simple-element-illustration-company-concept-symbol-design-can-be-used-web-mobile_159242-7784.jpg'),
-(3,'YMCA',2,'https://img.freepik.com/premium-vector/company-icon-simple-element-illustration-company-concept-symbol-design-can-be-used-web-mobile_159242-7784.jpg')
+(1,'Netflix',1,'https://i.pcmag.com/imagery/reviews/05cItXL96l4LE9n02WfDR0h-5.fit_scale.size_760x427.v1582751026.png'),
+(2,'Hulu',1,'https://assetshuluimcom-a.akamaihd.net/h3o/facebook_share_thumb_default_hulu.jpg'),
+(3,'YMCA',2,'https://1000logos.net/wp-content/uploads/2017/08/YMCA-emblem.jpg'),
+(4,'Spotify',1,'https://martech.org/wp-content/uploads/2017/09/spotify-logo-1920x1080.jpg'),
+(5, 'Regal', 3, 'https://www.rereleasenews.com/wp-content/uploads/2018/10/collage-9.jpg')
 SET IDENTITY_INSERT [Organization] OFF
 
 SET IDENTITY_INSERT [Location] ON
@@ -156,7 +160,10 @@ VALUES
 (3,'Hulu (No Ads)', 2,'https://cdn-icons-png.flaticon.com/512/6701/6701712.png'),
 (4,'Hulu (No Ads) + HBO Max', 2,'https://cdn-icons-png.flaticon.com/512/6701/6701712.png'),
 (5,'One Adult', 3,'https://cdn-icons-png.flaticon.com/512/6701/6701712.png'),
-(6,'Two Adults', 3,'https://cdn-icons-png.flaticon.com/512/6701/6701712.png')
+(6,'Two Adults', 3,'https://cdn-icons-png.flaticon.com/512/6701/6701712.png'),
+(7,'Individual', 4,'https://cdn-icons-png.flaticon.com/512/6701/6701712.png'),
+(8,'Duo', 4,'https://cdn-icons-png.flaticon.com/512/6701/6701712.png'),
+(9,'Regal Unlimited', 5,'https://cdn-icons-png.flaticon.com/512/6701/6701712.png')
 SET IDENTITY_INSERT [Membership] OFF
 
 SET IDENTITY_INSERT [UserMembership] ON
@@ -169,20 +176,29 @@ VALUES
 (4,2,3),
 (5,3,6),
 (6,4,2),
-(7,5,2)
+(7,5,2),
+(8,5,8),
+(9,3,7),
+(10,3,9),
+(11,1,9)
 SET IDENTITY_INSERT [UserMembership] OFF
 
 SET IDENTITY_INSERT [MoochPost] ON 
 INSERT INTO [MoochPost]
 ([Id],[UserMembershipId],[IsMooched],[AvailabilityStartDate],[AvailabilityEndDate])
 VALUES
-(1,1,0,'',''),
-(2,4,1,'05-02-2023','05-05-2023'),
-(3,5,1,'04-25-2023','04-26-2023'),
-(4,3,0,'05-03-2023','05-04-2023'),
-(5,6,0,'',''),
-(6,2,0,'',''),
-(7,2,0,'08-03-2023','08-04-2023')
+(1,1,0,'06-10-2023','06-12-2023'),
+(2,4,1,'07-02-2023','07-05-2023'),
+(3,5,1,'05-25-2023','05-26-2023'),
+(4,3,0,'06-03-2023','06-04-2023'),
+(5,6,0,'07-20-2023','07-20-2023'),
+(6,2,0,'05-22-2023','5-25-2023'),
+(7,2,0,'08-03-2023','08-04-2023'),
+(8,2,0,'04-13-2023','04-14-2023'),
+(9,8,0,'11-01-2023','11-02-2023'),
+(10,9,0,'09-04-2023','09-11-2023'),
+(11,10,0,'09-04-2023','09-11-2023'),
+(12,11,0,'12-26-2023','12-28-2023')
 SET IDENTITY_INSERT [MoochPost] OFF
 
 SET IDENTITY_INSERT [MoochRequest] ON
