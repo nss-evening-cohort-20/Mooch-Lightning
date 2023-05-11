@@ -47,4 +47,11 @@
         public string UserImageUrl { get; set; }
     }
 
+    public class DetailedMoochPostWithSuggetions : MoochPostSearchResult 
+    {
+        public List<MoochPostSearchResult>? organizationTypeSuggestions { get; set; }
+        public List<MoochPostSearchResult>? userSuggestions { get; set; }
+    }
+
+
 }

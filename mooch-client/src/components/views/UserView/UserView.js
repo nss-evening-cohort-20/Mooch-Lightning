@@ -8,10 +8,10 @@ import { UserMembershipDetails } from "./UserMembershipDetails";
 import { UserMoochPostDetails } from "./UserMoochPostDetails";
 import { UserMoochRequestDetails } from "./UserMoochRequestDetails";
 
-
 const url3 = "https://localhost:7082/api/User/";
 
 export const UserView = () => {
+  const [membershipModalIsOpen, setMembershipModalOpen] = useState(false)
 
 const currentUser = getCurrentUser();
 const [userMemberships, setUserMembershipsList] = useState([])
@@ -43,6 +43,7 @@ return <>
 <header><Profile/></header>
   <Container>
     <div className="d-flex justify-content-center">
+    <Button onClick={() => setMembershipModalOpen(true)}>Add Membership</Button>
     {userMemberships.map((memberships) =>(
       <>
         <UserMembershipDetails 
@@ -109,5 +110,6 @@ return <>
    </div>
 </Container>
 </main>
+<AddMembershipModal modalIsOpen={membershipModalIsOpen} setModalIsOpen={setMembershipModalOpen} reloadData={fetchUserDetails}/>
 </>
 };
