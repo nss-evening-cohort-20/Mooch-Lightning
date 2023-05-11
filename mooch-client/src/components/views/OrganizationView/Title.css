@@ -4,19 +4,16 @@
   display: 'flex';
   justify-content: 'center';
   text-align: center;
-  margin-top: 200px;
-}
-.input {
-  width: 800;
-  padding: '5px 20px';
-  font-size: 24px;
+  margin-top: 50px;
 }
 
-input[type='text'] {
-  font-size: 45px;
+.img-size {
+  margin-top: 50px;
+  height: 300px;
+  width: 400px;
+  border-radius: 8px;
 }
 
-.no-border {
-  border: 0;
-  box-shadow: none;
+h1 {
+  font-family: 'Bebas Neue', sans-serif;
 }

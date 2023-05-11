@@ -6,54 +6,59 @@ import './OrganizationView.css';
 import { getCurrentUser } from '../../Utils/Constants';
 import {
   Card,
+  CardGroup,
+  CardImg,
   CardBody,
   CardTitle,
   CardSubtitle,
   CardText,
   CardLink,
+  Button,
 } from 'reactstrap';
 import { Title } from './Title';
 
-//const url = 'https://localhost:7082/api/Organization/withMembership/1';
+const url = 'https://localhost:7082/api/Organization/withMembership/1';
 
 export const OrganizationView = () => {
-  //   const getOrganizationWithMembership = async () => {
-  //     const fetchData = await fetch(url);
-  //     const fetchJson = await fetchData.json();
-  //     setTitleName(fetchJson);
-  //   };
+  const getOrgUrl = async () => {
+    const fetchData = await fetch(url);
+    const fetchJson = await fetchData.json();
+    setOrgUrl(fetchJson.memberships);
+  };
+  // image for memberships
+  const [orgUrl, setOrgUrl] = useState([]);
 
-  //   const [titleName, setTitleName] = useState([]);
-
-  //   useEffect(() => {
-  //     getOrganizationWithMembership();
-  //   }, []);
+  useEffect(() => {
+    getOrgUrl();
+  }, []);
 
   return (
     <>
       <Title />
-      <Card
-        className="card-align"
-        style={{
-          width: '18rem',
-        }}
-      >
-        <CardBody>
-          <CardTitle tag="h5">Card title</CardTitle>
-          <CardSubtitle className="mb-2 text-muted" tag="h6">
-            Card subtitle
-          </CardSubtitle>
-        </CardBody>
-        <img alt="Card cap" src="https://picsum.photos/318/180" width="100%" />
-        <CardBody>
-          <CardText>
-            Some quick example text to build on the card title and make up the
-            bulk of the card‘s content.
-          </CardText>
-          <CardLink href="#">Card Link</CardLink>
-          <CardLink href="#">Another Link</CardLink>
-        </CardBody>
-      </Card>
+      <div className="d-flex justify-content-around">
+        <CardGroup style={{ width: '40%', height: '50%' }}>
+          {orgUrl.map((e) => {
+            return (
+              <>
+                <Card
+                  style={{ backgroundColor: '#DCDCDC' }}
+                  className="card, card-align"
+                >
+                  <CardImg
+                    alt="Card image cap"
+                    src={e.imageUrl}
+                    top
+                    width="100%"
+                  />
+                  <CardBody>
+                    <CardText className="card-text">{e.description}</CardText>
+                  </CardBody>
+                </Card>
+              </>
+            );
+          })}
+        </CardGroup>
+      </div>
     </>
   );
 };

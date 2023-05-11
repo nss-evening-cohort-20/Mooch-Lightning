@@ -16,13 +16,16 @@ export const CreateMoochPostView = () => {
 
   const currentUser = getCurrentUser();
 
+  console.log('CURRENT USER', currentUser);
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
         `${ROUTE_CONSTANTS.API_URL}/User/usermembershiplist/${currentUser.id}`
       );
-      const membershipArray = await response.json();
-      setMembershipArray(membershipArray.memberships);
+      const array = await response.json();
+      setMembershipArray(array);
+      console.log('MembershipArray', membershipArray);
     };
     fetchData();
   }, []);

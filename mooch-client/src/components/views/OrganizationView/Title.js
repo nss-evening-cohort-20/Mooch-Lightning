@@ -19,8 +19,8 @@ export const Title = () => {
   return (
     <>
       <div className="container">
-        <h2> {org.name}</h2>
-        <img src={org.imageUrl} />
+        <h1> {org.name}</h1>
+        <img className="img-size" src={org.imageUrl} />
       </div>
     </>
   );

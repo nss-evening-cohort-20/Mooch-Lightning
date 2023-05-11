@@ -1,5 +1,6 @@
 /* Card {
   border: 2px solid #d3d3d3;
+  color: #333;
   border-radius: 0.5em;
   margin-bottom: 1em;
   margin-left: auto;
@@ -11,16 +12,24 @@
 } */
 
 .card-align {
-  margin-top: 40px;
+  margin-top: 50px;
   margin-left: 100px;
+  width: 100%;
+  max-width: 80%;
+  justify-content: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   display: flex;
-  /* width: 100%; */
-  /* max-width: 80%;
-  margin: auto 0; */
-  /* justify-content: center; */
+  flex-direction: row;
+  justify-content: center;
 }
 
-h2 {
+.card {
+  margin-right: 20px !important;
+  color: #a9a9a9;
+}
+
+.card-text {
   text-align: center;
-  margin-top: 200px;
+  font-weight: bolder;
+  color: #808080;
 }
