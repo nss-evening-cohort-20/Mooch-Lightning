@@ -320,7 +320,6 @@ export const HomeView = () => {
                 position: "relative",
                 right: "0.5%",
                 backgroundColor: background.idNo === type.id ? `rgba(9,9,11,0.8)` : `rgba(9,9,11,1)`,
-
               }}>
               <CardTitle tag="h3" className="mb-0"
                 style={{
@@ -335,7 +334,6 @@ export const HomeView = () => {
               </CardTitle>
               <div className="d-flex justify-content-start"
                 style={{
-                  //backgroundColor: `${BLACK}`,
                   padding: "0px 20px 10px",
                 }}>
                 <MoochPostContainer
