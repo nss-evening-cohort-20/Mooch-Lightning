@@ -21,7 +21,6 @@ export const MoochPostView = () => {
         availabilityEndDate: ""
     });
 
-
     const [modalData, setModalData] = useState({
         postId: 0,
         organizationName: "",
@@ -80,7 +79,7 @@ export const MoochPostView = () => {
                     <h5>{formatDateToString(moochPost?.availabilityStartDate)} - {formatDateToString(moochPost?.availabilityEndDate)}</h5>
                     <Button onClick={(c) => handleRequestBtn()}>
                     Request!
-                </Button>
+                    </Button>
                 </section>
             </Col>
         <Col className="">

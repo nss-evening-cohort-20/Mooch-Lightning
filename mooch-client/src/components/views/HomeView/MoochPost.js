@@ -41,6 +41,7 @@ export const MoochPost = ({
                     backgroundColor: `${SLATE}`,
                     width: '15rem',
                     transform: isCardHovered ? "scale(1.05)" : "",
+                    transition: "transform .2s",
                     boxShadow: isCardHovered ? `0px 0px 5px 3px ${LIGHT_GRAY}` : "2px 2px 5px 1px black",
                     border: isCardHovered ? `2px solid ${LIGHT_GRAY}` : "2px solid #2A2B37"
                 }}
