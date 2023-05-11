@@ -47,10 +47,10 @@
         public string UserImageUrl { get; set; }
     }
 
-    public class DetailedMoochPostWithSuggetions : DetailedMoochPost 
+    public class DetailedMoochPostWithSuggetions : MoochPostSearchResult 
     {
-        public List<DetailedMoochPost>? organizationTypeSuggestions { get; set; }
-        public List<DetailedMoochPost>? userSuggestions { get; set; }
+        public List<MoochPostSearchResult>? organizationTypeSuggestions { get; set; }
+        public List<MoochPostSearchResult>? userSuggestions { get; set; }
     }
 
 
