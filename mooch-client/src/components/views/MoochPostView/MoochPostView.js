@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
-import { ROUTE_CONSTANTS } from "../../Utils/Constants";
+import { DIRTY_WHITE, ROUTE_CONSTANTS, WHITE } from "../../Utils/Constants";
 import { useParams } from "react-router-dom";
 import { Button, Col, Container, Row } from "reactstrap";
 import { formatDateToString } from "../../Utils/dateUtils";
 import { MoochRequestModal } from "../MoochRequestView/MoochRequestModal";
-import { MoochPost } from "./MoochPost copy";
+import { MoochPostCard } from "./MoochPostCard";
 
 export const MoochPostView = () => {
     const [userSuggestions, setUserSuggestions] = useState([]);
@@ -13,6 +13,7 @@ export const MoochPostView = () => {
     const [moochPost, setMoochPost] = useState({
         id: 0,
         membershipImageUrl: "",
+        organizationImageUrl: "",
         organizationName: "",
         membershipDescription: "",
         userName: "",
@@ -24,6 +25,7 @@ export const MoochPostView = () => {
     const [modalData, setModalData] = useState({
         postId: 0,
         organizationName: "",
+        organizationImageUrl: "",
         membershipDescription: "",
         membershipImageUrl: "",
         userName: "",
@@ -68,52 +70,49 @@ export const MoochPostView = () => {
     }
 
     return <>
-    <Container fluid className="text-muted pt-5">
+    <Container fluid className="pt-5">
         
         <Row md="2">
         <Col md="">
-                <section className="text-center">
-                    <h1>Mooch Post Details Page</h1>
-                    <img src={moochPost?.membershipImageUrl} />
-                    <h1>{moochPost?.organizationName} - {moochPost?.membershipDescription}</h1>
-                    <h5>{formatDateToString(moochPost?.availabilityStartDate)} - {formatDateToString(moochPost?.availabilityEndDate)}</h5>
+                <section className="text-center" style={{color: `${WHITE}`}}>
+                    <h1 className="mb-4" style={{color: `${WHITE}`}}>{moochPost?.userName}'s {moochPost?.organizationName} Mooch</h1>
+                    <img src={moochPost?.organizationImageUrl} className="rounded shadow  mb-3" style={{width: '40rem', height: '32rem', objectFit: 'cover'}}/>
+                    <h1 style={{color: `${DIRTY_WHITE}`}}>{moochPost?.organizationName} - {moochPost?.membershipDescription}</h1>
+                    <h5 style={{color: `${DIRTY_WHITE}`}}>{formatDateToString(moochPost?.availabilityStartDate)} - {formatDateToString(moochPost?.availabilityEndDate)}</h5>
                     <Button onClick={(c) => handleRequestBtn()}>
                     Request!
                     </Button>
                 </section>
             </Col>
         <Col className="">
-                <h4>More Mooches from this user</h4>
-            <div className="d-flex flex-wrap justify-content-start mb-5">
-
+                <h4 className="mb-3" style={{color: `${WHITE}`}}>More Mooches from this user</h4>
+                <div className="d-flex gap-3 flex-wrap justify-content-start mb-5">
                     {userSuggestions.map(post => {
-                        return <>
-                    <MoochPost
-                        key={`mp--${post.id}`}
-                        id={post.id}
-                        organizationName={post.organizationName}
-                        membershipDescription={post.membershipDescription}
-                        membershipImageUrl={post.membershipImageUrl}
-                        userName={post.username}
-                        userImageUrl={post.userImageUrl}
-                        availabilityStartDate={post.availabilityStartDate}
-                        availabilityEndDate={post.availabilityEndDate}
-                        setModalData={setModalData}
-                        setModalIsOpen={setModalIsOpen}
+                        return <MoochPostCard
+                            key={`mp--${post.id}`}
+                            id={post.id}
+                            organizationImage={post.organizationImageUrl}
+                            organizationName={post.organizationName}
+                            membershipDescription={post.membershipDescription}
+                            membershipImageUrl={post.membershipImageUrl}
+                            userName={post.username}
+                            userImageUrl={post.userImageUrl}
+                            availabilityStartDate={post.availabilityStartDate}
+                            availabilityEndDate={post.availabilityEndDate}
+                            setModalData={setModalData}
+                            setModalIsOpen={setModalIsOpen}
                         />
-                        
-
-                        </>
-})}
-            </div>
-        <h4 className="text-left">Similar Mooches</h4>
-        <div className="d-flex flex-wrap justify-content-start mb-5">
+                    })}
+                </div>
+        <h4 className="mb-3" style={{color: `${WHITE}`}} >Similar Mooches</h4>
+        <div className="d-flex gap-3 flex-wrap justify-content-start mb-5">
                 {organizationTypeSuggestions.map(post => {
                     return <>
-                    <MoochPost
+                    <MoochPostCard
                         key={`mp--${post.id}`}
                         id={post.id}
                         organizationName={post.organizationName}
+                        organizationImage={post.organizationImageUrl}
                         membershipDescription={post.membershipDescription}
                         membershipImageUrl={post.membershipImageUrl}
                         userName={post.username}

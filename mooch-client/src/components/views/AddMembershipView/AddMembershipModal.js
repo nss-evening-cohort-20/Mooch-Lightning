@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ROUTE_CONSTANTS } from '../../Utils/Constants';
+import { DIRTY_WHITE, ROUTE_CONSTANTS, SLATE, WHITE } from '../../Utils/Constants';
 import { useParams } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
 
@@ -68,8 +68,8 @@ export const AddMembershipModal = ({modalIsOpen, setModalIsOpen, reloadData }) =
 
   return (
     <Modal isOpen={modalIsOpen} toggle={toggle} size='lg'>
-        <ModalHeader toggle={toggle}>Add a membership to your Profile</ModalHeader>
-        <ModalBody>
+        <ModalHeader toggle={toggle} style={{backgroundColor: `${SLATE}`, color: `${WHITE}`}}>Add a membership to your Profile</ModalHeader>
+        <ModalBody style={{backgroundColor: `${SLATE}`}}>
 
     <Container className="form-align">
       <div className="App">
@@ -77,13 +77,13 @@ export const AddMembershipModal = ({modalIsOpen, setModalIsOpen, reloadData }) =
           
           <div className="d-flex justify-content-around">
           <FormGroup>
-            <Label for="organization">Choose the Organization</Label>
+            <Label for="organization" style={{color: `${DIRTY_WHITE}`}}>Choose the Organization</Label>
             <Input
               id="organization"
+              style={{backgroundColor: `${SLATE}`, color: `${DIRTY_WHITE}`, width: '20rem'}}
               name="organization"
               type="select"
               onChange={(e) => setOrganizationId(parseInt(e.target.value))}
-              style={{width: '20rem'}}
             >
               <option value={0}>-- Choose --</option>
               {orgList.map((org) => {
@@ -96,14 +96,14 @@ export const AddMembershipModal = ({modalIsOpen, setModalIsOpen, reloadData }) =
             </Input>
           </FormGroup>
           <FormGroup>
-            <Label for="orgMemberships">Choose the Membership</Label>
+            <Label for="orgMemberships" style={{color: `${DIRTY_WHITE}`}}>Choose the Membership</Label>
             <Input
               id="orgMemberships"
+              style={{backgroundColor: `${SLATE}`, color: `${DIRTY_WHITE}`, width: '20rem'}}
               name="orgMemberships"
               type="select"
               onChange={(e) => setMembershipId(parseInt(e.target.value))}
               disabled={membershipList.length > 0 ? false : true}
-              style={{width: '20rem'}}
             >
               <option value={0}>-- Choose --</option>
               {membershipList.map((membership) => {

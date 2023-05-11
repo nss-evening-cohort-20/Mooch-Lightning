@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ROUTE_CONSTANTS } from '../../Utils/Constants';
+import { DARK_GRAY, DIRTY_WHITE, ROUTE_CONSTANTS, SLATE, WHITE } from '../../Utils/Constants';
 import { useParams } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
 
@@ -44,24 +44,25 @@ export const MoochRequestModal = ({modalIsOpen, setModalIsOpen, modalData}) => {
   const toggle = () => setModalIsOpen(!modalIsOpen);
 
   return (
-    <Modal isOpen={modalIsOpen} toggle={toggle} size='lg'>
-        <ModalHeader toggle={toggle}>Submit a Request for this Mooch</ModalHeader>
-        <ModalBody>
+    <Modal isOpen={modalIsOpen} toggle={toggle} size='lg' >
+        <ModalHeader toggle={toggle} style={{backgroundColor: `${SLATE}`, color: `${WHITE}`}}>Submit a Request for this Mooch</ModalHeader>
+        <ModalBody style={{backgroundColor: `${SLATE}`}}>
 
-    <Container className="form-align">
+    <Container className="form-align" >
       <div className="App">
-      <section className="text-center">
+      <section className="text-center" style={{color: `${DIRTY_WHITE}`}}>
                     <img src={modalData.membershipImageUrl} />
-                    <h1>{modalData.organizationName} - {modalData.membershipDescription}</h1>
-                    <h5>{formatDateToString(modalData.availabilityStartDate)} - {formatDateToString(modalData.availabilityEndDate)}</h5>
+                    <h1 style={{color: `${DIRTY_WHITE}`}}>{modalData.organizationName} - {modalData.membershipDescription}</h1>
+                    <h5 style={{color: `${DIRTY_WHITE}`}}>{formatDateToString(modalData.availabilityStartDate)} - {formatDateToString(modalData.availabilityEndDate)}</h5>
              
                 </section>
         <Form className="form" onSubmit={handleSubmit}>
           
           <div className="d-flex justify-content-around">
             <FormGroup>
-              <Label for="startDate">Start Date</Label>
-              <Input
+              <Label for="startDate" style={{color: `${DIRTY_WHITE}`}}>Start Date</Label>
+              <Input 
+                style={{backgroundColor: `${SLATE}`, color: `${DIRTY_WHITE}`}}
                 id="startDate"
                 name="date"
                 type="date"
@@ -72,8 +73,9 @@ export const MoochRequestModal = ({modalIsOpen, setModalIsOpen, modalData}) => {
             </FormGroup>
 
             <FormGroup>
-              <Label for="endDate">End Date</Label>
+              <Label for="endDate" style={{color: `${DIRTY_WHITE}`}}>End Date</Label>
               <Input
+                style={{backgroundColor: `${SLATE}`, color: `${DIRTY_WHITE}`}}
                 id="endDate"
                 name="date"
                 placeholder="date placeholder"
