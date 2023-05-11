@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { Card, CardHeader, CardBody, CardTitle, CardText, Button, CardFooter } from "reactstrap"
 import { formatDateToString } from "../../Utils/dateUtils"
 
-export const MoochPost = ({ id,
+export const MoochPost2 = ({ id,
     organizationName,
     membershipDescription,
     membershipImageUrl,

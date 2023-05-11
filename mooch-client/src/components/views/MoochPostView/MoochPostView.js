@@ -2,9 +2,9 @@ import { useEffect, useState } from "react"
 import { ROUTE_CONSTANTS } from "../../Utils/Constants";
 import { useParams } from "react-router-dom";
 import { Button, Col, Container, Row } from "reactstrap";
-import { MoochPost } from "./MoochPost";
 import { formatDateToString } from "../../Utils/dateUtils";
 import { MoochRequestModal } from "../MoochRequestView/MoochRequestModal";
+import { MoochPost } from "./MoochPost copy";
 
 export const MoochPostView = () => {
     const [userSuggestions, setUserSuggestions] = useState([]);
@@ -20,6 +20,7 @@ export const MoochPostView = () => {
         availabilityStartDate: "",
         availabilityEndDate: ""
     });
+
 
     const [modalData, setModalData] = useState({
         postId: 0,

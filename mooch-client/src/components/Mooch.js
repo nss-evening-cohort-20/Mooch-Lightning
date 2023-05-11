@@ -4,6 +4,8 @@ import { ApplicationViews } from "./views/ApplicationViews";
 import { Login } from "./views/LoginView/Login";
 import { Register } from "./views/CreateAccountView/Register";
 
+//document.body.style = 'background: red;';
+
 export const Mooch = () => {
   return (
     <Routes>
