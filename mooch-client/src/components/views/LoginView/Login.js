@@ -60,8 +60,8 @@ export const Login = () => {
           borderRadius: "0",
           height: "100%",
           minHeight: "100vh"
-
-        }}>
+        }}
+      >
         <CardHeader
           style={{
             color: "grey",
@@ -113,7 +113,9 @@ export const Login = () => {
             className="d-flex"
             style={{
               justifyContent: "space-around",
-              fontSize: "4vh"
+              fontSize: "4vh",
+              width: "60%",
+              margin: "auto"
             }}>
 
             {teamMembers.map((x, index) => {
