@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { authenticate } from "../../Utils/authUtils";
 import "../LoginView/Login.css";
 import { EMAIL_REGISTER } from "../../Utils/Constants";
+import { Card, Form, FormGroup, Label, Input, Button, CardText, CardBody } from "reactstrap";
 
-export const Register = () => {
+export const Register = ({ setRegister }) => {
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -25,40 +26,107 @@ export const Register = () => {
 
 
   return (
-    <main style={{ textAlign: "center" }}>
-      <form className="form--login" onSubmit={handleRegister}>
-        <h1 className="h3 mb-3 font-weight-normal">Please Register</h1>
-        <fieldset>
-          <label htmlFor="email"> Email address </label>
-          <input
-            onChange={updateUser}
-            type="email"
-            id="email"
-            className="form-control"
-            placeholder="Email address"
-            required
-          />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="password"> Password </label>
-          <input
-            onChange={updateUser}
-            type="text"
-            id="password"
-            className="form-control"
-            placeholder="Must Be 6 Characters"
-            required
-            autoFocus
-          />
-        </fieldset>
-        <fieldset>
-          <button type="submit"> Register </button>
-        </fieldset>
-      </form>
-      <h2>Register With Google?</h2>
-      <button type="submit" onClick={handleRegister}>
-        Let's Do It!
-      </button>
-    </main>
+    <Card style={{
+      textAlign: "center",
+      backgroundColor: "black",
+      minHeight: "100vh",
+      height: "100%",
+      border: "1px solid #2A2B37",
+      padding: "7px 20px 20px",
+      borderRadius: "0",
+      transition: "1s",
+      fontFamily: 'Vina Sans, cursive',
+      color: "white",
+      fontSize: "25px"
+    }}>
+      <CardBody>
+        <CardText
+          style={{
+            fontSize: "50px",
+            color: "grey"
+          }}>
+          Please Register
+        </CardText>
+        <Form onSubmit={handleRegister}>
+          <FormGroup>
+            <Label htmlFor="email"
+              style={{
+                width: "100%",
+                textAlign: "left"
+              }}> Email address </Label>
+            <Input
+              onChange={updateUser}
+              type="email"
+              id="email"
+              className="form-control"
+              placeholder="Email address"
+              required
+              style={{
+                fontSize: "20px",
+                color: "grey"
+              }}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="password"
+              style={{
+                width: "100%",
+                textAlign: "left"
+              }}> Password </Label>
+            <Input
+              onChange={updateUser}
+              type="text"
+              id="password"
+              className="form-control"
+              placeholder="Must Be 6 Characters"
+              required
+              autoFocus
+              style={{
+                fontSize: "20px",
+                color: "grey"
+              }}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Button type="submit"
+              style={{
+                fontSize: "20px",
+                padding: "5px 15px"
+              }}> Register </Button>
+          </FormGroup>
+        </Form>
+        <h2
+          style={{ marginTop: "6vh" }}>Register With Google?</h2>
+        <Button type="submit" onClick={handleRegister}
+          style={{
+            fontSize: "20px",
+            padding: "5px 15px",
+            width: "fit-content",
+            margin: "0 auto"
+          }}>
+          Let's Do It!
+        </Button>
+        <CardText
+          style={{
+            marginTop: "8vh",
+            fontSize: "32px"
+          }}>
+          Already a user?
+        </CardText>
+        <CardText
+          style={{
+            fontSize: "28px",
+            color: "blue",
+            cursor: "pointer"
+          }}
+          onClick={
+            () => {
+              setRegister(false)
+            }
+          }>
+          Sign In
+        </CardText>
+      </CardBody>
+    </Card>
   );
 };

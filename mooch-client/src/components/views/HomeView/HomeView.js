@@ -105,13 +105,26 @@ export const HomeView = () => {
 
                   }
                 />
-                <SearchResultsContainer
-                  key={`sr--1`}
-                  searchValue={searchValue}
-                  setSearchValue={setSearchValue}
-                  setMadeSelection={setMadeSelection}
-                  madeSelection={madeSelection}
-                />
+                <Card
+                  className="overflow-hidden"
+                  style={{
+                    boxShadow: madeSelection === false ? "none" : "0px 2px 1px 2px #BAD9FB",
+                    borderWidth: madeSelection === false ? "0px" : "0px 20px 20x",
+                    borderColor: "#BAD9FB",
+                    position: "relative",
+                    bottom: "1px"
+                  }}>
+
+
+                  <SearchResultsContainer
+                    key={`sr--1`}
+                    searchValue={searchValue}
+                    setSearchValue={setSearchValue}
+                    setMadeSelection={setMadeSelection}
+                    madeSelection={madeSelection}
+                  />
+                </Card>
+
                 {searchValue !== "" ?
                   <FontAwesomeIcon
                     className="fa-2x"
@@ -136,16 +149,7 @@ export const HomeView = () => {
 
               {/* autofill for suggested search results */}
 
-              <Card
-                className="overflow-hidden"
-                style={{
-                  boxShadow: madeSelection === false ? "none" : "0px 0px 0px 1px #BAD9FB",
-                  borderWidth: madeSelection === false ? "0px" : "0px 1px 1px",
-                  position: "relative",
-                  bottom: "1px"
-                }}>
 
-              </Card>
             </div>
             <Button
               className="px-3 py-1 mx-5"
@@ -317,7 +321,8 @@ export const HomeView = () => {
                 width: "101%",
                 position: "relative",
                 right: "0.5%",
-                opacity: background.idNo === type.id ? "0.90" : "1"
+                backgroundColor: background.idNo === type.id ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,1)",
+                // backgroundColor: "rgba(0,0,255,0.5)"
               }}>
               <CardTitle tag="h3" className="mb-0"
                 style={{
@@ -332,7 +337,7 @@ export const HomeView = () => {
               </CardTitle>
               <div className="d-flex justify-content-start"
                 style={{
-                  backgroundColor: "#000000",
+                  // backgroundColor: "#000000",
                   padding: "0px 20px 10px",
                 }}>
                 <MoochPostContainer

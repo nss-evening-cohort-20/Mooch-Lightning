@@ -39,7 +39,7 @@ export const MoochPost = ({
                 width: '15rem',
                 transform: isCardHovered ? "scale(1.05)" : "",
                 boxShadow: "2px 2px 5px 1px black",
-                border: isCardHovered ? "2px solid white" : "2px solid #2A2B37"
+                border: isCardHovered ? "2px solid white" : "2px solid #2A2B37",
             }}
             onMouseEnter={
                 () => {

@@ -16,7 +16,7 @@ fieldset {
   text-align: left;
 }
 
-.form--login > fieldset > input[type="email"] {
+.form--login>fieldset>input[type="email"] {
   width: 25em;
 }
 
@@ -60,4 +60,14 @@ fieldset {
 .button--close {
   position: relative;
   bottom: -2rem;
+}
+
+@keyframes displayName {
+  from {
+    top: 500px
+  }
+
+  to {
+    top: 0px
+  }
 }
