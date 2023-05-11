@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./UserView.css";
-import { Button, Card, CardBody, CardGroup, CardImg, CardSubtitle, CardText, CardTitle } from "reactstrap";
+import { AccordionItem, AccordionHeader, AccordionBody, Button, Card, CardBody, CardGroup, CardImg, CardSubtitle, CardText, CardTitle, Container, UncontrolledAccordion } from "reactstrap";
 import { getCurrentUser } from "../../Utils/Constants";
 import { Profile } from "./ProfileInformation";
 import { UserMembershipDetails } from "./UserMembershipDetails";
 import { UserMoochPostDetails } from "./UserMoochPostDetails";
 import { UserMoochRequestDetails } from "./UserMoochRequestDetails";
+
 
 const url3 = "https://localhost:7082/api/User/";
 
@@ -40,11 +41,11 @@ useEffect(
 return <>
 <main>
 <header><Profile/></header>
-  <div>
-    <h3>My Memberships</h3>
+  <Container>
+    <div className="d-flex justify-content-center">
     {userMemberships.map((memberships) =>(
       <>
-        <UserMembershipDetails
+        <UserMembershipDetails 
         membershipId = {memberships.membershipId}
         membershipDescription = {memberships.membershipDescription}
         membershipImageUrl = {memberships.membershipImageUrl}
@@ -53,27 +54,43 @@ return <>
         orignizationImageUrl = {memberships.orignizationImageUrl}
         organizationType = {memberships.organizationType}
         />
-        
       </>
     ))
     }
-    <h3>My Mooches</h3>
+    </div>
+    <div className="d-flex justify-content-center">
+    <UncontrolledAccordion defaultOpen="1">
+  <AccordionItem>
+    <AccordionHeader targetId="1">
+      Mooch Requests
+    </AccordionHeader>
+    <AccordionBody accordionId="1">
+      <div style={{
+        display: "flex",
+        flexDirection: "row"
+      }}>
     {UserMoochPost.map((postedMooches) => (
       <>
-      <div>
        <UserMoochPostDetails
        userId = {postedMooches.userId}
        membershipId = {postedMooches.membershipId}
        moochPostId = {postedMooches.moochPostId}
        isMooched = {postedMooches.isMooched}
        availabilityStartDate = {postedMooches.availabilityStartDate}
-       availablilityEndDate = {postedMooches.availablilityEndDate}
+       availabilityEndDate = {postedMooches.availabilityEndDate}
        />
-      </div>
       </>
     ))
     }
-    <h3>My Requested Mooches</h3>
+    </div>
+    <Button>
+      Add New Mooch
+    </Button>
+    </AccordionBody>
+   </AccordionItem>
+   </UncontrolledAccordion>
+   </div>
+    <div className="d-flex justify-content-center">
     {UserRequestList.map((requestedMooches) => (
       <>
       <div>
@@ -89,7 +106,8 @@ return <>
       </div>
       </>
     ))}
-</div>
+   </div>
+</Container>
 </main>
 </>
 };

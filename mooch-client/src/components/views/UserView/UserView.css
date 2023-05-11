@@ -1,3 +1,20 @@
 h1{
     color: black;
 }
+
+header{
+display: flex;
+justify-content: flex-end;
+flex-direction: column;
+flex-flow: wrap-reverse;
+}
+
+.memberships{
+display: flex;
+justify-content: center;
+}
+
+
+
+
+
