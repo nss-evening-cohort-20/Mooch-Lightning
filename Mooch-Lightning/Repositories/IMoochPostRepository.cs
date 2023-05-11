@@ -6,7 +6,7 @@ namespace Mooch_Lightning.Repositories
     {
         MoochPost Add(MoochPost post);
         void Delete(int id);
-        MoochPost GetById(int id);
+        DetailedMoochPostWithSuggetions GetById(int id);
         void Update(MoochPost post, int id);
 
         List<DetailedMoochPost> GetAll();

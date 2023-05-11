@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mooch_Lightning.Model;
 using Mooch_Lightning.Repositories;
 
 
@@ -39,5 +40,11 @@ public class MoochRequestController : ControllerBase
         return Ok(_moochRequestRepo.TopFivePendingMoochRequests());
     }
 
+    [HttpPost]
+    public IActionResult Add(MoochRequest request)
+    {
+        _moochRequestRepo.Add(request);
+        return NoContent();
+    }
 
 }

@@ -2,21 +2,22 @@
 using Mooch_Lightning.Utils;
 using Mooch_Lightning.Model;
 using NuGet.Protocol.Plugins;
+using Microsoft.Extensions.Hosting;
 
-namespace Mooch_Lightning.Repositories
+namespace Mooch_Lightning.Repositories;
+
+public class MoochRequestRepository : BaseRepository, IMoochRequestRepository
 {
-    public class MoochRequestRepository : BaseRepository, IMoochRequestRepository
-    {
-        public MoochRequestRepository(IConfiguration configuration) : base(configuration) { }
+    public MoochRequestRepository(IConfiguration configuration) : base(configuration) { }
 
-        public MoochRequest GetMoochRequestById(int id)
+    public MoochRequest GetMoochRequestById(int id)
+    {
+        using (var conn = Connection)
         {
-            using (var conn = Connection)
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
             {
-                conn.Open();
-                using (var cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"
+                cmd.CommandText = @"
                                       SELECT [Id]
                                       ,[UserId]
                                       ,[MoochPostId]
@@ -28,39 +29,39 @@ namespace Mooch_Lightning.Repositories
                                       WHERE [Id] = @id;
                                       ";
 
-                    cmd.Parameters.AddWithValue("@id", id);
-                    var reader = cmd.ExecuteReader();
-                    MoochRequest mr = null;
-                    if (reader.Read())
+                cmd.Parameters.AddWithValue("@id", id);
+                var reader = cmd.ExecuteReader();
+                MoochRequest mr = null;
+                if (reader.Read())
+                {
+                    mr = new MoochRequest()
                     {
-                        mr = new MoochRequest()
-                        {
-                            Id = DbUtils.GetInt(reader, "Id"),
-                            UserId = DbUtils.GetInt(reader, "UserId"),
-                            MoochPostId = DbUtils.GetInt(reader, "MoochPostId"),
-                            StartDate = DbUtils.GetDateTime(reader, "StartDate"),
-                            EndDate = DbUtils.GetDateTime(reader, "EndDate"),
-                            IsApproved = DbUtils.GetNullableBool(reader, "IsApproved"),
-                            DateCreated = DbUtils.GetDateTime(reader, "DateCreated")
+                        Id = DbUtils.GetInt(reader, "Id"),
+                        UserId = DbUtils.GetInt(reader, "UserId"),
+                        MoochPostId = DbUtils.GetInt(reader, "MoochPostId"),
+                        StartDate = DbUtils.GetDateTime(reader, "StartDate"),
+                        EndDate = DbUtils.GetDateTime(reader, "EndDate"),
+                        IsApproved = DbUtils.GetNullableBool(reader, "IsApproved"),
+                        DateCreated = DbUtils.GetDateTime(reader, "DateCreated")
 
-                        };
-                    }
-                    reader.Close();
-                    return mr;
-
+                    };
                 }
+                reader.Close();
+                return mr;
+
             }
         }
+    }
 
 
-        public List<MoochRequest> TopFiveApprovedMoochRequests()
+    public List<MoochRequest> TopFiveApprovedMoochRequests()
+    {
+        using (var conn = Connection)
         {
-            using (var conn = Connection)
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
             {
-                conn.Open();
-                using (var cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"
+                cmd.CommandText = @"
                                      SELECT TOP (5) mr.[Id]
                                             ,mr.[UserId]
                                             ,mr.[MoochPostId]
@@ -76,43 +77,43 @@ namespace Mooch_Lightning.Repositories
                                     ORDER BY mr.StartDate DESC;";
 
 
-                    var reader = cmd.ExecuteReader();
+                var reader = cmd.ExecuteReader();
 
-                    var requests = new List<MoochRequest>();
-                    while (reader.Read())
+                var requests = new List<MoochRequest>();
+                while (reader.Read())
+                {
+                    requests.Add(new MoochRequest()
                     {
-                        requests.Add(new MoochRequest()
+                        Id = DbUtils.GetInt(reader, "Id"),
+                        UserId = DbUtils.GetInt(reader, "UserId"),
+                        MoochPostId = DbUtils.GetInt(reader, "MoochPostId"),
+                        User = new UserLastestMoochRequest()
                         {
-                            Id = DbUtils.GetInt(reader, "Id"),
-                            UserId = DbUtils.GetInt(reader, "UserId"),
-                            MoochPostId = DbUtils.GetInt(reader, "MoochPostId"),
-                            User = new UserLastestMoochRequest()
-                            {
-                                Username = DbUtils.GetString(reader, "UserName"),
-                                ImageUrl = DbUtils.GetString(reader, "ImageUrl")
-                            },
-                            StartDate = DbUtils.GetDateTime(reader, "StartDate"),
-                            EndDate = DbUtils.GetDateTime(reader, "EndDate"),
-                            IsApproved = DbUtils.GetNullableBool(reader, "IsApproved"),
-                            DateCreated = DbUtils.GetDateTime(reader, "DateCreated")
-                        });
-                    }
-
-                    reader.Close();
-
-                    return requests;
+                            Username = DbUtils.GetString(reader, "UserName"),
+                            ImageUrl = DbUtils.GetString(reader, "ImageUrl")
+                        },
+                        StartDate = DbUtils.GetDateTime(reader, "StartDate"),
+                        EndDate = DbUtils.GetDateTime(reader, "EndDate"),
+                        IsApproved = DbUtils.GetNullableBool(reader, "IsApproved"),
+                        DateCreated = DbUtils.GetDateTime(reader, "DateCreated")
+                    });
                 }
+
+                reader.Close();
+
+                return requests;
             }
         }
+    }
 
-        public List<MoochRequest> TopFivePendingMoochRequests()
+    public List<MoochRequest> TopFivePendingMoochRequests()
+    {
+        using (var conn = Connection)
         {
-            using (var conn = Connection)
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
             {
-                conn.Open();
-                using (var cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"
+                cmd.CommandText = @"
                                      SELECT TOP (5) mr.[Id]
                                             ,mr.[UserId]
                                             ,mr.[MoochPostId]
@@ -128,32 +129,51 @@ namespace Mooch_Lightning.Repositories
                                     ORDER BY mr.StartDate DESC;";
 
 
-                    var reader = cmd.ExecuteReader();
+                var reader = cmd.ExecuteReader();
 
-                    var requests = new List<MoochRequest>();
-                    while (reader.Read())
+                var requests = new List<MoochRequest>();
+                while (reader.Read())
+                {
+                    requests.Add(new MoochRequest()
                     {
-                        requests.Add(new MoochRequest()
+                        Id = DbUtils.GetInt(reader, "Id"),
+                        UserId = DbUtils.GetInt(reader, "UserId"),
+                        MoochPostId = DbUtils.GetInt(reader, "MoochPostId"),
+                        User = new UserLastestMoochRequest()
                         {
-                            Id = DbUtils.GetInt(reader, "Id"),
-                            UserId = DbUtils.GetInt(reader, "UserId"),
-                            MoochPostId = DbUtils.GetInt(reader, "MoochPostId"),
-                            User = new UserLastestMoochRequest()
-                            {
-                                Username = DbUtils.GetString(reader, "UserName"),
-                                ImageUrl = DbUtils.GetString(reader, "ImageUrl")
-                            },
-                            StartDate = DbUtils.GetDateTime(reader, "StartDate"),
-                            EndDate = DbUtils.GetDateTime(reader, "EndDate"),
-                            IsApproved = DbUtils.GetNullableBool(reader, "IsApproved"),
-                            DateCreated = DbUtils.GetDateTime(reader, "DateCreated")
-                        });
-                    }
-
-                    reader.Close();
-
-                    return requests;
+                            Username = DbUtils.GetString(reader, "UserName"),
+                            ImageUrl = DbUtils.GetString(reader, "ImageUrl")
+                        },
+                        StartDate = DbUtils.GetDateTime(reader, "StartDate"),
+                        EndDate = DbUtils.GetDateTime(reader, "EndDate"),
+                        IsApproved = DbUtils.GetNullableBool(reader, "IsApproved"),
+                        DateCreated = DbUtils.GetDateTime(reader, "DateCreated")
+                    });
                 }
+
+                reader.Close();
+
+                return requests;
+            }
+        }
+    }
+
+    public void Add(MoochRequest request)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"INSERT INTO [Mooch].[dbo].[MoochRequest] (MoochPostId, UserId, StartDate, EndDate, DateCreated)
+                                        OUTPUT inserted.Id
+                                        VALUES (@MoochPostId,@UserId, @StartDate, @EndDate, @DateCreated);";
+                cmd.Parameters.AddWithValue("@MoochPostId", request.MoochPostId);
+                cmd.Parameters.AddWithValue("@UserId", request.UserId);
+                cmd.Parameters.AddWithValue("@StartDate", request.StartDate);
+                cmd.Parameters.AddWithValue("@EndDate", request.EndDate);
+                cmd.Parameters.AddWithValue("@DateCreated", DateTime.Now);
+                cmd.ExecuteNonQuery();
             }
         }
     }
