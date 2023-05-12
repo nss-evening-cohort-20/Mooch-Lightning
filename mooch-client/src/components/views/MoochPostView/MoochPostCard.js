@@ -1,4 +1,3 @@
-import "./Home.css"
 import {
     Card,
     CardHeader,
@@ -14,7 +13,7 @@ import {
 import { useEffect, useState } from "react"
 import { DIRTY_WHITE, LIGHT_GRAY, SLATE, WHITE } from "../../Utils/Constants"
 
-export const MoochPost = ({
+export const MoochPostCard = ({
     id,
     typeId,
     organizationName,
@@ -48,18 +47,10 @@ export const MoochPost = ({
                 onMouseEnter={
                     () => {
                         setIsCardHovered(true)
-                        setBackground({
-                            idNo: typeId,
-                            img: organizationImage
-                        })
                     }}
                 onMouseLeave={
                     () => {
                         setIsCardHovered(false)
-                        setBackground({
-                            id: 0,
-                            img: "none"
-                        })
                     }}
             >
                 <img

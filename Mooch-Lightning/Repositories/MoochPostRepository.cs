@@ -2,6 +2,8 @@
 using Mooch_Lightning.Utils;
 using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
 using Mooch_Lightning.Model;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 
 namespace Mooch_Lightning.Repositories
@@ -11,7 +13,149 @@ namespace Mooch_Lightning.Repositories
 
         public MoochPostRepository(IConfiguration configuration) : base(configuration) { }
 
-        public MoochPost GetById(int id) { return new MoochPost(); }
+        public DetailedMoochPostWithSuggetions GetById(int id) {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"CREATE TABLE #tempMegaTable (
+                                            MoochPostId int,
+                                            OrganizationName nvarchar(255),
+                                            OrganizationImageUrl nvarchar(255),
+                                            MembershipDescription nvarchar(255),
+                                            MembershipImageUrl nvarchar(255),
+                                            AvailabilityStartDate datetime,
+                                            AvailabilityEndDate datetime,
+                                            IsMooched bit,
+                                            TypeId int,
+                                            [Type] nvarchar(255),
+                                            Username nvarchar(255),
+                                            UserId int,
+                                            UserImageURL nvarchar(255)
+                                        );
+
+                                        INSERT INTO #tempMegaTable
+                                            (MoochPostId, OrganizationName, OrganizationImageUrl, MembershipDescription, MembershipImageUrl,
+                                            AvailabilityStartDate, AvailabilityEndDate, IsMooched, TypeId,
+                                            [Type], Username, UserId, UserImageURL)
+
+
+                                        SELECT 
+                                            MP.Id AS MoochPostId,
+                                            O.Name AS OrganizationName,
+                                            O.ImageUrl AS OrganizationImageUrl,
+                                            M.Description AS MembershipDescription,
+                                            M.ImageUrl AS MembershipImageUrl,
+                                            MP.AvailabilityStartDate,
+                                            MP.AvailabilityEndDate,
+                                            MP.IsMooched,
+                                            OT.Id AS TypeId,
+                                            OT.Description AS [Type],
+                                            U.Username,
+                                            U.Id AS UserId,
+                                            U.ImageUrl AS UserImageURL
+                                        FROM 
+                                            MoochPost MP
+                                            JOIN UserMembership UM ON UM.Id = MP.UserMembershipId
+                                            JOIN Membership M ON M.Id = Um.MembershipId
+                                            JOIN Organization O ON M.OrganizationId = O.Id
+                                            JOIN OrganizationType OT ON O.OrganizationTypeId = OT.Id
+                                            JOIN [User] U ON UM.UserId = U.Id;
+
+
+                                        DECLARE @userId int
+                                        SELECT @userId = UserId
+                                        FROM #tempMegaTable 
+                                        WHERE MoochPostId = @Id;
+
+                                        DECLARE @OrganizationTypeId int
+                                        SELECT @OrganizationTypeId = TypeId
+                                        FROM #tempMegaTable 
+                                        WHERE MoochPostId = @Id;
+
+                                        SELECT 
+                                            MoochPostId,
+                                            OrganizationName,
+                                            OrganizationImageUrl,
+                                            MembershipDescription,
+                                            MembershipImageUrl,
+                                            AvailabilityStartDate,
+                                            AvailabilityEndDate,
+                                            Type,
+                                            Username,
+                                            UserImageURL,
+                                            (SELECT TOP 3
+                                                MoochPostId AS Id,
+                                                OrganizationName,
+                                                OrganizationImageUrl,
+                                                MembershipDescription,
+                                                MembershipImageUrl,
+                                                AvailabilityStartDate,
+                                                AvailabilityEndDate,
+                                                Type,
+                                                Username,
+                                                UserImageURL
+                                            FROM 
+                                                #tempMegaTable 
+                                            WHERE 
+                                                TypeId = @OrganizationTypeId AND isMooched = 0
+		                                        ORDER BY AvailabilityStartDate
+                                            FOR JSON PATH
+                                            ) AS OrganizationSuggestions,
+	                                        (SELECT TOP 3
+                                                MoochPostId AS Id,
+                                                OrganizationName,
+                                                OrganizationImageUrl,
+                                                MembershipDescription,
+                                                MembershipImageUrl,
+                                                AvailabilityStartDate,
+                                                AvailabilityEndDate,
+                                                Type,
+                                                Username,
+                                                UserImageURL
+                                            FROM 
+                                                #tempMegaTable 
+                                            WHERE 
+                                                UserId = @userId AND isMooched = 0
+	                                        ORDER BY AvailabilityStartDate
+                                            FOR JSON PATH) AS UserSuggestions
+                                        FROM 
+                                            #tempMegaTable
+                                        WHERE 
+                                            MoochPostId = @Id;
+
+	                                        DROP TABLE #tempMegaTable;
+                                        ";
+                    DbUtils.AddParameter(cmd, "@Id", id);
+                    var reader = cmd.ExecuteReader();
+
+
+                    DetailedMoochPostWithSuggetions moochPost = null;
+                    while (reader.Read())
+                    {
+                        moochPost =new DetailedMoochPostWithSuggetions()
+                        {
+                            Id = DbUtils.GetInt(reader, "MoochPostId"),
+                            OrganizationName = DbUtils.GetString(reader, "OrganizationName"),
+                            OrganizationImageUrl = DbUtils.GetString(reader, "OrganizationImageUrl"),
+                            MembershipDescription = DbUtils.GetString(reader, "MembershipDescription"),
+                            MembershipImageUrl = DbUtils.GetString(reader, "MembershipImageUrl"),
+                            AvailabilityStartDate = DbUtils.GetDateTime(reader, "AvailabilityStartDate"),
+                            AvailabilityEndDate = DbUtils.GetDateTime(reader, "AvailabilityEndDate"),
+                            Type = DbUtils.GetString(reader, "Type"),
+                            UserName = DbUtils.GetString(reader, "Username"),
+                            UserImageUrl = DbUtils.GetString(reader, "UserImageURL"),
+                            organizationTypeSuggestions = JsonSerializer.Deserialize<List<MoochPostSearchResult>>(DbUtils.GetString(reader, "OrganizationSuggestions")),
+                            userSuggestions = JsonSerializer.Deserialize<List<MoochPostSearchResult>>(DbUtils.GetString(reader, "UserSuggestions"))
+                        };
+                    }
+
+                    reader.Close();
+                    return moochPost;
+                }
+            }
+        }
 
         //Get All MoochPosts
 
