@@ -15,6 +15,13 @@ justify-content: center;
 }
 
 
+.accordion-button:not(.collapsed){
+    background-color: #09090b;
+}
+
+.accordion-button{
+    background-color: #09090b;
+}
 
 
 
