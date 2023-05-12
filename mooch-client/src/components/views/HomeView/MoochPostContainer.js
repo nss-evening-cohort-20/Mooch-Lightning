@@ -1,7 +1,23 @@
 import { useState, useEffect } from "react";
 import { MoochPost } from "./MoochPost";
+import { MoochRequestModal } from "../MoochRequestView/MoochRequestModal";
 
 export const MoochPostContainer = ({ orgType, isClicked, searchValue, setSearchValue, setBackground }) => {
+
+    const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [modalData, setModalData] = useState({
+        postId: 0,
+        organizationName: "",
+        organizationImageUrl: "",
+        membershipDescription: "",
+        membershipImageUrl: "",
+        userName: "",
+        userImageUrl: "",
+        availabilityStartDate: "",
+        availabilityEndDate: ""
+    })
+
+
 
     const url = "https://localhost:7082/api/MoochPost/search_results?search=";
 
@@ -76,12 +92,14 @@ export const MoochPostContainer = ({ orgType, isClicked, searchValue, setSearchV
                         availabilityStartDate={search.availabilityStartDate}
                         availabilityEndDate={search.availabilityEndDate}
                         setBackground={setBackground}
+                        setModalData={setModalData}
+                        setModalIsOpen={setModalIsOpen}
                     />
                 </div>
             </>
 
         ))}
-
+        <MoochRequestModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} modalData={modalData} />
     </>
 
 }
