@@ -207,7 +207,7 @@ export const Login = () => {
           position: "fixed",
           top: "0",
           display: displayLogin ? "flex" : "none",
-          justifyContent: "end"
+          justifyContent: "end",
 
         }}
         onClick={
@@ -226,7 +226,8 @@ export const Login = () => {
           top: "0",
           right: displayLogin ? "0" : "-500px",
           transition: "1s",
-          width: "350px"
+          width: "350px",
+          zIndex: "100"
         }}
       >
         {register ? <Register
