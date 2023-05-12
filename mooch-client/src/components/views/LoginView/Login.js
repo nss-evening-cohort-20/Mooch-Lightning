@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { authenticate } from "../../Utils/authUtils";
 import "./Login.css";
 import { EMAIL_SIGN_IN, GOOGLE_SIGN_IN } from "../../Utils/Constants";
-import { Card, CardHeader, CardText, CardBody, Form, FormGroup, Label, Input, Button } from "reactstrap"
+import { Card, CardHeader, CardText, CardBody, Form, FormGroup, Label, Input, Button, CardTitle } from "reactstrap"
 import { Register } from "../CreateAccountView/Register";
 import { Creators } from "./Creators";
+import { DARK_GRAY, SLATE, LIGHT_GRAY, WHITE, BLACK } from "../../Utils/Constants";
+import { bottom } from "@popperjs/core";
 
 
 export const Login = () => {
@@ -30,7 +32,13 @@ export const Login = () => {
 
   const [displayLogin, setDisplayLogin] = useState(false)
   const [register, setRegister] = useState(false)
+  const [bttnHover, setBttnHover] = useState({
+    BTTN1: false,
+    BTTN2: false,
+    BTTN3: false
+  })
 
+  const title = ["M", "O", "O", "C", "H"]
 
   const teamMembers = [
     { name: "Chase Burnett", url: "https://github.com/ChaseBurnett" },
@@ -39,7 +47,15 @@ export const Login = () => {
     { name: "Robert Stroud", url: "https://github.com/r-stroud" },
     { name: "Yogi", url: "https://github.com/chyogi" }]
 
+  const [hover, setHover] = useState(false)
 
+  function displayCreators() {
+    setTimeout(() => {
+      document.getElementById("creatorsContainer").style.display = "flex"
+    }, 2500)
+  }
+
+  displayCreators()
   return (
     <main className="container--login"
       style={{
@@ -53,8 +69,7 @@ export const Login = () => {
       {/* title card */}
       <Card
         style={{
-          border: "1px solid #2A2B37",
-          backgroundColor: "#2A2B37",
+          backgroundColor: `${SLATE}`,
           width: "100%",
           padding: "20px",
           borderRadius: "0",
@@ -64,7 +79,7 @@ export const Login = () => {
       >
         <CardHeader
           style={{
-            color: "grey",
+            color: `${LIGHT_GRAY}`,
             border: "none"
           }}>
 
@@ -72,29 +87,80 @@ export const Login = () => {
             style={{
               fontFamily: 'Vina Sans, cursive',
               fontSize: "18vh",
-              textAlign: "center"
+              textAlign: "center",
+              position: "relative",
+              zIndex: "1"
             }}
           >
-            Mooch
+            <div
+              style={{
+                display: "flex",
+                overflowY: "hidden",
+                justifyContent: "center"
+              }}>
+              {title.map((x, index) => {
+                return <div
+                  style={{
+                    animation: `displayTitle ${0.5 * (index + 1)}s ease-out 0s 1`,
+                    position: "relative",
+                  }}
+                >
+                  <CardText
+                    style={{
+                      position: "relative",
+                      zIndex: "1"
+                    }}>{x}</CardText>
+                  <CardText tag="h2"
+                    style={{
+                      fontFamily: 'Vina Sans, cursive',
+                      fontSize: "18vh",
+                      textAlign: "center",
+                      position: "relative",
+                      zIndex: "0",
+                      color: `${DARK_GRAY}`,
+                      bottom: "198px",
+                      left: "6px",
+                      height: "0"
+                    }}
+                  >
+                    {x}
+                  </CardText>
+
+                </div>
+              })}
+            </div>
           </CardText>
         </CardHeader>
         <CardBody
           style={{
             fontFamily: 'Vina Sans, cursive',
             fontSize: "6vh",
-            color: "white",
+            color: `${WHITE}`,
             textAlign: "center"
           }}  >
           <CardText
             style={{ marginTop: "5vh" }}>
-            The one and only subscrition sharing web application.
+            The <span
+              style={{ color: "orange" }}>one</span> and <span style={{ color: "orange" }}>only </span>subscrition sharing web application.
           </CardText>
           <Button
             style={{
               fontSize: "25px",
               padding: "5px 20px",
-              marginTop: "6vh"
+              marginTop: "6vh",
+              color: bttnHover.BTTN3 ? `${WHITE}` : `${SLATE}`,
+              backgroundColor: bttnHover.BTTN3 ? `${SLATE}` : `${LIGHT_GRAY}`
             }}
+            onMouseEnter={
+              () => {
+                setBttnHover({ BTTN3: true })
+              }
+            }
+            onMouseLeave={
+              () => {
+                setBttnHover({ BTTN3: false })
+              }
+            }
             onClick={
               () => {
                 setDisplayLogin(true)
@@ -112,17 +178,22 @@ export const Login = () => {
           <CardBody
             className="d-flex"
             style={{
-              justifyContent: "space-around",
               fontSize: "4vh",
+            }}>
+            <div id="creatorsContainer" style={{
+              display: "none",
+              justifyContent: "space-around",
               width: "60%",
               margin: "auto"
             }}>
+              {
+                teamMembers.map((x, index) => {
 
-            {teamMembers.map((x, index) => {
-              return <Creators
-                x={x}
-                index={index} />
-            })}
+                  return <Creators
+                    x={x}
+                    index={index} />
+                })}
+            </div>
           </CardBody>
         </CardBody>
       </Card>
@@ -163,7 +234,7 @@ export const Login = () => {
           <Card
             style={{
               border: "1px solid #2A2B37",
-              backgroundColor: "black",
+              backgroundColor: `${BLACK}`,
               minHeight: "100vh",
               height: "100%",
               padding: "20px",
@@ -172,7 +243,7 @@ export const Login = () => {
             }}>
             <CardHeader
               style={{
-                color: "grey",
+                color: `${LIGHT_GRAY}`,
                 border: "none"
               }}>
 
@@ -180,9 +251,25 @@ export const Login = () => {
                 style={{
                   fontFamily: 'Vina Sans, cursive',
                   fontSize: "50px",
-                  textAlign: "center"
+                  textAlign: "center",
+                  position: "relative",
+                  zIndex: "1",
+                  color: `${WHITE}`
                 }}
               >
+                Please <span style={{ color: "orange" }}> sign in</span>
+              </CardText>
+              <CardText
+                style={{
+                  fontFamily: 'Vina Sans, cursive',
+                  fontSize: "50px",
+                  color: `${LIGHT_GRAY}`,
+                  position: "relative",
+                  bottom: "73px",
+                  left: "4px",
+                  zIndex: "0",
+                  height: "0"
+                }}>
                 Please sign in
               </CardText>
             </CardHeader>
@@ -190,7 +277,7 @@ export const Login = () => {
               style={{
                 fontFamily: 'Vina Sans, cursive',
                 fontSize: "25px",
-                color: "white",
+                color: `${WHITE}`,
                 textAlign: "center"
               }}  >
               <Form
@@ -201,7 +288,7 @@ export const Login = () => {
                       width: "100%",
                       textAlign: "left"
                     }}>
-                    Email address
+                    <span style={{ color: "orange" }}> Email</span> address
                   </Label>
                   <Input
                     id="email"
@@ -213,7 +300,7 @@ export const Login = () => {
                     autoFocus
                     style={{
                       fontSize: "20px",
-                      color: "grey"
+                      color: `${LIGHT_GRAY}`
                     }}
                   />
                 </FormGroup>
@@ -223,7 +310,7 @@ export const Login = () => {
                       width: "100%",
                       textAlign: "left"
                     }}>
-                    Password
+                    <span style={{ color: "orange" }}>Pass</span>word
                   </Label>
                   <Input
                     id="password"
@@ -235,7 +322,7 @@ export const Login = () => {
                     autoFocus
                     style={{
                       fontSize: "20px",
-                      color: "grey"
+                      color: `${LIGHT_GRAY}`
                     }} />
 
                 </FormGroup>
@@ -244,9 +331,22 @@ export const Login = () => {
                     type="submit"
                     style={{
                       fontSize: "20px",
-                      padding: "5px 15px"
-                    }}>
+                      padding: "5px 15px",
+                      color: bttnHover.BTTN1 ? `${WHITE}` : `${SLATE}`,
+                      backgroundColor: bttnHover.BTTN1 ? `${SLATE}` : `${LIGHT_GRAY}`
+                    }}
+                    onMouseEnter={
+                      () => {
+                        setBttnHover({ BTTN1: true })
+                      }
+                    }
+                    onMouseLeave={
+                      () => {
+                        setBttnHover({ BTTN1: false })
+                      }
+                    }>
                     Sign In
+
                   </Button>
                 </FormGroup>
               </Form>
@@ -255,13 +355,25 @@ export const Login = () => {
               <h2
                 style={{
                   marginTop: "6vh"
-                }}>Login With Google?</h2>
+                }}>Login With <span style={{ color: "orange" }}>Google?</span></h2>
               <Button type="submit"
                 onClick={(e) => handleAuthenticate(e, GOOGLE_SIGN_IN)}
                 style={{
                   fontSize: "20px",
-                  padding: "5px 15px"
-                }}>
+                  padding: "5px 15px",
+                  color: bttnHover.BTTN2 ? `${WHITE}` : `${SLATE}`,
+                  backgroundColor: bttnHover.BTTN2 ? `${SLATE}` : `${LIGHT_GRAY}`
+                }}
+                onMouseEnter={
+                  () => {
+                    setBttnHover({ BTTN2: true })
+                  }
+                }
+                onMouseLeave={
+                  () => {
+                    setBttnHover({ BTTN2: false })
+                  }
+                }>
                 Let's Do It!
               </Button>
               <section style={{
@@ -271,7 +383,7 @@ export const Login = () => {
                   style={{
                     marginBottom: "0",
                     fontSize: "32px"
-                  }}>New User?</CardText>
+                  }}><span style={{ color: "orange" }}>New</span> User?</CardText>
                 {/* <Link to="/register"
                 style={{
                   textDecoration: "none",
@@ -280,16 +392,38 @@ export const Login = () => {
                 <CardText
                   style={{
                     fontSize: "28px",
-                    color: "blue",
-                    cursor: "pointer"
+                    color: hover ? `orange` : `${LIGHT_GRAY}`,
+                    cursor: "pointer",
+                    position: "relative",
+                    zIndex: "1"
                   }}
                   onClick={
                     () => {
                       setRegister(true)
                     }
+                  }
+                  onMouseEnter={
+                    () => {
+                      setHover(true)
+                    }
+                  }
+                  onMouseLeave={
+                    () => {
+                      setHover(false)
+                    }
                   }>
                   Register
                 </CardText>
+                <CardText
+                  style={{
+                    fontSize: "28px",
+                    color: `${DARK_GRAY}`,
+                    cursor: "pointer",
+                    position: "relative",
+                    zIndex: "0",
+                    bottom: "55px",
+                    left: "3px"
+                  }}>Register</CardText>
               </section>
             </CardBody>
           </Card>

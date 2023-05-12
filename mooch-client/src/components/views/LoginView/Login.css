@@ -64,10 +64,25 @@ fieldset {
 
 @keyframes displayName {
   from {
-    top: 500px
+    top: 500px;
   }
 
   to {
-    top: 0px
+    top: 0px;
+  }
+}
+
+@keyframes displayTitle {
+  0% {
+    top: 500px;
+  }
+
+  88% {
+    color: orange;
+  }
+
+  100% {
+    color: #6b7280;
+    top: 50px;
   }
 }

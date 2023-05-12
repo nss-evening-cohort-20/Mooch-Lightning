@@ -2,10 +2,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authenticate } from "../../Utils/authUtils";
 import "../LoginView/Login.css";
-import { EMAIL_REGISTER } from "../../Utils/Constants";
+import { DIRTY_WHITE, EMAIL_REGISTER } from "../../Utils/Constants";
 import { Card, Form, FormGroup, Label, Input, Button, CardText, CardBody } from "reactstrap";
+import { DARK_GRAY, SLATE, LIGHT_GRAY, WHITE, BLACK } from "../../Utils/Constants";
 
 export const Register = ({ setRegister }) => {
+
+  const [hover, setHover] = useState(false)
+  const [bttnHover, setBttnHover] = useState({
+    BTTN1: false,
+    BTTN2: false
+  })
+
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -28,7 +36,7 @@ export const Register = ({ setRegister }) => {
   return (
     <Card style={{
       textAlign: "center",
-      backgroundColor: "black",
+      backgroundColor: `${BLACK}`,
       minHeight: "100vh",
       height: "100%",
       border: "1px solid #2A2B37",
@@ -36,14 +44,29 @@ export const Register = ({ setRegister }) => {
       borderRadius: "0",
       transition: "1s",
       fontFamily: 'Vina Sans, cursive',
-      color: "white",
-      fontSize: "25px"
+      color: `${WHITE}`,
+      fontSize: "25px",
+
     }}>
       <CardBody>
         <CardText
           style={{
             fontSize: "50px",
-            color: "grey"
+            color: `${WHITE}`,
+            position: `relative`,
+            zIndex: "1"
+          }}>
+          Please <span style={{ color: "orange" }}>Register</span>
+        </CardText>
+        <CardText
+          style={{
+            fontSize: "50px",
+            color: `${LIGHT_GRAY}`,
+            position: "relative",
+            bottom: "88px",
+            left: "4px",
+            zIndex: "0",
+            height: "0"
           }}>
           Please Register
         </CardText>
@@ -53,7 +76,7 @@ export const Register = ({ setRegister }) => {
               style={{
                 width: "100%",
                 textAlign: "left"
-              }}> Email address </Label>
+              }}> <span style={{ color: "orange" }}>Email</span> address </Label>
             <Input
               onChange={updateUser}
               type="email"
@@ -63,7 +86,7 @@ export const Register = ({ setRegister }) => {
               required
               style={{
                 fontSize: "20px",
-                color: "grey"
+                color: `${LIGHT_GRAY}`
               }}
             />
           </FormGroup>
@@ -72,7 +95,7 @@ export const Register = ({ setRegister }) => {
               style={{
                 width: "100%",
                 textAlign: "left"
-              }}> Password </Label>
+              }}> <span style={{ color: "orange" }}>Pass</span>word </Label>
             <Input
               onChange={updateUser}
               type="text"
@@ -83,7 +106,7 @@ export const Register = ({ setRegister }) => {
               autoFocus
               style={{
                 fontSize: "20px",
-                color: "grey"
+                color: `${LIGHT_GRAY}`
               }}
             />
           </FormGroup>
@@ -91,19 +114,44 @@ export const Register = ({ setRegister }) => {
             <Button type="submit"
               style={{
                 fontSize: "20px",
-                padding: "5px 15px"
-              }}> Register </Button>
+                padding: "5px 15px",
+                color: bttnHover.BTTN1 ? `${WHITE}` : `${SLATE}`,
+                backgroundColor: bttnHover.BTTN1 ? `${SLATE}` : `${LIGHT_GRAY}`
+              }}
+              onMouseEnter={
+                () => {
+                  setBttnHover({ BTTN1: true })
+                }
+              }
+              onMouseLeave={
+                () => {
+                  setBttnHover({ BTTN1: false })
+                }
+              }
+            > Register </Button>
           </FormGroup>
         </Form>
         <h2
-          style={{ marginTop: "6vh" }}>Register With Google?</h2>
+          style={{ marginTop: "6vh" }}>Register With <span style={{ color: "orange" }}>Google?</span></h2>
         <Button type="submit" onClick={handleRegister}
           style={{
             fontSize: "20px",
             padding: "5px 15px",
             width: "fit-content",
-            margin: "0 auto"
-          }}>
+            margin: "0 auto",
+            color: bttnHover.BTTN2 ? `${WHITE}` : `${SLATE}`,
+            backgroundColor: bttnHover.BTTN2 ? `${SLATE}` : `${LIGHT_GRAY}`
+          }}
+          onMouseEnter={
+            () => {
+              setBttnHover({ BTTN2: true })
+            }
+          }
+          onMouseLeave={
+            () => {
+              setBttnHover({ BTTN2: false })
+            }
+          }>
           Let's Do It!
         </Button>
         <CardText
@@ -111,21 +159,44 @@ export const Register = ({ setRegister }) => {
             marginTop: "8vh",
             fontSize: "32px"
           }}>
-          Already a user?
+          Already a <span style={{ color: "orange" }}>user</span>?
         </CardText>
         <CardText
           style={{
             fontSize: "28px",
-            color: "blue",
-            cursor: "pointer"
+            color: hover ? `orange` : `${LIGHT_GRAY}`,
+            cursor: "pointer",
+            position: "relative",
+            zIndex: "1"
           }}
           onClick={
             () => {
               setRegister(false)
             }
-          }>
+          }
+          onMouseEnter={
+            () => {
+              setHover(true)
+            }
+          }
+          onMouseLeave={
+            () => {
+              setHover(false)
+            }
+          }
+        >
           Sign In
         </CardText>
+        <CardText
+          style={{
+            fontSize: "28px",
+            color: `${DARK_GRAY}`,
+            cursor: "pointer",
+            position: "relative",
+            zIndex: "0",
+            bottom: "55px",
+            left: "3px"
+          }}>Sign In</CardText>
       </CardBody>
     </Card>
   );
