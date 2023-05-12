@@ -18,6 +18,7 @@ import { SearchResultsContainer } from "./SearchResultsContainer";
 import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { BLACK, DIRTY_WHITE, LIGHT_GRAY, SLATE, WHITE } from "../../Utils/Constants";
 
 
 
@@ -62,7 +63,7 @@ export const HomeView = () => {
     <div className=" position-fixed py-3"
       style={{
         height: "70px", top: "0px", zIndex: "100", width: "100vw",
-        backgroundColor: "black",
+        backgroundColor: `${BLACK}`
         // boxShadow: "0px 2px 5px 0px #14213D"
       }}>
       <Form
@@ -86,8 +87,8 @@ export const HomeView = () => {
                 <Input
                   style={{
                     width: "100%",
-                    color: "white",
-                    backgroundColor: "#2A2B37",
+                    color: `${WHITE}`,
+                    backgroundColor: `${SLATE}`,
                     fontFamily: 'Vina Sans, cursive',
                     fontSize: "24px",
                     letterSpacing: "1.5px",
@@ -134,7 +135,7 @@ export const HomeView = () => {
                       position: "absolute",
                       top: "12px",
                       left: "10px",
-                      color: "white",
+                      color: `${WHITE}`,
                     }} /> :
                   <FontAwesomeIcon
                     className="fa-2x"
@@ -143,7 +144,7 @@ export const HomeView = () => {
                       position: "absolute",
                       top: "12px",
                       left: "10px",
-                      color: "#6C757D",
+                      color: `${LIGHT_GRAY}`,
                     }} />}
               </div>
 
@@ -156,8 +157,8 @@ export const HomeView = () => {
               style={{
                 height: "fit-content",
                 minWidth: "200px",
-                backgroundColor: buttonHover ? "#2A2B37" : "white",
-                color: buttonHover ? "white" : "#2A2B37",
+                backgroundColor: buttonHover ? `${SLATE}` : `${WHITE}`,
+                color: buttonHover ? `${WHITE}` : `${SLATE}`,
                 fontFamily: 'Vina Sans, cursive',
                 fontSize: "25px",
                 letterSpacing: "0.7px",
@@ -211,6 +212,7 @@ export const HomeView = () => {
           position: "sticky",
           paddingLeft: "10px",
           top: "65px",
+          color: `${WHITE}`
           // zIndex: "00"
         }}>Welcome Robert</div>
       {/* welcome message */}
@@ -223,7 +225,7 @@ export const HomeView = () => {
         <Card
           style={{
             border: "1px solid #2A2B37",
-            backgroundColor: "#2A2B37",
+            backgroundColor: `${SLATE}`,
             width: "fit-content",
             margin: "10px 20px",
             height: "fit-content",
@@ -231,7 +233,7 @@ export const HomeView = () => {
           }}>
           <CardHeader
             style={{
-              color: "grey",
+              color: `${LIGHT_GRAY}`,
               border: "none"
             }}>
 
@@ -248,7 +250,7 @@ export const HomeView = () => {
             style={{
               fontFamily: 'Vina Sans, cursive',
               fontSize: "25px",
-              color: "white"
+              color: `${DIRTY_WHITE}`
             }}  >
             <CardText>
               A subscrition sharing web application made with you in mind.
@@ -262,7 +264,7 @@ export const HomeView = () => {
         <Card
           style={{
             border: "1px solid #2A2B37",
-            backgroundColor: "#2A2B37",
+            backgroundColor: `${SLATE}`,
             width: "fit-content",
             margin: "10px 20px",
             height: "fit-content",
@@ -270,7 +272,7 @@ export const HomeView = () => {
           }}>
           <CardHeader
             style={{
-              color: "grey",
+              color: `${LIGHT_GRAY}`,
               border: "none"
             }}>
 
@@ -287,7 +289,7 @@ export const HomeView = () => {
             style={{
               fontFamily: 'Vina Sans, cursive',
               fontSize: "25px",
-              color: "white"
+              color: `${DIRTY_WHITE}`
             }}  >
             <CardText>
               A subscrition sharing web application made with you in mind.
@@ -321,13 +323,12 @@ export const HomeView = () => {
                 width: "101%",
                 position: "relative",
                 right: "0.5%",
-                backgroundColor: background.idNo === type.id ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,1)",
-                // backgroundColor: "rgba(0,0,255,0.5)"
+                backgroundColor: background.idNo === type.id ? `rgba(9,9,11,0.8)` : `rgba(9,9,11,1)`,
               }}>
               <CardTitle tag="h3" className="mb-0"
                 style={{
-                  backgroundColor: "#000000",
-                  color: "#E5E5E5",
+                  backgroundColor: `${BLACK}`,
+                  color: `${DIRTY_WHITE}`,
                   borderTop: "1px solid #E5E5E5",
                   padding: "10px 30px",
                   fontFamily: 'Vina Sans, cursive',
@@ -337,7 +338,6 @@ export const HomeView = () => {
               </CardTitle>
               <div className="d-flex justify-content-start"
                 style={{
-                  // backgroundColor: "#000000",
                   padding: "0px 20px 10px",
                 }}>
                 <MoochPostContainer
@@ -356,7 +356,7 @@ export const HomeView = () => {
       <Card
         style={{
           border: "1px solid #2A2B37",
-          backgroundColor: "#2A2B37",
+          backgroundColor: `${BLACK}`,
           width: "fit-content",
           margin: "10px 20px",
           height: "fit-content",
@@ -364,7 +364,7 @@ export const HomeView = () => {
         }}>
         <CardHeader
           style={{
-            color: "grey",
+            color: `${LIGHT_GRAY}`,
             border: "none"
           }}>
 
@@ -381,7 +381,7 @@ export const HomeView = () => {
           style={{
             fontFamily: 'Vina Sans, cursive',
             fontSize: "25px",
-            color: "white"
+            color: `${DIRTY_WHITE}`
           }}  >
           <CardText>
             More text

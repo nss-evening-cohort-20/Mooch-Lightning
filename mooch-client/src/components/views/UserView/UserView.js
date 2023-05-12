@@ -7,10 +7,12 @@ import { Profile } from "./ProfileInformation";
 import { UserMembershipDetails } from "./UserMembershipDetails";
 import { UserMoochPostDetails } from "./UserMoochPostDetails";
 import { UserMoochRequestDetails } from "./UserMoochRequestDetails";
+import { AddMembershipModal } from "../AddMembershipView/AddMembershipModal";
 
 const url3 = "https://localhost:7082/api/User/";
 
 export const UserView = () => {
+  const [membershipModalIsOpen, setMembershipModalOpen] = useState(false)
 
 const currentUser = getCurrentUser();
 const [userMemberships, setUserMembershipsList] = useState([])
@@ -42,6 +44,7 @@ return <>
 <header><Profile/></header>
   <div>
     <h3>My Memberships</h3>
+    <Button onClick={() => setMembershipModalOpen(true)}>Add Membership</Button>
     {userMemberships.map((memberships) =>(
       <>
         <UserMembershipDetails
@@ -91,5 +94,6 @@ return <>
     ))}
 </div>
 </main>
+<AddMembershipModal modalIsOpen={membershipModalIsOpen} setModalIsOpen={setMembershipModalOpen} reloadData={fetchUserDetails}/>
 </>
 };
