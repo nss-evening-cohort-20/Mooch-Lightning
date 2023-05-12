@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_CONSTANTS, SLATE, WHITE } from '../../Utils/Constants';
-import { useParams } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import './CreateMoochPostView.css';
 import { getCurrentUser } from '../../Utils/Constants';
@@ -15,8 +14,6 @@ export const CreateMoochPostView = () => {
   const navigate = useNavigate();
 
   const currentUser = getCurrentUser();
-
-  console.log('CURRENT USER', currentUser);
 
   useEffect(() => {
     const fetchData = async () => {

@@ -1,23 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ROUTE_CONSTANTS } from '../../Utils/Constants';
 import { useParams } from 'react-router-dom';
 import './OrganizationView.css';
-import { getCurrentUser } from '../../Utils/Constants';
-import {
-  Card,
-  CardGroup,
-  CardImg,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  CardLink,
-  Button,
-} from 'reactstrap';
+import { Card, CardGroup, CardImg, CardBody, CardText } from 'reactstrap';
 import { Title } from './Title';
-
-const url = 'https://localhost:7082/api/Organization/withMembership/1';
 
 export const OrganizationView = () => {
   const getOrgUrl = async () => {
@@ -25,6 +10,9 @@ export const OrganizationView = () => {
     const fetchJson = await fetchData.json();
     setOrgUrl(fetchJson.memberships);
   };
+  const { id } = useParams();
+  const url = `https://localhost:7082/api/Organization/withMembership/${id}`;
+
   // image for memberships
   const [orgUrl, setOrgUrl] = useState([]);
 
@@ -41,6 +29,7 @@ export const OrganizationView = () => {
             return (
               <>
                 <Card
+                  key={e.id}
                   style={{ backgroundColor: '#DCDCDC' }}
                   className="card, card-align"
                 >
