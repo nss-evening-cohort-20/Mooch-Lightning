@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Title.css';
+import { WHITE } from '../../Utils/Constants';
 
 const url = 'https://localhost:7082/api/Organization/withMembership/1';
 
@@ -19,7 +20,7 @@ export const Title = () => {
   return (
     <>
       <div className="container">
-        <h1> {org.name}</h1>
+        <h1 style={{ color: `${WHITE}` }}> {org.name}</h1>
         <img className="img-size" src={org.imageUrl} />
       </div>
     </>

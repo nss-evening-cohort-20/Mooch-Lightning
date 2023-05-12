@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ROUTE_CONSTANTS } from '../../Utils/Constants';
+import { ROUTE_CONSTANTS, SLATE, WHITE } from '../../Utils/Constants';
 import { useParams } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import './CreateMoochPostView.css';
@@ -54,15 +54,23 @@ export const CreateMoochPostView = () => {
       <div className="App">
         <label>
           <span
-            style={{ textAlign: 'left', fontSize: '25px', marginLeft: '15px' }}
+            style={{
+              textAlign: 'left',
+              fontSize: '25px',
+              marginLeft: '15px',
+              color: `${WHITE}`,
+            }}
           >
             Share a Membership For Mooching
           </span>
         </label>
         <Form className="form" onSubmit={handleSubmit}>
           <FormGroup>
-            <Label for="select">Select</Label>
+            <Label for="select" style={{ color: `${WHITE}` }}>
+              Select
+            </Label>
             <Input
+              style={{ backgroundColor: `${SLATE}`, color: `${WHITE}` }}
               id="select"
               name="Mooch Request"
               type="select"
@@ -80,8 +88,11 @@ export const CreateMoochPostView = () => {
           </FormGroup>
           <div className="d-flex justify-content-around">
             <FormGroup>
-              <Label for="startDate">Start Date</Label>
+              <Label for="startDate" style={{ color: `${WHITE}` }}>
+                Start Date
+              </Label>
               <Input
+                style={{ backgroundColor: `${SLATE}`, color: `${WHITE}` }}
                 id="startDate"
                 name="date"
                 type="date"
@@ -92,8 +103,11 @@ export const CreateMoochPostView = () => {
             </FormGroup>
 
             <FormGroup>
-              <Label for="endDate">End Date</Label>
+              <Label for="endDate" style={{ color: `${WHITE}` }}>
+                End Date
+              </Label>
               <Input
+                style={{ backgroundColor: `${SLATE}`, color: `${WHITE}` }}
                 id="endDate"
                 name="date"
                 placeholder="date placeholder"
