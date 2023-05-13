@@ -25,6 +25,7 @@ import {
   LIGHT_GRAY,
   SLATE,
   WHITE,
+  getCurrentUser,
 } from '../../Utils/Constants';
 
 const url = 'https://localhost:7082/api/OrganizationType';
@@ -40,6 +41,8 @@ export const HomeView = () => {
     const fetchJson = await fetchData.json();
     setOrganizationTypes(fetchJson);
   };
+
+  const currentUser = getCurrentUser()
 
   const [organizationTypes, setOrganizationTypes] = useState([]);
 
@@ -62,29 +65,29 @@ export const HomeView = () => {
   });
 
   return <>
-    <div>
-      <img
-        style={{
-          objectFit: "contain",
-          height: "200px",
-          width: "200px",
-          textAlign: "center",
-          marginLeft: "40%",
-        }}
-        alt="profile image"
-        src="/images/mooch-logo.png"
-      />
-    </div>
 
-    <div className=" position-fixed py-3"
+    <div className=" position-fixed py-3 d-flex align-items-baseline "
       style={{
         height: "70px", top: "0px", zIndex: "100", width: "100vw",
         backgroundColor: `${BLACK}`
         // boxShadow: "0px 2px 5px 0px #14213D"
       }}>
+      <div className='align-self-center'
+        style={{
+          color: `${WHITE}`,
+          marginLeft: '1rem',
+          fontFamily: 'Vina Sans, cursive',
+          fontSize: "40px",
+          letterSpacing: "1px",
+          paddingBottom: "8px"
+        }}>
+        mooch
+      </div>
+
       <Form
         style={{
-          alignSelf: "center",
+          marginLeft: "20px",
+
           position: "relative",
           bottom: "10px"
         }}>
@@ -171,7 +174,7 @@ export const HomeView = () => {
 
             </div>
             <Button
-              className="px-3 py-1 mx-5"
+              className="px-3 py-1 mx-5" use
               style={{
                 height: "fit-content",
                 minWidth: "200px",
@@ -232,7 +235,7 @@ export const HomeView = () => {
           // zIndex: "00"
         }}
       >
-        Welcome Robert
+        Welcome {currentUser.username}
       </div>
       {/* welcome message */}
       <div
@@ -277,50 +280,7 @@ export const HomeView = () => {
             }}
           >
             <CardText>
-              A subscrition sharing web application made with you in mind.
-            </CardText>
-            <CardText>
-              Search posts to find something that catches your interest or
-              share a post to spread the love.
-            </CardText>
-          </CardBody>
-        </Card>
-        <Card
-          style={{
-            border: '1px solid #2A2B37',
-            backgroundColor: `${SLATE}`,
-            width: 'fit-content',
-            margin: '10px 20px',
-            height: 'fit-content',
-            padding: '20px',
-            fontWeight: `100`
-          }}
-        >
-          <CardHeader
-            style={{
-              color: `${LIGHT_GRAY}`,
-              border: 'none',
-            }}
-          >
-            <CardText
-              tag="h2"
-              style={{
-                fontFamily: 'Vina Sans, cursive',
-                fontSize: '40px',
-              }}
-            >
-              Welcome To Mooch!
-            </CardText>
-          </CardHeader>
-          <CardBody
-            style={{
-              fontFamily: 'Vina Sans, cursive',
-              fontSize: '25px',
-              color: `${DIRTY_WHITE}`,
-            }}
-          >
-            <CardText>
-              A subscrition sharing web application made with you in mind.
+              A subscription sharing web application made with you in mind.
             </CardText>
             <CardText>
               Search posts to find something that catches your interest or

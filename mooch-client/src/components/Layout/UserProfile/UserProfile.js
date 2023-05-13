@@ -19,7 +19,9 @@ import {
   LIGHT_GRAY,
   SLATE,
   WHITE,
+  getCurrentUser,
 } from "../../Utils/Constants";
+import { authsignOut } from "../../Utils/authUtils";
 
 export const UserProfile = () => {
   const [userInfo, setUserInfo] = useState({});
@@ -27,10 +29,13 @@ export const UserProfile = () => {
   const [userMembershipsDetails, setUserMembershipsDetails] = useState([]);
   const [userMoochPostDetails, setUserMoochPostDetails] = useState([]);
 
+  const currentUser = getCurrentUser()
+  const navigate = useNavigate()
+
   useEffect(
     () => {
       const fetchData = async () => {
-        const response = await fetch(`https://localhost:7082/api/User/1`);
+        const response = await fetch(`https://localhost:7082/api/User/${currentUser.id}`);
         const userApiResponse = await response.json();
         console.log(userApiResponse);
         setUserInfo(userApiResponse);
@@ -52,20 +57,8 @@ export const UserProfile = () => {
           top: "112px",
           color: `${WHITE}`,
         }}
-        // style={{
-        //   fontFamily: "Vina Sans, cursive",
-        //   fontSize: "35px",
-        //   position: "sticky",
-        //   paddingLeft: "10px",
-        //   top: "65px",
-        //   color: `${WHITE}`,
-        //   // zIndex: "00"
-        // }}
       >
         <Card
-          //   style={{
-          //     width: "18rem",
-          //   }}
           style={{
             border: "1px solid #2A2B37",
             backgroundColor: `${SLATE}`,
@@ -75,21 +68,20 @@ export const UserProfile = () => {
             padding: "20px",
           }}
         >
-          <img
-            style={{ objectFit: "contain", height: "100px", width: "100px" }}
-            alt="profile image"
-            src={`${userInfo.imageUrl}`}
-          />
+
           <CardBody>
             <CardTitle tag="h5">Profile Info</CardTitle>
-            <CardSubtitle className="mb-2 text-muted" tag="h6">
+            <CardSubtitle className="mb-2" tag="h6" style={{ color: `${LIGHT_GRAY}` }}>
               {`${userInfo.firstName} ${userInfo.lastName}`}
             </CardSubtitle>
             <CardSubtitle className="mb-2 text-muted" tag="h6">
               {`${userInfo.email}`}
             </CardSubtitle>
-            <CardText>{`You have ${userMoochRequestDetails?.length} Mooch Request(s)!`}</CardText>
-            <Button>Sign Out</Button>
+            <CardText>{`You have ${userMoochRequestDetails?.length} Mooch ${userMoochRequestDetails?.length > 1 ? "Requests!" : 'Request!'}`}</CardText>
+            <div className="d-flex justify-content-between">
+              <Button onClick={() => navigate("UserProfile")}>My Account</Button>
+              <Button onClick={() => authsignOut()}>Sign Out</Button>
+            </div>
           </CardBody>
         </Card>
       </div>
