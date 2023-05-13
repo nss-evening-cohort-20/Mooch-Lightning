@@ -9,6 +9,7 @@ import { UserMoochPostDetails } from "./UserMoochPostDetails";
 import { UserMoochRequestDetails } from "./UserMoochRequestDetails";
 import { AddMembershipModal } from "../AddMembershipView/AddMembershipModal";
 import { BLACK, DIRTY_WHITE, LIGHT_GRAY, SLATE, WHITE } from "../../Utils/Constants";
+import { NavBar } from "../../Layout/NavBar/NavBar";
 
 const url3 = "https://localhost:7082/api/User/";
 
@@ -43,9 +44,9 @@ export const UserView = () => {
 
 
   return <>
-    <main>
-      <header><Profile /></header>
-      <Container>
+    <NavBar />
+    <main className="mt-5">
+      <Container style={{ marginTop: '6rem' }}>
         <div className="d-flex justify-content-center"
           style={{ margin: `20px 0` }}>
           <UncontrolledAccordion defaultOpen="1">

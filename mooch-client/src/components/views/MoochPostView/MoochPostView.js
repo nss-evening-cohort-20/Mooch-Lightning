@@ -5,6 +5,7 @@ import { Button, Col, Container, Row } from "reactstrap";
 import { formatDateToString } from "../../Utils/dateUtils";
 import { MoochRequestModal } from "../MoochRequestView/MoochRequestModal";
 import { MoochPostCard } from "./MoochPostCard";
+import { NavBar } from "../../Layout/NavBar/NavBar";
 
 export const MoochPostView = () => {
     const [userSuggestions, setUserSuggestions] = useState([]);
@@ -70,7 +71,8 @@ export const MoochPostView = () => {
     }
 
     return <>
-        <Container fluid className="pt-5">
+        <NavBar />
+        <Container fluid className="pt-5 mt-5">
             <Row md="2">
                 <Col md="">
                     <section className="text-center" style={{ color: `${WHITE}` }}>
