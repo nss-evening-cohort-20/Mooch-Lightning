@@ -228,7 +228,7 @@ export const Login = () => {
 
       {/* register from */}
 
-      <div style={{
+      {/* <div style={{
         position: "fixed",
         top: "0",
         top: registerForm ? "0" : "100vh",
@@ -237,7 +237,7 @@ export const Login = () => {
         zIndex: "200"
       }} >
         <CreateAccount />
-      </div>
+      </div> */}
 
 
       {/* register / sign in */}
