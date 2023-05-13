@@ -18,7 +18,10 @@ public class User
 public class UserMoochPostDetails
 {
     public int UserId { get; set; }
+    public string Username { get; set; }
     public int MembershipId { get; set; }
+    public string MembershipDescription { get; set; }
+    public string OrgName { get; set; }
     public int MoochPostId { get; set; }
     public bool? IsMooched { get; set; }
     public DateTime? AvailabilityStartDate { get; set; }
