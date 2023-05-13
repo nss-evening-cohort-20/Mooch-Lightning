@@ -51,7 +51,7 @@ export const MoochRequestModal = ({ modalIsOpen, setModalIsOpen, modalData }) =>
         <Container className="form-align" >
           <div>
             <section className="text-center" style={{ color: `${DIRTY_WHITE}` }}>
-              <img src={modalData.membershipImageUrl} />
+              <img src={modalData.membershipImageUrl} style={{ maxWidth: '24rem' }} />
               <h1 style={{ color: `${DIRTY_WHITE}` }}>{modalData.organizationName} - {modalData.membershipDescription}</h1>
               <h5 style={{ color: `${DIRTY_WHITE}` }}>{formatDateToString(modalData.availabilityStartDate)} - {formatDateToString(modalData.availabilityEndDate)}</h5>
 
