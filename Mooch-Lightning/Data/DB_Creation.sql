@@ -130,7 +130,7 @@ INSERT INTO [OrganizationType]
 VALUES
 (1,'Streaming Service', 'https://media.istockphoto.com/id/1130133758/photo/pop-corn-on-pastel-color-background-food-and-snack-concepts-ideas-minimal.jpg?s=612x612&w=0&k=20&c=MoDEUkTcZ8QeOSQ5DJCEpEyUATQkfPWSsx5Jr12oxts='),
 (2, 'Fitness', 'https://images.squarespace-cdn.com/content/v1/5fea20d8455b341d9dd8ba63/1609441552564-AW5AYSGG2WPXW8TACN5O/landing-background-min-squarespace.jpg?format=2500w'),
-(3, 'Theatres','https://images.squarespace-cdn.com/content/v1/5fea20d8455b341d9dd8ba63/1609441552564-AW5AYSGG2WPXW8TACN5O/landing-background-min-squarespace.jpg?format=2500w')
+(3, 'Theaters','https://images.squarespace-cdn.com/content/v1/5fea20d8455b341d9dd8ba63/1609441552564-AW5AYSGG2WPXW8TACN5O/landing-background-min-squarespace.jpg?format=2500w')
 SET IDENTITY_INSERT [OrganizationType] OFF
 
 SET IDENTITY_INSERT [Organization] ON

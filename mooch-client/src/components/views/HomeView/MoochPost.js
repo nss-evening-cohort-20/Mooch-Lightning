@@ -92,24 +92,33 @@ export const MoochPost = ({
             src={organizationImage}
             style={{
               height: '150px',
+              cursor: `pointer`
             }}
           />
           <CardBody>
             <CardTitle
               tag="h4"
               style={{ color: `${WHITE}` }}
-              onClick={() => navigate(`OrganizationView/${organizationId}`)}
+
             >
-              {organizationName}
-              <p
+              <div
                 style={{
-                  color: `${DIRTY_WHITE}}`,
-                  fontSize: '14px',
-                  display: 'block',
+                  cursor: 'pointer'
                 }}
+                onClick={() => navigate(`OrganizationView/${organizationId}`)}
               >
-                {membershipDescription}
-              </p>
+                {organizationName}
+                <p
+                  style={{
+                    color: `${DIRTY_WHITE}}`,
+                    fontSize: '14px',
+                    display: 'block',
+                  }}
+
+                >
+                  {membershipDescription}
+                </p>
+              </div>
               <p
                 style={{
                   color: `${DIRTY_WHITE}}`,
@@ -126,17 +135,17 @@ export const MoochPost = ({
             style={{
               backgroundColor: `${SLATE}`,
               borderWidth: '1px 0px',
-              borderColor: 'lightgray',
+              borderColor: `${LIGHT_GRAY}`,
               borderStyle: 'solid',
             }}
           >
             <ListGroupItem
-              style={{ backgroundColor: `${SLATE}`, color: `${DIRTY_WHITE}` }}
+              style={{ backgroundColor: `${SLATE}`, color: `${DIRTY_WHITE}`, borderColor: `${LIGHT_GRAY}` }}
             >
               Start Date: <span>{startDate.toLocaleDateString()}</span>
             </ListGroupItem>
             <ListGroupItem
-              style={{ backgroundColor: `${SLATE}`, color: `${DIRTY_WHITE}` }}
+              style={{ backgroundColor: `${SLATE}`, color: `${DIRTY_WHITE}`, borderColor: `${LIGHT_GRAY}` }}
             >
               End Date: <span>{endDate.toLocaleDateString()}</span>
             </ListGroupItem>

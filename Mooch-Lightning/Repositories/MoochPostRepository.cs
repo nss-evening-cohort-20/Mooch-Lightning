@@ -336,14 +336,20 @@ namespace Mooch_Lightning.Repositories
                                     UPPER(O.Name) LIKE '%' + @SEARCHVALUE + '%'
                                     AND
                                     MP.IsMooched = 0
+									AND
+									MP.AvailabilityEndDate > GETDATE()
                                     OR
                                     UPPER(M.Description) LIKE '%' + @SEARCHVALUE + '%'
                                     AND
                                     MP.IsMooched = 0
+									AND
+									MP.AvailabilityEndDate > GETDATE()
                                     OR
                                     UPPER(U.Username) LIKE '%' + @SEARCHVALUE + '%'
                                     AND
                                     MP.IsMooched = 0
+									AND
+									MP.AvailabilityEndDate > GETDATE()
 
                                     ORDER BY MP.AvailabilityStartDate, O.Name ASC";
 

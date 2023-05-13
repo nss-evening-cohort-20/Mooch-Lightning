@@ -9,6 +9,7 @@
   margin: auto 0;
   justify-content: center; */
 }
+
 .App {
   border: 2px solid #d3d3d3;
   border-radius: 0.5em;
@@ -25,6 +26,6 @@
   padding: 1em;
 }
 
-label {
+/* label {
   font-weight: 600;
-}
+} */

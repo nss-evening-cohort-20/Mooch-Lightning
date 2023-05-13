@@ -63,7 +63,7 @@ export const CreateMoochPostView = () => {
         </label>
         <Form className="form" onSubmit={handleSubmit}>
           <FormGroup>
-            <Label for="select" style={{ color: `${WHITE}` }}>
+            <Label for="select" style={{ color: `${WHITE}`, fontWeight: "600" }}>
               Select
             </Label>
             <Input
@@ -85,7 +85,7 @@ export const CreateMoochPostView = () => {
           </FormGroup>
           <div className="d-flex justify-content-around">
             <FormGroup>
-              <Label for="startDate" style={{ color: `${WHITE}` }}>
+              <Label for="startDate" style={{ color: `${WHITE}`, fontWeight: "600" }}>
                 Start Date
               </Label>
               <Input
