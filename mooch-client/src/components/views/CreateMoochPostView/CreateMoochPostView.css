@@ -1,0 +1,31 @@
+/* .form-container {
+  margin-top: 50%;
+} */
+.form-align {
+  margin-top: 300px;
+  /* display: flex;
+  width: 100%;
+  max-width: 80%;
+  margin: auto 0;
+  justify-content: center; */
+}
+
+.App {
+  border: 2px solid #d3d3d3;
+  border-radius: 0.5em;
+  margin-bottom: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  padding: 1em;
+  text-align: left;
+  width: 800px;
+}
+
+.form {
+  padding: 1em;
+}
+
+/* label {
+  font-weight: 600;
+} */

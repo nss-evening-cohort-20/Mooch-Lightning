@@ -1,6 +1,13 @@
 import { Card, CardBody, CardText } from "reactstrap"
 import { useState, useEffect } from "react"
-
+import {
+    BLACK,
+    DARK_GRAY,
+    DIRTY_WHITE,
+    LIGHT_GRAY,
+    SLATE,
+    WHITE,
+} from '../../Utils/Constants';
 
 export const SearchResult = ({ searchValue, setSearchValue, result, idNo, number, origin }) => {
 
@@ -28,7 +35,7 @@ export const SearchResult = ({ searchValue, setSearchValue, result, idNo, number
                     padding: "5px 0 5px 30px",
                     height: "fit-content",
                     backgroundColor: "#2A2B37",
-                    color: isSuggestionHovered ? "#E5E5E5" : "grey",
+                    color: isSuggestionHovered ? `${WHITE}` : `${LIGHT_GRAY}`,
                     fontSize: "20px"
                 }}
                 onMouseEnter={

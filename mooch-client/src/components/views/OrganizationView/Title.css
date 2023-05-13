@@ -1,0 +1,19 @@
+.container {
+  width: 500;
+  /* margin: '50px auto'; */
+  display: 'flex';
+  justify-content: 'center';
+  text-align: center;
+  margin-top: 50px;
+}
+
+.img-size {
+  margin-top: 50px;
+  height: 300px;
+  width: 400px;
+  border-radius: 8px;
+}
+
+h1 {
+  font-family: 'Bebas Neue', sans-serif;
+}

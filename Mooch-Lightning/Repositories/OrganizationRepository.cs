@@ -90,6 +90,7 @@ public class OrganizationRepository : BaseRepository, IOrganizationRepository
                 cmd.CommandText = @"
                                 SELECT  Organization.Id as OrganizationId
                                        ,Organization.Name
+                                       ,Organization.imageUrl as OrganizationImage
                                        ,Membership.Id as MembershipId
                                        ,Membership.Description
                                        ,Membership.ImageUrl
@@ -110,6 +111,7 @@ public class OrganizationRepository : BaseRepository, IOrganizationRepository
                         {
                             Id = Id,
                             Name = DbUtils.GetString(reader, "Name"),
+                            ImageUrl = DbUtils.GetString(reader, "OrganizationImage"),
                             Memberships = new List<Membership>()
                         };
                     };

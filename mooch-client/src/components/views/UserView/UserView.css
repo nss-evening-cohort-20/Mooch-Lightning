@@ -1,3 +1,27 @@
 h1{
     color: black;
 }
+
+header{
+display: flex;
+justify-content: flex-end;
+flex-direction: column;
+flex-flow: wrap-reverse;
+}
+
+.memberships{
+display: flex;
+justify-content: center;
+}
+
+
+.accordion-button:not(.collapsed){
+    background-color: #09090b;
+}
+
+.accordion-button{
+    background-color: #09090b;
+}
+
+
+

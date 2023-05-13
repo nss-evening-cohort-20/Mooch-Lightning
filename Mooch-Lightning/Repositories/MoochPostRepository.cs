@@ -234,10 +234,11 @@ namespace Mooch_Lightning.Repositories
                                         OUTPUT inserted.Id
                                         VALUES (@UserMembershipId,@IsMooched,@AvailabilityStartDate,@AvailabilityEndDate);";
                     cmd.Parameters.AddWithValue("@UserMemberShipId", post.UserMembershipId);
-                    cmd.Parameters.AddWithValue("@IsMooched", post.IsMooched);
+                    cmd.Parameters.AddWithValue("@IsMooched", false);
                     cmd.Parameters.AddWithValue("@AvailabilityStartDate", post.AvailabilityStartDate);
                     cmd.Parameters.AddWithValue("@AvailabilityEndDate", post.AvailabilityEndDate);
                     post.Id = (int)cmd.ExecuteScalar();
+                 
                     return post;
                 }
             }
@@ -301,6 +302,7 @@ namespace Mooch_Lightning.Repositories
                                     SELECT 
 
                                     MP.Id AS PostId,
+                                    O.Id as OrgId,
                                     O.Name AS OrgName,
                                     O.ImageUrl AS OrgImg,
                                     M.Description AS mDescription,
@@ -334,14 +336,20 @@ namespace Mooch_Lightning.Repositories
                                     UPPER(O.Name) LIKE '%' + @SEARCHVALUE + '%'
                                     AND
                                     MP.IsMooched = 0
+									AND
+									MP.AvailabilityEndDate > GETDATE()
                                     OR
                                     UPPER(M.Description) LIKE '%' + @SEARCHVALUE + '%'
                                     AND
                                     MP.IsMooched = 0
+									AND
+									MP.AvailabilityEndDate > GETDATE()
                                     OR
                                     UPPER(U.Username) LIKE '%' + @SEARCHVALUE + '%'
                                     AND
                                     MP.IsMooched = 0
+									AND
+									MP.AvailabilityEndDate > GETDATE()
 
                                     ORDER BY MP.AvailabilityStartDate, O.Name ASC";
 
@@ -358,6 +366,7 @@ namespace Mooch_Lightning.Repositories
                             Id = DbUtils.GetInt(reader, "PostId"),
                             
                             OrganizationName = DbUtils.GetString(reader,"OrgName"),
+                            OrganizationId = DbUtils.GetInt(reader, "OrgId"),
                             OrganizationImageUrl = DbUtils.GetString(reader,"OrgImg"),
                             MembershipDescription = DbUtils.GetString(reader, "mDescription"),
                             MembershipImageUrl = DbUtils.GetString(reader, "MembershipImg"),

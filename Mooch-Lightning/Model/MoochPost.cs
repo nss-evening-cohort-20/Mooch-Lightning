@@ -12,7 +12,7 @@
     public class MoochPostSearchResult
     {
         public int Id { get; set; }
-        
+        public int OrganizationId { get; set; }
         public string OrganizationName { get; set; }
         public string OrganizationImageUrl { get; set; }
         public string MembershipDescription { get; set; }

@@ -1,87 +1,105 @@
-import { useState, useEffect } from "react";
-import { MoochPost } from "./MoochPost";
+import { useState, useEffect } from 'react';
+import { MoochPost } from './MoochPost';
+import { MoochRequestModal } from "../MoochRequestView/MoochRequestModal";
 
-export const MoochPostContainer = ({ orgType, isClicked, searchValue, setSearchValue, setBackground }) => {
+export const MoochPostContainer = ({
+  orgType,
+  isClicked,
+  searchValue,
+  setSearchValue,
+  setBackground,
+}) => {
 
-    const url = "https://localhost:7082/api/MoochPost/search_results?search=";
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [modalData, setModalData] = useState({
+    postId: 0,
+    organizationName: "",
+    organizationImageUrl: "",
+    membershipDescription: "",
+    membershipImageUrl: "",
+    userName: "",
+    userImageUrl: "",
+    availabilityStartDate: "",
+    availabilityEndDate: ""
+  })
 
-    const getSearchResults = async () => {
-        const fetchData = await fetch(url)
-        const fetchJson = await fetchData.json()
-        setSearchResults(fetchJson)
+
+  const url = 'https://localhost:7082/api/MoochPost/search_results?search=';
+
+  const getSearchResults = async () => {
+    const fetchData = await fetch(url);
+    const fetchJson = await fetchData.json();
+    setSearchResults(fetchJson);
+  };
+
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    getSearchResults();
+  }, []);
+
+  const [filterResults, setFilterResults] = useState([]);
+
+  useEffect(() => {
+    const copy = searchResults.map((x) => ({ ...x }));
+    const filteredSearch = copy.filter((obj) => obj.type === orgType);
+    setFilterResults(filteredSearch);
+  }, [searchResults]);
+
+  useEffect(() => {
+    let editValue = '';
+
+    if (
+      (searchValue !== '' && searchValue.includes('(')) ||
+      searchValue.includes(')')
+    ) {
+      editValue = searchValue.replace('(', '%28');
+      editValue = editValue.replace(')', '%29');
+      editValue = editValue.replace('+', '%2B');
+    } else {
+      editValue = searchValue;
     }
 
-    const [searchResults, setSearchResults] = useState([])
+    const searchUrl = `${url}${editValue}`;
 
-    useEffect(
-        () => {
-            getSearchResults()
-        }, []
-    )
+    const getNewSearchResults = async () => {
+      const fetchData = await fetch(searchUrl);
+      const fetchJson = await fetchData.json();
+      setSearchResults(fetchJson);
+    };
 
-    const [filterResults, setFilterResults] = useState([])
+    getNewSearchResults();
+    document.getElementById('searchBar').value = '';
+    setSearchValue('');
+  }, [isClicked]);
 
-    useEffect(
-        () => {
+  return <>
+    {filterResults.map((search) => (
+      <>
+        <div style={{
+          margin: "10px 15px",
+        }}>
+          <MoochPost
+            key={`mp--${search.id}`}
+            id={search.id}
+            organizationId={search.organizationId}
+            typeId={search.typeId}
+            organizationName={search.organizationName}
+            organizationImage={search.organizationImageUrl}
+            membershipDescription={search.membershipDescription}
+            membershipImageUrl={search.membershipImageUrl}
+            userName={search.userName}
+            userImageUrl={search.userImageUrl}
+            availabilityStartDate={search.availabilityStartDate}
+            availabilityEndDate={search.availabilityEndDate}
+            setBackground={setBackground}
+            setModalData={setModalData}
+            setModalIsOpen={setModalIsOpen}
+          />
+        </div>
+      </>
 
-            const copy = searchResults.map(x => ({ ...x }))
-            const filteredSearch = copy.filter(obj => obj.type === orgType)
-            setFilterResults(filteredSearch)
-        }, [searchResults]
-    )
-
-    useEffect(
-        () => {
-            let editValue = ""
-
-            if (searchValue !== "" && searchValue.includes("(") || searchValue.includes(")")) {
-                editValue = searchValue.replace("(", "%28")
-                editValue = editValue.replace(")", "%29")
-                editValue = editValue.replace("+", "%2B")
-            } else {
-                editValue = searchValue
-            }
-
-            const searchUrl = `${url}${editValue}`
-
-            const getNewSearchResults = async () => {
-                const fetchData = await fetch(searchUrl)
-                const fetchJson = await fetchData.json()
-                setSearchResults(fetchJson)
-            }
-
-            getNewSearchResults()
-            document.getElementById("searchBar").value = ""
-            setSearchValue("")
-
-        }, [isClicked]
-    )
-
-    return <>
-        {filterResults.map((search) => (
-            <>
-                <div style={{
-                    margin: "10px 15px",
-                }}>
-                    <MoochPost
-                        key={`mp--${search.id}`}
-                        id={search.id}
-                        typeId={search.typeId}
-                        organizationName={search.organizationName}
-                        organizationImage={search.organizationImageUrl}
-                        membershipDescription={search.membershipDescription}
-                        membershipImageUrl={search.membershipImageUrl}
-                        userName={search.userName}
-                        userImageUrl={search.userImageUrl}
-                        availabilityStartDate={search.availabilityStartDate}
-                        availabilityEndDate={search.availabilityEndDate}
-                        setBackground={setBackground}
-                    />
-                </div>
-            </>
-
-        ))}
-
-    </>
-
-}
+    ))}
+    <MoochRequestModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} modalData={modalData} />
+  </>
+};
