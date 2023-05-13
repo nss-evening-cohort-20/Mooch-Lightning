@@ -81,7 +81,7 @@ export const HomeView = () => {
           letterSpacing: "1px",
           paddingBottom: "8px"
         }}>
-        mooch
+        MOOCH
       </div>
 
       <Form
