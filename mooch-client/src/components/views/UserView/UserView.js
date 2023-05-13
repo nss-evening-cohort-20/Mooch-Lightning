@@ -49,12 +49,12 @@ export const UserView = () => {
       <Container style={{ marginTop: '6rem' }}>
         <div className="d-flex justify-content-center"
           style={{ margin: `20px 0` }}>
-          <UncontrolledAccordion defaultOpen="1">
+          <UncontrolledAccordion defaultOpen="1" style={{ width: '64rem' }}>
             <AccordionItem style={{
-              backgroundColor: `${LIGHT_GRAY}`
+              backgroundColor: `${SLATE}`
             }}>
               <AccordionHeader targetId="1">
-                <div style={{ backgroundColor: `${BLACK}`, width: `100%`, height: `100%` }} > Memberships </div>
+                <div style={{ backgroundColor: `${BLACK}`, width: `100%`, height: `100%`, color: `${WHITE}` }} > Memberships </div>
               </AccordionHeader>
               <AccordionBody accordionId="1">
                 <div style={{
@@ -86,12 +86,12 @@ export const UserView = () => {
         </div>
         <div className="d-flex justify-content-center"
           style={{ margin: `20px 0` }}>
-          <UncontrolledAccordion defaultOpen="1">
+          <UncontrolledAccordion defaultOpen="1" style={{ width: '64rem' }}>
             <AccordionItem style={{
-              backgroundColor: `${LIGHT_GRAY}`
+              backgroundColor: `${SLATE}`
             }}>
               <AccordionHeader targetId="1">
-                Mooch Posts
+                <div style={{ backgroundColor: `${BLACK}`, width: `100%`, height: `100%`, color: `${WHITE}` }} > Mooch Posts </div>
               </AccordionHeader>
               <AccordionBody accordionId="1">
                 <div style={{
@@ -140,12 +140,12 @@ export const UserView = () => {
         </div>
         <div className="d-flex justify-content-center"
           style={{ margin: `20px 0` }}>
-          <UncontrolledAccordion defaultOpen="1">
+          <UncontrolledAccordion defaultOpen="1" style={{ width: '64rem' }}>
             <AccordionItem style={{
-              backgroundColor: `${LIGHT_GRAY}`
+              backgroundColor: `${SLATE}`
             }}>
               <AccordionHeader targetId="1">
-                Mooch Requests
+                <div style={{ backgroundColor: `${BLACK}`, width: `100%`, height: `100%`, color: `${WHITE}` }} > Mooch Requests </div>
               </AccordionHeader>
               <AccordionBody accordionId="1">
                 <div style={{
