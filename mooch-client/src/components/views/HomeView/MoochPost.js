@@ -36,6 +36,7 @@ export const MoochPost = ({
 
     const [buttonHovered, setButtonHovered] = useState(false);
     const [isCardHovered, setIsCardHovered] = useState(false);
+    const [isImgHovered, setIsImgHovered] = useState(false);
 
     return (
         <>
@@ -76,6 +77,16 @@ export const MoochPost = ({
                             height: '150px',
                             cursor: `pointer`
                         }}
+                        onMouseEnter={
+                            () => {
+                                setIsImgHovered(true)
+                            }
+                        }
+                        onMouseLeave={
+                            () => {
+                                setIsImgHovered(false)
+                            }
+                        }
                     />
                     <CardBody>
                         <CardTitle

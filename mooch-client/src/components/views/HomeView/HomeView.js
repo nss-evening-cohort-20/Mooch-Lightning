@@ -263,7 +263,7 @@ export const HomeView = () => {
             }}
           >
             <CardText>
-              A subscrition sharing web application made with you in mind.
+              A subscription sharing web application made with you in mind.
             </CardText>
             <CardText>
               Search posts to find something that catches your interest or
