@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import './OrganizationView.css';
 import { Card, CardGroup, CardImg, CardBody, CardText } from 'reactstrap';
 import { Title } from './Title';
+import { NavBar } from '../../Layout/NavBar/NavBar';
+import { SLATE } from '../../Utils/Constants';
 
 export const OrganizationView = () => {
   const getOrgUrl = async () => {
@@ -22,16 +24,18 @@ export const OrganizationView = () => {
 
   return (
     <>
-      <Title />
-      <div className="d-flex justify-content-around">
-        <CardGroup style={{ width: '40%', height: '50%' }}>
+      <NavBar />
+      <div style={{ marginTop: '6rem' }} >
+        <Title />
+
+        <CardGroup className="d-flex justify-content-around mx-auto" style={{ width: '40%', height: '50%' }}>
           {orgUrl.map((e) => {
             return (
               <>
                 <Card
                   key={e.id}
                   style={{
-                    backgroundColor: '#DCDCDC',
+                    backgroundColor: `${SLATE}`,
                     marginRight: "20px",
                     color: "#a9a9a9 "
                   }}
@@ -57,6 +61,7 @@ export const OrganizationView = () => {
             );
           })}
         </CardGroup>
+
       </div>
     </>
   );
