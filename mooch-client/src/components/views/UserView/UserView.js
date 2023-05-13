@@ -1,18 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./UserView.css";
-import { Button, Card, CardBody, CardGroup, CardImg, CardSubtitle, CardText, CardTitle } from "reactstrap";
+import { AccordionItem, AccordionHeader, AccordionBody, Button, Card, CardBody, CardGroup, CardImg, CardSubtitle, CardText, CardTitle, Container, UncontrolledAccordion } from "reactstrap";
 import { getCurrentUser } from "../../Utils/Constants";
 import { Profile } from "./ProfileInformation";
 import { UserMembershipDetails } from "./UserMembershipDetails";
 import { UserMoochPostDetails } from "./UserMoochPostDetails";
 import { UserMoochRequestDetails } from "./UserMoochRequestDetails";
-import { AddMembershipModal } from "../AddMembershipView/AddMembershipModal";
+import {AddMembershipModal} from "../AddMembershipView/AddMembershipModal";
+import {BLACK, DIRTY_WHITE, LIGHT_GRAY, SLATE, WHITE} from "../../Utils/Constants";
 
 const url3 = "https://localhost:7082/api/User/";
 
 export const UserView = () => {
-  const [membershipModalIsOpen, setMembershipModalOpen] = useState(false)
+const [membershipModalIsOpen, setMembershipModalOpen] = useState(false)
 
 const currentUser = getCurrentUser();
 const [userMemberships, setUserMembershipsList] = useState([])
@@ -42,12 +43,26 @@ useEffect(
 return <>
 <main>
 <header><Profile/></header>
-  <div>
-    <h3>My Memberships</h3>
-    <Button onClick={() => setMembershipModalOpen(true)}>Add Membership</Button>
+  <Container>
+  <div className="d-flex justify-content-center" 
+  style={{margin:`20px 0`}}>
+    <UncontrolledAccordion defaultOpen="1">
+  <AccordionItem style={{
+        backgroundColor: `${LIGHT_GRAY}`}}>
+    <AccordionHeader targetId="1">
+     <div style={{ backgroundColor:`${BLACK}`, width:`100%`, height:`100%`}} > Memberships </div>
+    </AccordionHeader>
+    <AccordionBody accordionId="1">
+      <div style={{
+        display: "flex",
+        flexDirection: "row",
+      }}>
+    <Button onClick={() => setMembershipModalOpen(true)} style={{
+      backgroundColor:`${BLACK}`
+    }}>Add Membership</Button>
     {userMemberships.map((memberships) =>(
       <>
-        <UserMembershipDetails
+        <UserMembershipDetails 
         membershipId = {memberships.membershipId}
         membershipDescription = {memberships.membershipDescription}
         membershipImageUrl = {memberships.membershipImageUrl}
@@ -56,30 +71,60 @@ return <>
         orignizationImageUrl = {memberships.orignizationImageUrl}
         organizationType = {memberships.organizationType}
         />
-        
       </>
     ))
     }
-    <h3>My Mooches</h3>
+     </div>
+    </AccordionBody>
+   </AccordionItem>
+   </UncontrolledAccordion>
+    </div>
+    <div className="d-flex justify-content-center"
+    style={{margin:`20px 0`}}>
+    <UncontrolledAccordion defaultOpen="1">
+  <AccordionItem style={{
+        backgroundColor: `${LIGHT_GRAY}`}}>
+    <AccordionHeader targetId="1">
+      Mooch Requests
+    </AccordionHeader>
+    <AccordionBody accordionId="1">
+      <div style={{
+        display: "flex",
+        flexDirection: "row"
+      }}>
     {UserMoochPost.map((postedMooches) => (
       <>
-      <div>
        <UserMoochPostDetails
        userId = {postedMooches.userId}
        membershipId = {postedMooches.membershipId}
        moochPostId = {postedMooches.moochPostId}
        isMooched = {postedMooches.isMooched}
        availabilityStartDate = {postedMooches.availabilityStartDate}
-       availablilityEndDate = {postedMooches.availablilityEndDate}
+       availabilityEndDate = {postedMooches.availabilityEndDate}
        />
-      </div>
       </>
     ))
     }
-    <h3>My Requested Mooches</h3>
+    </div>
+    </AccordionBody>
+   </AccordionItem>
+   </UncontrolledAccordion>
+   </div>
+   <div className="d-flex justify-content-center" 
+   style={{margin:`20px 0`}}>
+    <UncontrolledAccordion defaultOpen="1">
+  <AccordionItem style={{
+        backgroundColor: `${LIGHT_GRAY}`}}>
+    <AccordionHeader targetId="1">
+      Mooch Details
+    </AccordionHeader>
+    <AccordionBody accordionId="1">
+      <div style={{
+        display: "flex",
+        flexDirection: "row"
+      }}>
     {UserRequestList.map((requestedMooches) => (
       <>
-      <div>
         <UserMoochRequestDetails
         userId = {requestedMooches.userId}
         moochRequestId = {requestedMooches.moochRequestId}
@@ -89,10 +134,14 @@ return <>
         isApproved = {requestedMooches.isApproved}
         dateCreated = {requestedMooches.dateCreated}
         />
-      </div>
       </>
     ))}
-</div>
+    </div>
+    </AccordionBody>
+   </AccordionItem>
+   </UncontrolledAccordion>
+   </div>
+</Container>
 </main>
 <AddMembershipModal modalIsOpen={membershipModalIsOpen} setModalIsOpen={setMembershipModalOpen} reloadData={fetchUserDetails}/>
 </>
