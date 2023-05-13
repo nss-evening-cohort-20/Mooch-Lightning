@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { MoochPost } from './MoochPost';
+import { MoochRequestModal } from "../MoochRequestView/MoochRequestModal";
 
 export const MoochPostContainer = ({
   orgType,
@@ -8,6 +9,21 @@ export const MoochPostContainer = ({
   setSearchValue,
   setBackground,
 }) => {
+
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [modalData, setModalData] = useState({
+    postId: 0,
+    organizationName: "",
+    organizationImageUrl: "",
+    membershipDescription: "",
+    membershipImageUrl: "",
+    userName: "",
+    userImageUrl: "",
+    availabilityStartDate: "",
+    availabilityEndDate: ""
+  })
+
+
   const url = 'https://localhost:7082/api/MoochPost/search_results?search=';
 
   const getSearchResults = async () => {
@@ -57,33 +73,33 @@ export const MoochPostContainer = ({
     setSearchValue('');
   }, [isClicked]);
 
-  return (
-    <>
-      {filterResults.map((search) => (
-        <>
-          <div
-            style={{
-              margin: '10px 15px',
-            }}
-          >
-            <MoochPost
-              key={`mp--${search.id}`}
-              id={search.id}
-              organizationId={search.organizationId}
-              typeId={search.typeId}
-              organizationName={search.organizationName}
-              organizationImage={search.organizationImageUrl}
-              membershipDescription={search.membershipDescription}
-              membershipImageUrl={search.membershipImageUrl}
-              userName={search.userName}
-              userImageUrl={search.userImageUrl}
-              availabilityStartDate={search.availabilityStartDate}
-              availabilityEndDate={search.availabilityEndDate}
-              setBackground={setBackground}
-            />
-          </div>
-        </>
-      ))}
-    </>
-  );
+  return <>
+    {filterResults.map((search) => (
+      <>
+        <div style={{
+          margin: "10px 15px",
+        }}>
+          <MoochPost
+            key={`mp--${search.id}`}
+            id={search.id}
+            organizationId={search.organizationId}
+            typeId={search.typeId}
+            organizationName={search.organizationName}
+            organizationImage={search.organizationImageUrl}
+            membershipDescription={search.membershipDescription}
+            membershipImageUrl={search.membershipImageUrl}
+            userName={search.userName}
+            userImageUrl={search.userImageUrl}
+            availabilityStartDate={search.availabilityStartDate}
+            availabilityEndDate={search.availabilityEndDate}
+            setBackground={setBackground}
+            setModalData={setModalData}
+            setModalIsOpen={setModalIsOpen}
+          />
+        </div>
+      </>
+
+    ))}
+    <MoochRequestModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} modalData={modalData} />
+  </>
 };

@@ -24,17 +24,36 @@ export const MoochPostCard = ({
     userImageUrl,
     availabilityStartDate,
     availabilityEndDate,
-    setBackground }) => {
+    setBackground,
+    setModalIsOpen,
+    setModalData }) => {
 
     let startDate = new Date(availabilityStartDate)
     let endDate = new Date(availabilityEndDate)
 
-    const [buttonHovered, setButtonHovered] = useState(false)
+    const [moochBtnHovered, setMoochBtnHovered] = useState(false)
+    const [suggBtnHovered, setSuggBtnHovered] = useState(false)
     const [isCardHovered, setIsCardHovered] = useState(false)
+
+    const handleRequestBtn = () => {
+        setModalData(
+            {
+                postId: id,
+                organizationName: organizationName,
+                membershipDescription: membershipDescription,
+                membershipImageUrl: membershipImageUrl,
+                userName: userName,
+                userImageUrl: userImageUrl,
+                availabilityStartDate: availabilityStartDate,
+                availabilityEndDate: availabilityEndDate
+            })
+        setModalIsOpen(true)
+    }
+
 
 
     return <>
-        <div style={{opacity: isCardHovered ? "1" : `.8`}}>
+        <div style={{ opacity: isCardHovered ? "1" : `.8` }}>
             <Card
                 style={{
                     backgroundColor: `${SLATE}`,
@@ -64,45 +83,43 @@ export const MoochPostCard = ({
                     <CardTitle tag="h4"
                         style={{ color: `${WHITE}` }}>
                         {organizationName}
-                        <p
-                            style={{ color: `${DIRTY_WHITE}}`, fontSize: "14px", display: "block" }}>
+                        <p style={{ color: `${DIRTY_WHITE}}`, fontSize: "14px", display: "block" }}>
                             {membershipDescription}</p>
-                        <p
-                            style={{ color: `${DIRTY_WHITE}}`, fontSize: "14px", display: "block" }}>
-                                Shared By: {userName}</p>
+                        <p style={{ color: `${DIRTY_WHITE}}`, fontSize: "14px", display: "block" }}>
+                            Shared By: {userName}</p>
                     </CardTitle>
                 </CardBody>
                 <ListGroup flush
                     style={{
-                        backgroundColor: `${SLATE}`,             
+                        backgroundColor: `${SLATE}`,
                         borderWidth: "1px 0px",
                         borderColor: "lightgray",
                         borderStyle: "solid"
                     }}>
-                    <ListGroupItem style={{backgroundColor: `${SLATE}`, color: `${DIRTY_WHITE}`}}>
+                    <ListGroupItem style={{ backgroundColor: `${SLATE}`, color: `${DIRTY_WHITE}` }}>
                         Start Date: <span>{startDate.toLocaleDateString()}</span>
                     </ListGroupItem>
-                    <ListGroupItem style={{backgroundColor: `${SLATE}`, color: `${DIRTY_WHITE}`}}>
+                    <ListGroupItem style={{ backgroundColor: `${SLATE}`, color: `${DIRTY_WHITE}` }}>
                         End Date: <span>{endDate.toLocaleDateString()}</span>
                     </ListGroupItem>
                 </ListGroup>
                 <CardBody>
                     <Button
                         style={{
-                            backgroundColor: buttonHovered ? `${DIRTY_WHITE}` : `${SLATE}`,
-                            color: buttonHovered ? `${SLATE}` : `${DIRTY_WHITE}`,
+                            backgroundColor: moochBtnHovered ? `${DIRTY_WHITE}` : `${SLATE}`,
+                            color: moochBtnHovered ? `${SLATE}` : `${DIRTY_WHITE}`,
                             fontFamily: 'Vina Sans, cursive',
                             fontSize: "18px",
                             letterSpacing: "0.7px",
-                            
                         }}
+                        onClick={handleRequestBtn}
                         onMouseEnter={
                             () => {
-                                setButtonHovered(true)
+                                setMoochBtnHovered(true)
                             }}
                         onMouseLeave={
                             () => {
-                                setButtonHovered(false)
+                                setMoochBtnHovered(false)
                             }}
                     >
                         Mooch!
