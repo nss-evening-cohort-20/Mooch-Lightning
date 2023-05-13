@@ -30,7 +30,11 @@ export const OrganizationView = () => {
               <>
                 <Card
                   key={e.id}
-                  style={{ backgroundColor: '#DCDCDC' }}
+                  style={{
+                    backgroundColor: '#DCDCDC',
+                    marginRight: "20px",
+                    color: "#a9a9a9 "
+                  }}
                   className="card, card-align"
                 >
                   <CardImg
@@ -40,7 +44,13 @@ export const OrganizationView = () => {
                     width="100%"
                   />
                   <CardBody>
-                    <CardText className="card-text">{e.description}</CardText>
+                    <CardText className="card-text"
+                      style={{
+                        textAlign: "center",
+                        fontWeight: "bolder",
+                        color: "#808080"
+                      }}>{e.description}
+                    </CardText>
                   </CardBody>
                 </Card>
               </>
