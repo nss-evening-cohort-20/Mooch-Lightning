@@ -337,15 +337,21 @@ public class UserRepository : BaseRepository, IUserRepository
             using (var cmd = conn.CreateCommand())
             {
                 cmd.CommandText = @"
-                                    select um.UserId as UserId
+                                     select
+                                     um.UserId as UserId
+									,u.Username
+									,m.[Description]
                                     ,mp.Id as MoochPostId
                                     ,mp.IsMooched as IsMooched
                                     ,mp.AvailabilityStartDate as AvailabilityStartDate
                                     ,mp.AvailabilityEndDate as AvailabilityEndDate
                                     ,um.MembershipId as MembershipId
+                                    ,o.[Name]
                                     from [dbo].[MoochPost] mp
                                     inner join [dbo].[UserMembership] um on um.id = mp.UserMembershipId
                                     inner join [dbo].[User] u on u.id = um.UserId
+									inner join Membership m on m.id = um.MembershipId
+                                    inner join Organization o on o.id = m.OrganizationId
                                     where u.id = @userId
                                     ";
 
@@ -358,7 +364,10 @@ public class UserRepository : BaseRepository, IUserRepository
                     userMoochPostDetailsList.Add(new UserMoochPostDetails()
                     {
                         UserId = DbUtils.GetInt(reader, "UserId"),
+                        Username = DbUtils.GetString(reader, "Username"),
                         MembershipId = DbUtils.GetInt(reader, "MembershipId"),
+                        MembershipDescription = DbUtils.GetString(reader, "Description"),
+                        OrgName = DbUtils.GetString(reader,"Name"),
                         MoochPostId = DbUtils.GetInt(reader, "MoochPostId"),
                         IsMooched = DbUtils.GetNullableBool(reader, "IsMooched"),
                         AvailabilityStartDate = DbUtils.GetDateTime(reader, "AvailabilityStartDate"),
