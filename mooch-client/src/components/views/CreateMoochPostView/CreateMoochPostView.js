@@ -48,7 +48,7 @@ export const CreateMoochPostView = () => {
 
   return (
     <Container className="form-align">
-      <div className="App">
+      <div className="App" style={{ backgroundColor: `${SLATE}` }}>
         <label>
           <span
             style={{

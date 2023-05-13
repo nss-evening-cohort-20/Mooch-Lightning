@@ -43,6 +43,7 @@ export const HomeView = () => {
   };
 
   const currentUser = getCurrentUser()
+  const navigate = useNavigate()
 
   const [organizationTypes, setOrganizationTypes] = useState([]);
 
@@ -289,6 +290,48 @@ export const HomeView = () => {
           </CardBody>
         </Card>
         <UserProfile />
+        <Card
+          style={{
+            border: '1px solid #2A2B37',
+            backgroundColor: `${SLATE}`,
+
+            margin: '10px 20px',
+            height: 'fit-content',
+            padding: '20px',
+            fontWeight: `100`
+          }}
+        >
+          <CardHeader
+            style={{
+              color: `${LIGHT_GRAY}`,
+              border: 'none',
+            }}
+          >
+            <CardText
+              tag="h2"
+              style={{
+                fontFamily: 'Vina Sans, cursive',
+                fontSize: '40px',
+              }}
+            >
+              Share Your Mooch
+            </CardText>
+          </CardHeader>
+          <CardBody
+            style={{
+              fontFamily: 'Vina Sans, cursive',
+              fontSize: '25px',
+              color: `${DIRTY_WHITE}`
+            }}
+          >
+            <CardText>
+              Have A membership to share?
+            </CardText>
+            <CardText style={{ cursor: 'pointer' }} onClick={() => navigate("/createMoochPostView")}>
+              Click Here
+            </CardText>
+          </CardBody>
+        </Card>
       </div>
 
       {/* shows posts by organization type */}
