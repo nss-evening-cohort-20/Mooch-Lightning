@@ -9,6 +9,7 @@ import { Register } from "../CreateAccountView/Register";
 import { Creators } from "./Creators";
 import { DARK_GRAY, SLATE, LIGHT_GRAY, WHITE, BLACK } from "../../Utils/Constants";
 import { bottom } from "@popperjs/core";
+import { CreateAccount } from "../CreateAccountView/CreateAccount";
 
 
 export const Login = () => {
@@ -32,6 +33,7 @@ export const Login = () => {
 
   const [displayLogin, setDisplayLogin] = useState(false)
   const [register, setRegister] = useState(false)
+  const [registerForm, setRegisterForm] = useState(false)
   const [bttnHover, setBttnHover] = useState({
     BTTN1: false,
     BTTN2: false,
@@ -198,7 +200,10 @@ export const Login = () => {
         </CardBody>
       </Card>
 
-      {/* sign in card */}
+
+
+
+      {/* clickable background to remove sign/register */}
       <div
         style={{
           width: "100%",
@@ -206,10 +211,11 @@ export const Login = () => {
           width: "100%",
           position: "fixed",
           top: "0",
-          display: displayLogin ? "flex" : "none",
+          display: displayLogin || registerForm ? "flex" : "none",
           justifyContent: "end",
 
         }}
+
         onClick={
           () => {
             setDisplayLogin(false)
@@ -219,6 +225,23 @@ export const Login = () => {
         }
       >
       </div>
+
+      {/* register from */}
+
+      <div style={{
+        position: "fixed",
+        top: "0",
+        top: registerForm ? "0" : "100vh",
+        transition: "1s",
+        width: "350px",
+        zIndex: "200"
+      }} >
+        <CreateAccount />
+      </div>
+
+
+      {/* register / sign in */}
+
 
       <div
         style={{
@@ -230,8 +253,10 @@ export const Login = () => {
           zIndex: "100"
         }}
       >
+        {/* ternary statment to display register component */}
+
         {register ? <Register
-          setRegister={setRegister}></Register> :
+          setRegister={setRegister} /> :
           <Card
             style={{
               border: "1px solid #2A2B37",
