@@ -12,6 +12,7 @@ import {
 } from 'reactstrap';
 import { PhotoUpload } from '../../Utils/PhotoUpload';
 import { authsignOut } from '../../Utils/authUtils';
+import { UserProfile } from "../../Layout/UserProfile/UserProfile";
 import { useState, useEffect } from 'react';
 import { MoochPostContainer } from './MoochPostContainer';
 import { SearchResultsContainer } from './SearchResultsContainer';
@@ -326,7 +327,7 @@ export const HomeView = () => {
               share a post to spread the love.
             </CardText>
           </CardBody>
-        </Card> */}
+        </Card>
         <UserProfile />
       </div>
 
