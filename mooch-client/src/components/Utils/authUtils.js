@@ -39,7 +39,7 @@ export const authsignOut = (navigate) => {
       // Remove the user from localstorage
       localStorage.removeItem('mooch_user');
       // Navigate us back to home
-      navigate('/');
+      navigate('/login');
       console.log('Sign Out Success!');
     })
     .catch((error) => {
