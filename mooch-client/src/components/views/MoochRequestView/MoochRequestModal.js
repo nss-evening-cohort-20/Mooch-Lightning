@@ -49,7 +49,7 @@ export const MoochRequestModal = ({ modalIsOpen, setModalIsOpen, modalData }) =>
       <ModalBody style={{ backgroundColor: `${SLATE}` }}>
 
         <Container className="form-align" >
-          <div className="App">
+          <div>
             <section className="text-center" style={{ color: `${DIRTY_WHITE}` }}>
               <img src={modalData.membershipImageUrl} />
               <h1 style={{ color: `${DIRTY_WHITE}` }}>{modalData.organizationName} - {modalData.membershipDescription}</h1>
