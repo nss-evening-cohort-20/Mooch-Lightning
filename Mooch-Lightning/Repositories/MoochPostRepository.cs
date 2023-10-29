@@ -94,7 +94,7 @@ namespace Mooch_Lightning.Repositories
                                                 AvailabilityStartDate,
                                                 AvailabilityEndDate,
                                                 Type,
-                                                Username,
+                                                Username as UserName,
                                                 UserImageURL
                                             FROM 
                                                 #tempMegaTable 
@@ -112,7 +112,7 @@ namespace Mooch_Lightning.Repositories
                                                 AvailabilityStartDate,
                                                 AvailabilityEndDate,
                                                 Type,
-                                                Username,
+                                                Username as UserName,
                                                 UserImageURL
                                             FROM 
                                                 #tempMegaTable 

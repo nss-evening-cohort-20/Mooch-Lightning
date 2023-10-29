@@ -70,7 +70,7 @@ export const UserProfile = () => {
         >
 
           <CardBody>
-            <CardTitle tag="h5">Profile Info</CardTitle>
+            <CardTitle tag="h5" style={{ color: `${WHITE}` }}>Profile Info</CardTitle>
             <CardSubtitle className="mb-2" tag="h6" style={{ color: `${LIGHT_GRAY}` }}>
               {`${userInfo.firstName} ${userInfo.lastName}`}
             </CardSubtitle>
@@ -80,7 +80,7 @@ export const UserProfile = () => {
             <CardText>{`You have ${userMoochRequestDetails?.length} Mooch ${userMoochRequestDetails?.length > 1 ? "Requests!" : 'Request!'}`}</CardText>
             <div className="d-flex justify-content-between">
               <Button onClick={() => navigate("UserProfile")}>My Account</Button>
-              <Button onClick={() => authsignOut()}>Sign Out</Button>
+              <Button onClick={() => authsignOut(navigate)}>Sign Out</Button>
             </div>
           </CardBody>
         </Card>
