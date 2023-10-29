@@ -28,36 +28,49 @@ This project was created as a Full Stack Group Project while attending Nashville
 
 ## Project Description
 
+Many of us subscribe to a host of different services. Woudn't it be nice to share a subscription with a friend when you don't need it? Like if you're travelling outside the country, you probably aren't going to be using that YMCA service that much!
+
+Mooch solves this problem by allowing users to browse and search for membership subscriptions that other users are willing to share. Users can manage their memberships, create new Mooch Posts when they want to share a membership for a specific time, and manage incoming Mooch Requests on their posted mooches to decide who they want to share that mooch with!
+
+# ScreenShots/Gifs
+
 ## Homepage
 
 
 ![Mooch-gif-2](https://github.com/nss-evening-cohort-20/Mooch-Lightning/assets/107286368/02b7954e-af87-4de7-904e-abaca3bd350d)
+
+> Interactive homepage with collapsing sections
 
 ---
 
 ## Realtime Searching by Organization, Membership, or Username
 ![Mooch-gif-3](https://github.com/nss-evening-cohort-20/Mooch-Lightning/assets/107286368/c53058b1-1675-4278-8039-62a8f2f96660)
 
+> Realtime search feedback as you type
+
 ---
 
 ## Organization Details, Mooch Details with Suggestions
 ![Mooch-gif-4](https://github.com/nss-evening-cohort-20/Mooch-Lightning/assets/107286368/d074febc-080a-4a43-a566-a5c30e04c05a)
+
+> Suggestions for mooches, all in one effecient backend request
+
 
 ---
 
 ## Request a Mooch
 ![Mooch-gif-5](https://github.com/nss-evening-cohort-20/Mooch-Lightning/assets/107286368/035345dd-79d7-4fef-97b4-1869e31a7758)
 
+> Requesting another users Mooch Post
+
 ---
 
 ## Add a Membership, post a Mooch
 ![Mooch-gif-6](https://github.com/nss-evening-cohort-20/Mooch-Lightning/assets/107286368/e74456f8-289c-463e-a721-f28bcb95d7d5)
 
+> Add a membership to your account from the list, then post a Mooch yourself!
+
 ---
-
-Many of us subscribe to a host of different services. Woudn't it be nice to share a subscription with a friend when you don't need it? Like if you're travelling outside the country, you probably aren't going to be using that YMCA service that much!
-
-Mooch solves this problem by allowing users to browse and search for membership subscriptions that other users are willing to share. Users can manage their memberships, create new Mooch Posts when they want to share a membership for a specific time, and manage incoming Mooch Requests on their posted mooches to decide who they want to share that mooch with!
 
 ## Technologies Used
 
@@ -112,7 +125,7 @@ Dependencies
 You will need npm, Visual Studio, .NET 6, SQL Server, and whatever SQL Client you prefer (We used SQL Server Management Studio)
 
 1. git clone this repo to your local machine.
-2. Setup Firebase project for authentication and photo storage. Setup Google Maps and Places APIs. For step-by-step instructions for this process, check out this file <a href="/firebaseInstructions.md">here.</a> (If Employer, contact me through LinkedIn <a href="https://www.linkedin.com/in/jeremy-white-dev/" target="_blank">Here</a>)
+2. Setup Firebase project for authentication. For step-by-step instructions for this process, check out this file <a href="/firebaseInstructions.md">here.</a>
 3. Navigate to the repo on your machine and run the following commands in the terminal:
 
 ```
