@@ -96,7 +96,7 @@ export const MoochPostView = () => {
                                 organizationName={post.organizationName}
                                 membershipDescription={post.membershipDescription}
                                 membershipImageUrl={post.membershipImageUrl}
-                                userName={post.username}
+                                userName={post.userName}
                                 userImageUrl={post.userImageUrl}
                                 availabilityStartDate={post.availabilityStartDate}
                                 availabilityEndDate={post.availabilityEndDate}
@@ -116,7 +116,7 @@ export const MoochPostView = () => {
                                     organizationImage={post.organizationImageUrl}
                                     membershipDescription={post.membershipDescription}
                                     membershipImageUrl={post.membershipImageUrl}
-                                    userName={post.username}
+                                    userName={post.userName}
                                     userImageUrl={post.userImageUrl}
                                     availabilityStartDate={post.availabilityStartDate}
                                     availabilityEndDate={post.availabilityEndDate}

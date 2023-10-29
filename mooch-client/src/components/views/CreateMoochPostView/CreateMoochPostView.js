@@ -42,9 +42,8 @@ export const CreateMoochPostView = () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(membershipPost),
-    }).then(() => {
-      navigate('/');
-    });
+    }).then(resp => resp.json())
+      .then(json => navigate(`/mooch-details/${json.moochPost?.id}`));
   };
 
   return (
