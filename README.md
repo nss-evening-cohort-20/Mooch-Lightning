@@ -28,20 +28,32 @@ This project was created as a Full Stack Group Project while attending Nashville
 
 ## Project Description
 
-### Homepage
+## Homepage
+
+
 ![Mooch-gif-2](https://github.com/nss-evening-cohort-20/Mooch-Lightning/assets/107286368/02b7954e-af87-4de7-904e-abaca3bd350d)
 
-### Realtime Searching by Organization, Membership, or Username
+---
+
+## Realtime Searching by Organization, Membership, or Username
 ![Mooch-gif-3](https://github.com/nss-evening-cohort-20/Mooch-Lightning/assets/107286368/c53058b1-1675-4278-8039-62a8f2f96660)
 
-### Organization Details, Mooch Details with Suggestions
+---
+
+## Organization Details, Mooch Details with Suggestions
 ![Mooch-gif-4](https://github.com/nss-evening-cohort-20/Mooch-Lightning/assets/107286368/d074febc-080a-4a43-a566-a5c30e04c05a)
 
-### Request a Mooch
+---
+
+## Request a Mooch
 ![Mooch-gif-5](https://github.com/nss-evening-cohort-20/Mooch-Lightning/assets/107286368/035345dd-79d7-4fef-97b4-1869e31a7758)
 
-### Add a Membership, post a Mooch
+---
+
+## Add a Membership, post a Mooch
 ![Mooch-gif-6](https://github.com/nss-evening-cohort-20/Mooch-Lightning/assets/107286368/e74456f8-289c-463e-a721-f28bcb95d7d5)
+
+---
 
 Many of us subscribe to a host of different services. Woudn't it be nice to share a subscription with a friend when you don't need it? Like if you're travelling outside the country, you probably aren't going to be using that YMCA service that much!
 
